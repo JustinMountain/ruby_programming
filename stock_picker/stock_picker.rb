@@ -1,29 +1,32 @@
-stocks = [17,3,6,9,15,8,6,1,10]
-
 def stock_picker(stocks)
   best_value = []
+  best_value_diff = 0
 
-  # each_with_index
-  stocks.each_with_index do |buy_value, buy_day|
-    
-    # p buy_day
-    # p buy_value
+  stocks.each_with_index do |value, index|
+    compare = []
+    buy_day = index
 
+    until buy_day == stocks.length - 1
+      tracker = 1
+      until tracker + index == stocks.length
+        compare[0] = stocks[index]
+        compare[1] = stocks[index + tracker]
+        diff = compare[1].to_i - compare[0].to_i
 
-    sell_day = buy_day
-    
-    unless sell_day == stocks.length 
-      sell_day++
-      sell_value = buy_value
-      puts stocks[sell_day]
+        if diff > best_value_diff
+          best_value_diff = diff
+          best_value[0] = index
+          best_value[1] = index + tracker
+        end
+        tracker += 1
+      end
+      buy_day += 1
     end
-
-
-    # p best_value
   end
-  # at [i] multiply by each remaining element
-  # take j - i, keeping whichever pair has the highest value
-  # after completing, whichever is held is the best stocks
+  puts "The best buy and sells days are represented by the indices #{best_value[0]} and #{best_value[1]}."
+  puts "Buying and selling on these days represents a profit of $#{best_value_diff}."
 end
+
+stocks = [17,3,6,9,15,8,6,1,10]
 
 stock_picker(stocks)

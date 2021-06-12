@@ -1,4 +1,8 @@
+2021-06-12
+- Started Tic Tac Toe project
+
 2021-06-10
+- Completed the Bubble Sort project
 - Started the Bubble Sort project
 - Completed the Stock Picker project
 

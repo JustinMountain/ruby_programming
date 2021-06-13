@@ -1,3 +1,7 @@
+2021-06-13
+- Started the Mastermind project
+- Complete the Tic Tac Toe project
+
 2021-06-12
 - Started Tic Tac Toe project
 

@@ -61,15 +61,48 @@ class CheckCode
   def initialize(secret_code, guess)
     @code = secret_code
     @guess = guess
-    #loop through guess[i], check for that value in code
-      #if exists, check is it's at code[i]
-        #add mark to results depending on the answer
+    @results = []
+
+    # Check for equality at [i]
+    i = 0
+    while i < @code.length
+      if @code[i] == @guess[i]
+        # Add 1 correct "number in position" marker
+        @results << "o"                                     # Symbol for correct number, correct position
+        # Remove both from the array
+        @code.delete_at(i)
+        @guess.delete_at(i)
+      else
+        i += 1
+      end
+    end
+
+    # Check for correct numbers
+    diff = @code - @guess
+    diff = @code - diff
+    j = 0
+    while j < diff.length
+      @results << "x"                                     # Symbol for correct number, wrong position
+      j += 1
+    end
+    p @results      
+  end
+
+  def results
+    p @results
   end
 end
 
-# Check for player selection
-code_maker = PlayerSelect.new()
-puts "The #{code_maker.maker} will make the code."
-# Check for code creation
-code = CodeSelect.new(code_maker.maker)
-# p code.code
+
+
+# # Check for player selection
+# code_maker = PlayerSelect.new()
+# puts "The #{code_maker.maker} will make the code."
+# # Check for code creation
+# code = CodeSelect.new(code_maker.maker)
+# # p code.code
+
+CheckCode.new(["1", "2", "3", "4"], ["4", "3", "2", "1"])
+CheckCode.new(["1", "2", "3", "4"], ["1", "2", "3", "4"])
+CheckCode.new(["1", "2", "3", "4"], ["1", "2", "4", "3"])
+CheckCode.new(["1", "2", "3", "4"], ["4", "2", "3", "1"])

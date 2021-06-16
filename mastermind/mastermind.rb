@@ -78,14 +78,13 @@ class CheckCode
     diff = @code - diff
     j = 0
     while j < diff.length
-      @results << "X"                                     # Symbol for correct number, wrong position
+      @results << "X"                                       # Symbol for correct number, wrong position
       j += 1
     end
   end
 
   def results
-    string_return = "            Clues: " + @results + "\n"
-    return string_return
+    return @results
   end
 
   def is_gameover
@@ -102,7 +101,6 @@ class GamePlayLoop
       code = CodeSelect.new(maker)
       send_code = Marshal.load(Marshal.dump(code))
       @guess = "0"
-      p code.code
 
       while @attempt <= 12
         puts "What do you think the 4 digit password is?"
@@ -129,7 +127,7 @@ class GamePlayLoop
         #print guess with results and increment attempt
         puts "\n"
         p @guess
-        print results.results
+        print "            Clues: " + results.results + "\n"
         print "Guesses remaining: #{12 - @attempt} \n\n"
 
         if results.is_gameover
@@ -140,6 +138,107 @@ class GamePlayLoop
       end
     elsif maker == "player"
       # loop for computer as breaker
+      code = CodeSelect.new(maker)
+      send_code = Marshal.load(Marshal.dump(code))
+      @guess = [1, 2, 3, 4]
+
+      # Make my Array of Arrays
+      array_of_possibilities = Array.new(4)
+      i = 0
+      array0 = 1
+      array1 = 1
+      array2 = 1
+      array3 = 1
+      
+      until array0 > 6 
+        until array1 > 6
+          until array2 > 6
+            until array3 > 6
+              array_of_possibilities[i] = [array0, array1, array2, array3]
+              i += 1
+              array3 += 1
+            end
+            array3 = 1
+            array2 +=1
+          end
+          array2 = 1
+          array1 +=1
+        end
+        array1 = 1
+        array0 +=1
+      end
+
+      p array_of_possibilities.length
+
+      while @attempt <= 12
+        #Here's where the algorithm for breaking the code goes!
+
+        #create duplicate objects and find results for guess
+        send_guess = Marshal.load(Marshal.dump(@guess))
+        send_code = Marshal.load(Marshal.dump(code))
+        results = CheckCode.new(send_code.code, send_guess)
+
+        # results.results 
+          # is a string of X O or nothing
+
+          # if string contains 1 0, remove all that dont have 
+            # [0] @ [0] || [1] @ [1] || [2] @ [2] || [3] @ [3] 
+          # if string contains 2 0, remove all that dont have 
+            # [0] @ [0] && [1] @ [1] || [0] @ [0] && [2] @ [2] || [0] @ [0] && [3] @ [3] 
+            # || [1] @ [1] && [2] @ [2] || [1] @ [1] && [3] @ [3] 
+            # || [2] @ [2] && [3] @ [3] 
+          # if string contains 3 0, remove all that dont have 
+            # [0] @ [0] && [1] @ [1] && [2] @ [2] || [0] @ [0] && [1] @ [1] && [3] @ [3] || [0] @ [0] && [2] @ [2] && [3] @ [3]
+            # || [1] @ [1] && [2] @ [2] && [3] @ [3] 
+          # if string contains 4 0, we win 
+
+          # if string contains 1 X, remove all that don't have at least one of the values
+            # !option.include?(guess[0]) || !option.include?(guess[1]) || !option.include?(guess[2]) || !option.include?(guess[3]) 
+          # if string contains 2 X, remove all that don't have at least two of the values
+            # !option.include?(guess[0]) && !option.include?(guess[1]) 
+            # || !option.include?(guess[0]) && !option.include?(guess[2]) 
+            # || !option.include?(guess[0]) && !option.include?(guess[3]) 
+            # || !option.include?(guess[1]) && !option.include?(guess[2]) 
+            # || !option.include?(guess[1]) && !option.include?(guess[3]) 
+            # || !option.include?(guess[2]) && !option.include?(guess[3]) 
+
+          # if string contains 3 X, remove all that don't have at least three of the values
+            # !option.include?(guess[0]) && !option.include?(guess[1]) && !option.include?(guess[2]) 
+            # || !option.include?(guess[0]) && !option.include?(guess[1]) && !option.include?(guess[3]) 
+            # || !option.include?(guess[0]) && !option.include?(guess[2]) && !option.include?(guess[3]) 
+            # || !option.include?(guess[1]) && !option.include?(guess[2]) && !option.include?(guess[3]) 
+
+          # if string contains 4 X, remove all that don't have all four values
+            # !option.include?(guess[0]) && !option.include?(guess[1]) && !option.include?(guess[2]) && !option.include?(guess[3]) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #Here's where the algorithm for breaking the code ends!
+
+
+        #print guess with results and increment attempt
+        puts "\n"
+        p @guess
+        print "            Clues: " + results.results + "\n"
+        print "Guesses remaining: #{12 - @attempt} \n\n"
+
+        if results.is_gameover
+          p "The computer deciphered your code in #{@attempt} guesses."
+          break
+        end
+        @attempt += 1
+      end
     end
   end
 end

@@ -1,10 +1,12 @@
 TODO
 - Gameplay loop for player as maker, computer as breaker
-- Setup game rules and explanation\
+- Setup game rules and explanation
 - Make output more readable
 - Setup a simple option for standard rules (4 digits, 6 numbers, 12 guesses) and a more complex version
 
 2021-06-16
+- Array of Possibilities created
+- Setup psuedo code for the computer algorithm
 - Player as maker, computer as breaker gameplay loop has been finished!
 
 2021-06-14

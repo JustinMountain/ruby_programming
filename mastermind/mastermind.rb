@@ -168,8 +168,6 @@ class GamePlayLoop
         array0 +=1
       end
 
-      p array_of_possibilities.length
-
       while @attempt <= 12
         #Here's where the algorithm for breaking the code goes!
 
@@ -179,6 +177,8 @@ class GamePlayLoop
         results = CheckCode.new(send_code.code, send_guess)
 
         # results.results 
+          puts results.results.count("X")
+
           # is a string of X O or nothing
 
           # if string contains 1 0, remove all that dont have 
@@ -222,7 +222,7 @@ class GamePlayLoop
 
 
 
-
+          # Choose a new guess to output
 
         #Here's where the algorithm for breaking the code ends!
 

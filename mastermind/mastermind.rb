@@ -139,8 +139,7 @@ class GamePlayLoop
     elsif maker == "player"
       # loop for computer as breaker
       code = CodeSelect.new(maker)
-      send_code = Marshal.load(Marshal.dump(code))
-      @guess = [1, 2, 3, 4]
+      @guess = [1, 1, 2, 2]
 
       # Make my Array of Arrays
       array_of_possibilities = Array.new(4)
@@ -176,21 +175,131 @@ class GamePlayLoop
         send_code = Marshal.load(Marshal.dump(code))
         results = CheckCode.new(send_code.code, send_guess)
 
-        # results.results 
-          puts results.results.count("X")
+        perfect_numbers = results.results.count("O")
+        wrong_spot = results.results.count("X")
 
-          # is a string of X O or nothing
+        # puts results.results.length
+
+        i = array_of_possibilities.length - 1
+
+        if results.results.length == 0
+          until i < 0
+            if array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[3]) 
+              array_of_possibilities.delete_at(i)
+            end
+            i -= 1
+          end
+        elsif results.results.length == 1
+          if perfect_numbers == 1
+            until i < 0
+              unless array_of_possibilities[i][0] == @guess[0] || array_of_possibilities[i][1] == @guess[1] || array_of_possibilities[i][2] == @guess[2] || array_of_possibilities[i][3] == @guess[3] 
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          elsif wrong_spot == 1
+            until i < 0
+              unless array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[3]) 
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          end
+        elsif results.results.length == 2
+          if wrong_spot == 2
+            until i < 0
+              unless array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[3]) || array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[3]) || array_of_possibilities[i].include?(@guess[2]) && array_of_possibilities[i].include?(@guess[3]) 
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          elsif perfect_numbers == 2
+            until i < 0
+              unless array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][1] == @guess[1] || array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][2] == @guess[2] || array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][3] == @guess[3] || array_of_possibilities[i][1] == @guess[1] && array_of_possibilities[i][2] == @guess[2] || array_of_possibilities[i][1] == @guess[1] && array_of_possibilities[i][3] == @guess[3] || array_of_possibilities[i][2] == @guess[2] && array_of_possibilities[i][3] == @guess[3] 
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          elsif perfect_numbers == 1 && wrong_spot == 1
+            until i < 0
+              unless array_of_possibilities[i][0] == @guess[0] && (array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[3])) || array_of_possibilities[i][1] == @guess[1] && (array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[3])) || array_of_possibilities[i][2] == @guess[2] && (array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[3])) || array_of_possibilities[i][3] == @guess[3] && (array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[2]))
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          end
+        elsif results.results.length == 3
+          if perfect_numbers == 3
+            until i < 0
+              unless array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][1] == @guess[1] && array_of_possibilities[i][2] == @guess[2] || array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][1] == @guess[1] && array_of_possibilities[i][3] == @guess[3] || array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][2] == @guess[2] && array_of_possibilities[i][3] == @guess[3] || array_of_possibilities[i][1] == @guess[1] && array_of_possibilities[i][2] == @guess[2] && array_of_possibilities[i][3] == @guess[3] 
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          elsif perfect_numbers == 2 && wrong_spot == 1
+            until i < 0
+              unless (array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][1] == @guess[1]) && (array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[3])) || (array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][2] == @guess[2]) && (array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[3])) || (array_of_possibilities[i][0] == @guess[0] && array_of_possibilities[i][3] == @guess[3]) && (array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[2])) || (array_of_possibilities[i][1] == @guess[1] && array_of_possibilities[i][2] == @guess[2]) && (array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[3])) || (array_of_possibilities[i][1] == @guess[1] && array_of_possibilities[i][3] == @guess[3]) && (array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[2])) || (array_of_possibilities[i][2] == @guess[2] && array_of_possibilities[i][3] == @guess[3]) && (array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[1])) 
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          elsif perfect_numbers == 1 && wrong_spot == 2
+            until i < 0
+              unless array_of_possibilities[i][0] == @guess[0] && (array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[3]) || array_of_possibilities[i].include?(@guess[2]) && array_of_possibilities[i].include?(@guess[3])) || array_of_possibilities[i][1] == @guess[1] && (array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[3]) || array_of_possibilities[i].include?(@guess[2]) && array_of_possibilities[i].include?(@guess[3])) || array_of_possibilities[i][2] == @guess[2] && (array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[3]) || array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[3])) || array_of_possibilities[i][3] == @guess[3] && (array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[2]))
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          elsif wrong_spot == 3
+            until i < 0
+              unless array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[3]) || array_of_possibilities[i].include?(@guess[0]) && array_of_possibilities[i].include?(@guess[2]) && array_of_possibilities[i].include?(@guess[3]) || array_of_possibilities[i].include?(@guess[1]) && array_of_possibilities[i].include?(@guess[2]) && array_of_possibilities[i].include?(@guess[3])
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          end
+        elsif results.results.length == 4
+          if perfect_numbers >= 4
+            puts "The computer deciphered your code in #{@attempt} guesses."
+
+          #   x = 1 o = 3
+          #elsif
+                              # NEED CODE HERE
+        
+          #   x = 2 o = 2
+          #elsif
+                              # NEED CODE HERE
+
+          #   x = 3 o = 1
+          #elsif
+                              # NEED CODE HERE
+          
+          elsif wrong_spot >= 4
+            until i < 0
+              unless array_of_possibilities[i].include?(@guess[0]) || array_of_possibilities[i].include?(@guess[1]) || array_of_possibilities[i].include?(@guess[2]) || array_of_possibilities[i].include?(@guess[3])
+                array_of_possibilities.delete_at(i)
+              end
+              i -= 1
+            end
+          end
+        end
+
+
 
           # if string contains 1 0, remove all that dont have 
             # [0] @ [0] || [1] @ [1] || [2] @ [2] || [3] @ [3] 
           # if string contains 2 0, remove all that dont have 
-            # [0] @ [0] && [1] @ [1] || [0] @ [0] && [2] @ [2] || [0] @ [0] && [3] @ [3] 
-            # || [1] @ [1] && [2] @ [2] || [1] @ [1] && [3] @ [3] 
+            # [0] @ [0] && [1] @ [1] 
+            # || [0] @ [0] && [2] @ [2] 
+            # || [0] @ [0] && [3] @ [3] 
+            # || [1] @ [1] && [2] @ [2] 
+            # || [1] @ [1] && [3] @ [3] 
             # || [2] @ [2] && [3] @ [3] 
           # if string contains 3 0, remove all that dont have 
             # [0] @ [0] && [1] @ [1] && [2] @ [2] || [0] @ [0] && [1] @ [1] && [3] @ [3] || [0] @ [0] && [2] @ [2] && [3] @ [3]
             # || [1] @ [1] && [2] @ [2] && [3] @ [3] 
           # if string contains 4 0, we win 
+
 
           # if string contains 1 X, remove all that don't have at least one of the values
             # !option.include?(guess[0]) || !option.include?(guess[1]) || !option.include?(guess[2]) || !option.include?(guess[3]) 
@@ -213,17 +322,12 @@ class GamePlayLoop
 
 
 
-
-
-
-
-
-
-
-
-
           # Choose a new guess to output
-
+          puts array_of_possibilities.length
+          array_of_possibilities.delete_at(0)
+          @guess = array_of_possibilities[0]
+          # print @guess[0]
+          # print code.code[0]
         #Here's where the algorithm for breaking the code ends!
 
 

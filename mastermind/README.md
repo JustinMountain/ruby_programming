@@ -5,6 +5,7 @@ TODO
 - Setup a simple option for standard rules (4 digits, 6 numbers, 12 guesses) and a more complex version
 
 2021-06-16
+- Implemented psuedo code, but missed interactivity.... need to refactor checks
 - Array of Possibilities created
 - Setup psuedo code for the computer algorithm
 - Player as maker, computer as breaker gameplay loop has been finished!

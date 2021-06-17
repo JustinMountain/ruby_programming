@@ -4,6 +4,12 @@ TODO
 - Make output more readable
 - Setup a simple option for standard rules (4 digits, 6 numbers, 12 guesses) and a more complex version
 
+2021-06-17
+- Implemented the checks for the computer's algorithm
+- Gameloop as maker works sometimes
+  - 4153, 6342, 5462, 6121 are examples of codes that break the algorithm
+  - Possibly need to figure out a new CheckCode class
+
 2021-06-16
 - Implemented psuedo code, but missed interactivity.... need to refactor checks
 - Array of Possibilities created

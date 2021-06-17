@@ -54,31 +54,27 @@ end
 
 # Class to check the code and output proper feedback
 class CheckCode
-  def initialize(secret_code, guess)
-    @code = secret_code
-    @guess = guess
+  def initialize(secret_code, guess_code)
+    @secret_code = secret_code
+    @guess_code = guess_code
     @results = ""
 
     # Check for equality at [i]
     i = 0
-    while i < @code.length
-      if @code[i] == @guess[i]
+    while i < @secret_code.length
+      if @secret_code[i] == @guess_code[i]
         # Add 1 correct "number in position" marker
         @results << "O"                                     # Symbol for correct number, correct position
         # Remove both from the array
-        @code.delete_at(i)
-        @guess.delete_at(i)
+        @secret_code.delete_at(i)
+        @guess_code.delete_at(i)
       else
         i += 1
       end
     end
-    # p @code
-    # p @guess
     # Check for correct numbers
-    diff = @code - @guess
-    # p diff
-    diff = @code - diff
-    # p diff
+    diff = @secret_code - @guess_code
+    diff = @secret_code - diff
 
     j = 0
     while j < diff.length
@@ -143,7 +139,6 @@ class GamePlayLoop
     elsif maker == "player"
       # loop for computer as breaker
       code = CodeSelect.new(maker)
-      @guess = [1, 1, 1, 1]
 
       # Make my Array of Arrays
       array_of_possibilities = Array.new(4)
@@ -172,6 +167,13 @@ class GamePlayLoop
       end
 
       while @attempt <= 12
+        if @attempt == 1
+          @guess = [1, 1, 2, 2]
+        else
+          # Choose a new guess to output
+          @guess = array_of_possibilities[0]
+        end
+
         #Here's where the algorithm for breaking the code goes!
 
         #create duplicate objects and find results for guess
@@ -192,20 +194,15 @@ class GamePlayLoop
 
         until i < 0
           # check code
-          send_guess = Marshal.load(Marshal.dump(@guess))
+          guess_as_code = Marshal.load(Marshal.dump(@guess))
           send_possibility = Marshal.load(Marshal.dump(array_of_possibilities[i]))
-          # possible_results = CheckCode.new(send_guess, send_possibility)
-          possible_results = CheckCode.new(send_guess, send_possibility)
+          possible_results = CheckCode.new(guess_as_code, send_possibility)
 
           unless results.results == possible_results.results
             array_of_possibilities.delete_at(i)
           end
           i -= 1
         end
-
-        # Choose a new guess to output
-        puts array_of_possibilities.length
-        @guess = array_of_possibilities[0]
 
         #Here's where the algorithm for breaking the code ends!
 

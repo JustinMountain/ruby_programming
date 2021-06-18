@@ -4,6 +4,9 @@ TODO
 - Make output more readable
 - Setup a simple option for standard rules (4 digits, 6 numbers, 12 guesses) and a more complex version
 
+2021-06-18
+- Reworked CheckCode class to be non-destructive, still not likely the cleanest implementation but it works.
+
 2021-06-17
 - Implemented the checks for the computer's algorithm
 - Gameloop as maker works sometimes

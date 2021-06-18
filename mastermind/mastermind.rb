@@ -88,7 +88,7 @@ class GamePlayLoop
 
     if maker == "computer"
       code = CodeSelect.new(maker)
-      send_code = Marshal.load(Marshal.dump(code))
+      send_code = code.clone
       @guess = "0"
 
       while @attempt <= 12
@@ -109,8 +109,8 @@ class GamePlayLoop
         end
 
         #create duplicate objects and find results for guess
-        send_guess = Marshal.load(Marshal.dump(@guess))
-        send_code = Marshal.load(Marshal.dump(code))
+        send_guess = @guess.clone
+        send_code = code.clone
         results = CheckCode.new(send_code.code, send_guess)
 
         #print guess with results and increment attempt
@@ -167,8 +167,8 @@ class GamePlayLoop
         #Here's where the algorithm for breaking the code goes!
 
         #create duplicate objects and find results for guess
-        send_guess = Marshal.load(Marshal.dump(@guess))
-        send_code = Marshal.load(Marshal.dump(code))
+        send_guess = @guess.clone
+        send_code = code.clone
         results = CheckCode.new(send_code.code, send_guess)
 
         #print guess with results and increment attempt
@@ -181,8 +181,8 @@ class GamePlayLoop
 
         until i < 0
           # check code
-          guess_as_code = Marshal.load(Marshal.dump(@guess))
-          send_possibility = Marshal.load(Marshal.dump(array_of_possibilities[i]))
+          guess_as_code = @guess.clone
+          send_possibility = array_of_possibilities[i].clone
           possible_results = CheckCode.new(guess_as_code, send_possibility)
 
           unless results.results == possible_results.results

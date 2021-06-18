@@ -2,8 +2,10 @@ class PlayerSelect
   def self.maker
     input = ""
     until input == "1" || input == "2"
-        puts "Do you want to break the code or make the code?"
-        puts "Enter '1' to break the code or '2' to make the code:"    
+        puts "\n  Welcome to Mastermind!"
+        puts "  ---"
+        puts "  Are you a code breaker or a code maker?"
+        puts "  Enter '1' to break the code or '2' to make the code:"    
         input = gets.chomp
     end
     input == "1" ? @maker = "computer" : @maker = "player"
@@ -11,33 +13,25 @@ class PlayerSelect
 end
 
 class CodeSelect
-  def initialize(maker)
+  def self.code(maker)
     @code = []
     if maker == "player"
-      i = 0
-      puts "You need to make a 4-digit code."
-      while i <= 3 do
-        if i == 0
-          position = "first"
-        elsif i == 1
-          position = "second"
-        elsif i == 3
-          position = "third"
-        elsif i == 3
-          position = "fourth"
-        end
-        puts "Please enter the #{position} number between 1 and 6:"
-
-        digit = gets.chomp.to_i
-        if digit >= 1 && digit <= 6
-          @code[i] = digit
-          i += 1
+      puts "\n  So you think you can outsmart a computer, eh? "
+      until @code.length == 4
+        puts "  Please make a 4-digit code containing only 1 - 6."
+        code_string = gets.chomp
+        if !code_string.include?("7") && !code_string.include?("8") && !code_string.include?("9") && !code_string.include?("0") && code_string.length == 4 && code_string.to_i > 0 && code_string.to_i >= 1111
+          @code = code_string.split("")
+          i = 0
+          until i >= @code.length
+            @code[i] = @code[i].to_i
+            i += 1
+          end
         else
-          puts "That wasn't a valid option."
+          puts "  Please try again."
         end
+        puts "\n  Your secret code is #{@code}."
       end
-      puts "Your secret passcode is #{@code}."
-
     elsif maker == "computer"
       i = 0
       while i <= 3 do
@@ -45,10 +39,7 @@ class CodeSelect
         i += 1
       end
     end
-  end
-
-  def code
-    @code
+    return @code
   end
 end
 
@@ -110,6 +101,13 @@ class GamePlayLoop
     elsif maker == "player"
       ComputerGuessLoop.loop(maker)
     end
+    puts "  Would you like to play again?"
+    again = ""
+    until again == "Y" || again == "N"
+        puts "  Enter 'Y' to play again or 'N' give up:"
+        again = gets.chomp.upcase
+    end
+    again == "Y" ? game = GamePlayLoop.new(PlayerSelect.maker) : @maker = "player"
   end
 end
 
@@ -147,15 +145,18 @@ end
 class PlayerGuessLoop
   def self.loop(maker)
     attempt = 1
-    code = CodeSelect.new(maker)
+    code = CodeSelect.code(maker)
     send_code = code.clone
+    puts "\n  After each guess, you will be given clues about the code:"
+    puts "    Each 'O' means that you have 1 correct number in the correct position"
+    puts "    Each 'X' means that you have 1 correct number in the wrong position"
+    puts "\n  You have 12 attempts to find the secret code, do you have what it takes?\n"
     while attempt <= 12
-      puts "What do you think the 4 digit password is?"
+      puts "\n  Attempt ##{attempt}: What do you think the 4 digit password is?"
       @guess = PlayerValidGuess.valid
-      #create duplicate objects and find results for guess
       send_guess = @guess
       send_code = code
-      results = DisplayResults.display(send_code.code, send_guess)
+      results = DisplayResults.display(send_code, send_guess)
 
       #print guess with results and increment attempt
       PrintResults.print(@guess, results, attempt)
@@ -172,7 +173,6 @@ class PlayerValidGuess
       puts "Don't forget the parameters of the code!"
       guess = gets.chomp
     end
-    #convert @guess from string to array
     guess = guess.split("")
     i = 0
     while i < 4
@@ -186,27 +186,25 @@ end
 class ComputerGuessLoop
   def self.loop(maker)
     attempt = 1
-    code = CodeSelect.new(maker)
+    code = CodeSelect.code(maker)
     array_of_possibilities = ArrayOfPossibilities.create_array()
 
     while attempt <= 12
-      
       if attempt == 1
         @guess = [1, 1, 2, 2]
       else
         @guess = array_of_possibilities[0]
       end
 
-      results = DisplayResults.display(code.code, @guess)
+      results = DisplayResults.display(code, @guess)
+      sleep(1)
       PrintResults.print(@guess, results, attempt)
       
-      # Check for Game Over
       GameOverCheck.check(maker, results, attempt) ? break :      
-      results = CheckCode.results(code.code, @guess)
+      results = CheckCode.results(code, @guess)
 
       i = array_of_possibilities.length - 1
       until i < 0
-        # check code
         send_possibility = array_of_possibilities[i]
         possible_results = CheckCode.results(@guess, send_possibility)
         unless results == possible_results
@@ -221,10 +219,9 @@ end
 
 class PrintResults
   def self.print(guess, results, attempt)
-    puts "\n"
-    p guess
-    puts "            Clues: " + results + "\n"
-    puts "Guesses remaining: #{12 - attempt} \n\n"
+    puts "\n  #{guess}" 
+    puts "              Clues: " + results + "\n"
+    puts "  Guesses remaining: #{12 - attempt} \n"
   end
 end
 
@@ -234,8 +231,11 @@ class GameOverCheck
       if maker == "computer"
         puts "You figured out the code in #{attempt} guesses."
       elsif maker == "player"
-        puts "The computer deciphered your code in #{attempt} guesses."
+        puts "\n  The computer deciphered your code in #{attempt} guesses. Better luck next time.\n\n"
       end 
+      return true
+    elsif attempt == 12
+      puts "\n  Good effort, but the secret code is now lost forever. Better luck next time.\n\n"
       return true
     else 
       return false
@@ -243,47 +243,4 @@ class GameOverCheck
   end
 end
 
-# # Check for player selection
-# code_maker = PlayerSelect.new()
-# puts "The #{code_maker.maker} will make the code."
-# # Check for code creation
-# code = CodeSelect.new(code_maker.maker)
-# # p code.code
-
-# Check for proper feedback
-# puts CheckCode.new([1, 2, 3, 4], [5, 4, 6, 2]).results
-# puts CheckCode.new([5, 4, 6, 2], [1, 2, 3, 4]).results
-# puts CheckCode.new(["1", "2", "3", "4"], ["1", "2", "3", "4"]).results
-# puts CheckCode.new(["1", "2", "3", "4"], ["1", "2", "4", "3"]).results
-# puts CheckCode.new(["1", "2", "3", "4"], ["4", "2", "3", "1"]).results
-
-# Check for GamePlayLoop
 game = GamePlayLoop.new(PlayerSelect.maker)
-
-# Check win condition class
-# is_finished = CheckWinCondition.new("OOOO")
-# p is_finished.done
-
-
-# master_code = [1, 2, 3, 4]
-# guess = [1, 1, 1, 4]
-
-# send_master = Marshal.load(Marshal.dump(master_code))
-# send_guess = Marshal.load(Marshal.dump(guess))
-
-
-# possible_results = CheckCode.new(send_master, send_guess)
-
-# send_master = Marshal.load(Marshal.dump(master_code))
-# send_guess = Marshal.load(Marshal.dump(guess))
-
-# results = CheckCode.new(send_guess, send_master)
-
-# puts master_code
-# puts guess
-
-# puts possible_results.results
-# puts results.results
-
-
-# puts possible_results.results == results.results

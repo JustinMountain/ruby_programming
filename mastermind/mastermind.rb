@@ -71,9 +71,6 @@ class CheckCode
       end
       i += 1
     end
-    if @results == "OOOO" 
-      @gameover = true
-    end
     return @results
   end
 end
@@ -143,7 +140,8 @@ class GamePlayLoop
         PrintResults.print(@guess, results, attempt)
         
         # Check for Game Over
-        GameOverCheck.check(maker, results, attempt)        
+        GameOverCheck.check(maker, results, attempt)   
+        results == "OOOO" ? break : return     
 
         i = array_of_possibilities.length - 1
 
@@ -204,19 +202,14 @@ class PrintResults
 end
 
 class GameOverCheck
-  @gameover = false
-
   def self.check(maker, results, attempt)
     if results == "OOOO"
       if maker == "computer"
         puts "You figured out the code in #{attempt} guesses."
-        return @gameover
       elsif maker == "player"
         puts "The computer deciphered your code in #{attempt} guesses."
       end 
-      gameover = true 
     end
-    return @gameover
   end
 end
 

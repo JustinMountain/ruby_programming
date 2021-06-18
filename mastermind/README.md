@@ -5,6 +5,7 @@ TODO
 - Setup a simple option for standard rules (4 digits, 6 numbers, 12 guesses) and a more complex version
 
 2021-06-18
+- Cleaning up code towards better practice
 - Reworked CheckCode class to be non-destructive, still not likely the cleanest implementation but it works.
 
 2021-06-17

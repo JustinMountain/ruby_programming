@@ -54,10 +54,11 @@ end
 
 # Class to check the code and output proper feedback
 class CheckCode
-  def initialize(secret_code, guess_code)
+  def self.results(secret_code, guess_code)
     @secret_code = secret_code
     @guess_code = guess_code
     @results = ""
+    @gameover = false
 
     i = 0
     while i < @secret_code.length
@@ -70,28 +71,23 @@ class CheckCode
       end
       i += 1
     end
-  end
-
-  def results
+    if @results == "OOOO" 
+      @gameover = true
+    end
     return @results
-  end
-
-  def is_gameover
-    @gameover = false
-    @results == "OOOO" ? @gameover = true : @gameover = false
   end
 end
 
 class GamePlayLoop
   def initialize(maker)
-    @attempt = 1
+    attempt = 1
 
     if maker == "computer"
       code = CodeSelect.new(maker)
       send_code = code.clone
       @guess = "0"
 
-      while @attempt <= 12
+      while attempt <= 12
         puts "What do you think the 4 digit password is?"
         @guess = gets.chomp
 
@@ -111,53 +107,25 @@ class GamePlayLoop
         #create duplicate objects and find results for guess
         send_guess = @guess.clone
         send_code = code.clone
-        results = CheckCode.new(send_code.code, send_guess)
+        results = CheckCode.results(send_code.code, send_guess)
 
         #print guess with results and increment attempt
-        puts "\n"
-        p @guess
-        print "            Clues: " + results.results + "\n"
-        print "Guesses remaining: #{12 - @attempt} \n\n"
+        PrintResults.print(@guess, results, attempt)
+        
+        GameOverCheck.check(maker, results, attempt)
 
-        if results.is_gameover
-          p "You won in #{@attempt} guesses!"
-          break
-        end
-        @attempt += 1
+        attempt += 1
       end
     elsif maker == "player"
       # loop for computer as breaker
       code = CodeSelect.new(maker)
 
       # Make my Array of Arrays
-      array_of_possibilities = Array.new(4)
-      i = 0
-      array0 = 1
-      array1 = 1
-      array2 = 1
-      array3 = 1
-      
-      until array0 > 6 
-        until array1 > 6
-          until array2 > 6
-            until array3 > 6
-              array_of_possibilities[i] = [array0, array1, array2, array3]
-              i += 1
-              array3 += 1
-            end
-            array3 = 1
-            array2 +=1
-          end
-          array2 = 1
-          array1 +=1
-        end
-        array1 = 1
-        array0 +=1
-      end
+      array_of_possibilities = ArrayOfPossibilities.create_array()
 
-      while @attempt <= 12
+      while attempt <= 12
         
-        if @attempt == 1
+        if attempt == 1
           @guess = [1, 1, 2, 2]
         else
           # Choose a new guess to output
@@ -169,38 +137,86 @@ class GamePlayLoop
         #create duplicate objects and find results for guess
         send_guess = @guess.clone
         send_code = code.clone
-        results = CheckCode.new(send_code.code, send_guess)
+        results = CheckCode.results(send_code.code, send_guess)
 
         #print guess with results and increment attempt
-        puts "\n"
-        p @guess
-        print "            Clues: " + results.results + "\n"
-        print "Guesses remaining: #{12 - @attempt} \n\n"
+        PrintResults.print(@guess, results, attempt)
         
+        # Check for Game Over
+        GameOverCheck.check(maker, results, attempt)        
+
         i = array_of_possibilities.length - 1
 
         until i < 0
           # check code
-          guess_as_code = @guess.clone
-          send_possibility = array_of_possibilities[i].clone
-          possible_results = CheckCode.new(guess_as_code, send_possibility)
+          send_possibility = array_of_possibilities[i]
+          possible_results = CheckCode.results(@guess, send_possibility)
 
-          unless results.results == possible_results.results
+          unless results == possible_results
             array_of_possibilities.delete_at(i)
           end
           i -= 1
         end
-
-        #Here's where the algorithm for breaking the code ends!
-
-        # check for gameover
-        if results.is_gameover
-          p "The computer deciphered your code in #{@attempt} guesses."
-          break
-        end
-        @attempt += 1
+        attempt += 1
       end
     end
+  end
+end
+
+class ArrayOfPossibilities
+  def self.create_array
+    # Make my Array of Arrays
+    array_of_possibilities = Array.new(4)
+    i = 0
+    array0 = 1
+    array1 = 1
+    array2 = 1
+    array3 = 1
+    
+    until array0 > 6 
+      until array1 > 6
+        until array2 > 6
+          until array3 > 6
+            array_of_possibilities[i] = [array0, array1, array2, array3]
+            i += 1
+            array3 += 1
+          end
+          array3 = 1
+          array2 +=1
+        end
+        array2 = 1
+        array1 +=1
+      end
+      array1 = 1
+      array0 +=1
+    end
+    return array_of_possibilities
+  end
+end
+
+class PrintResults
+  def self.print(guess, results, attempt)
+    puts "\n"
+    p guess
+    puts "            Clues: " + results + "\n"
+    puts "Guesses remaining: #{12 - attempt} \n\n"
+  end
+end
+
+class GameOverCheck
+  @gameover = false
+
+  def self.check(maker, results, attempt)
+    if results == "OOOO"
+      if maker == "computer"
+        puts "You figured out the code in #{attempt} guesses."
+        return @gameover
+      elsif maker == "player"
+        puts "The computer deciphered your code in #{attempt} guesses."
+      end 
+      gameover = true 
+    end
+    return @gameover
   end
 end
 

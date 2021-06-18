@@ -52,13 +52,11 @@ class CodeSelect
   end
 end
 
-# Class to check the code and output proper feedback
 class CheckCode
   def self.results(secret_code, guess_code)
     @secret_code = secret_code
     @guess_code = guess_code
     @results = ""
-    @gameover = false
 
     i = 0
     while i < @secret_code.length
@@ -75,88 +73,42 @@ class CheckCode
   end
 end
 
+class DisplayResults
+  def self.display(secret_code, guess)
+    @code = Marshal.load(Marshal.dump(secret_code))
+    @guess = Marshal.load(Marshal.dump(guess))
+    @results = ""
+
+    i = 0
+    while i < @code.length
+      if @code[i] == @guess[i]
+        # Add 1 correct "number in position" marker
+        @results << "O"                                     # Symbol for correct number, correct position
+        # Remove both from the array
+        @code.delete_at(i)
+        @guess.delete_at(i)
+      else
+        i += 1
+      end
+    end
+    # Check for correct numbers
+    diff = @code - @guess
+    diff = @code - diff
+    j = 0
+    while j < diff.length
+      @results << "X"                                       # Symbol for correct number, wrong position
+      j += 1
+    end
+    return @results
+  end
+end
+
 class GamePlayLoop
   def initialize(maker)
-    attempt = 1
-
     if maker == "computer"
-      code = CodeSelect.new(maker)
-      send_code = code.clone
-      @guess = "0"
-
-      while attempt <= 12
-        puts "What do you think the 4 digit password is?"
-        @guess = gets.chomp
-
-        until @guess.length == 4 && @guess.to_i > 0 && !@guess.include?("7") && !@guess.include?("8") && !@guess.include?("9") && !@guess.include?("0")
-          puts "Don't forget the parameters of the code!"
-          @guess = gets.chomp
-        end
-
-        #convert @guess from string to array
-        @guess = @guess.split("")
-        i = 0
-        while i < 4
-          @guess[i] = @guess[i].to_i
-          i += 1
-        end
-
-        #create duplicate objects and find results for guess
-        send_guess = @guess.clone
-        send_code = code.clone
-        results = CheckCode.results(send_code.code, send_guess)
-
-        #print guess with results and increment attempt
-        PrintResults.print(@guess, results, attempt)
-        
-        GameOverCheck.check(maker, results, attempt)
-
-        attempt += 1
-      end
+      PlayerGuessLoop.loop(maker)
     elsif maker == "player"
-      # loop for computer as breaker
-      code = CodeSelect.new(maker)
-
-      # Make my Array of Arrays
-      array_of_possibilities = ArrayOfPossibilities.create_array()
-
-      while attempt <= 12
-        
-        if attempt == 1
-          @guess = [1, 1, 2, 2]
-        else
-          # Choose a new guess to output
-          @guess = array_of_possibilities[0]
-        end
-
-        #Here's where the algorithm for breaking the code goes!
-
-        #create duplicate objects and find results for guess
-        send_guess = @guess.clone
-        send_code = code.clone
-        results = CheckCode.results(send_code.code, send_guess)
-
-        #print guess with results and increment attempt
-        PrintResults.print(@guess, results, attempt)
-        
-        # Check for Game Over
-        GameOverCheck.check(maker, results, attempt)   
-        results == "OOOO" ? break : return     
-
-        i = array_of_possibilities.length - 1
-
-        until i < 0
-          # check code
-          send_possibility = array_of_possibilities[i]
-          possible_results = CheckCode.results(@guess, send_possibility)
-
-          unless results == possible_results
-            array_of_possibilities.delete_at(i)
-          end
-          i -= 1
-        end
-        attempt += 1
-      end
+      ComputerGuessLoop.loop(maker)
     end
   end
 end
@@ -192,6 +144,81 @@ class ArrayOfPossibilities
   end
 end
 
+class PlayerGuessLoop
+  def self.loop(maker)
+    attempt = 1
+    code = CodeSelect.new(maker)
+    send_code = code.clone
+    while attempt <= 12
+      puts "What do you think the 4 digit password is?"
+      @guess = PlayerValidGuess.valid
+      #create duplicate objects and find results for guess
+      send_guess = @guess
+      send_code = code
+      results = DisplayResults.display(send_code.code, send_guess)
+
+      #print guess with results and increment attempt
+      PrintResults.print(@guess, results, attempt)
+      GameOverCheck.check(maker, results, attempt)
+      attempt += 1
+    end
+  end
+end
+
+class PlayerValidGuess
+  def self.valid
+    guess = gets.chomp
+    until guess.length == 4 && guess.to_i > 0 && !guess.include?("7") && !guess.include?("8") && !guess.include?("9") && !guess.include?("0")
+      puts "Don't forget the parameters of the code!"
+      guess = gets.chomp
+    end
+    #convert @guess from string to array
+    guess = guess.split("")
+    i = 0
+    while i < 4
+      guess[i] = guess[i].to_i
+      i += 1
+    end
+    return guess
+  end
+end
+
+class ComputerGuessLoop
+  def self.loop(maker)
+    attempt = 1
+    code = CodeSelect.new(maker)
+    array_of_possibilities = ArrayOfPossibilities.create_array()
+
+    while attempt <= 12
+      
+      if attempt == 1
+        @guess = [1, 1, 2, 2]
+      else
+        @guess = array_of_possibilities[0]
+      end
+
+      results = DisplayResults.display(code.code, @guess)
+      PrintResults.print(@guess, results, attempt)
+      
+      # Check for Game Over
+      GameOverCheck.check(maker, results, attempt) ? break :      
+      results = CheckCode.results(code.code, @guess)
+
+      i = array_of_possibilities.length - 1
+      until i < 0
+        # check code
+        send_possibility = array_of_possibilities[i]
+        possible_results = CheckCode.results(@guess, send_possibility)
+        unless results == possible_results
+          array_of_possibilities.delete_at(i)
+        end
+        i -= 1
+      end
+      attempt += 1
+    end
+  end
+end
+
 class PrintResults
   def self.print(guess, results, attempt)
     puts "\n"
@@ -209,6 +236,9 @@ class GameOverCheck
       elsif maker == "player"
         puts "The computer deciphered your code in #{attempt} guesses."
       end 
+      return true
+    else 
+      return false
     end
   end
 end

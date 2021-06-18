@@ -59,27 +59,16 @@ class CheckCode
     @guess_code = guess_code
     @results = ""
 
-    # Check for equality at [i]
     i = 0
     while i < @secret_code.length
-      if @secret_code[i] == @guess_code[i]
+      if @guess_code[i] == @secret_code[i]
         # Add 1 correct "number in position" marker
         @results << "O"                                     # Symbol for correct number, correct position
-        # Remove both from the array
-        @secret_code.delete_at(i)
-        @guess_code.delete_at(i)
-      else
-        i += 1
+      elsif @secret_code[i] == @guess_code[0] || @guess_code[1] || @guess_code[2] || @guess_code[3]
+        # Add 1 correct number in wrong position marker
+        @results << "X"                                         # Symbol for correct number, wrong position
       end
-    end
-    # Check for correct numbers
-    diff = @secret_code - @guess_code
-    diff = @secret_code - diff
-
-    j = 0
-    while j < diff.length
-      @results << "X"                                       # Symbol for correct number, wrong position
-      j += 1
+      i += 1
     end
   end
 
@@ -167,6 +156,7 @@ class GamePlayLoop
       end
 
       while @attempt <= 12
+        
         if @attempt == 1
           @guess = [1, 1, 2, 2]
         else
@@ -180,9 +170,6 @@ class GamePlayLoop
         send_guess = Marshal.load(Marshal.dump(@guess))
         send_code = Marshal.load(Marshal.dump(code))
         results = CheckCode.new(send_code.code, send_guess)
-
-        perfect_numbers = results.results.count("O")
-        wrong_spot = results.results.count("X")
 
         #print guess with results and increment attempt
         puts "\n"
@@ -225,7 +212,8 @@ end
 # # p code.code
 
 # Check for proper feedback
-# puts CheckCode.new([1, 1, 1, 4], [1, 1, 3, 3]).results
+# puts CheckCode.new([1, 2, 3, 4], [5, 4, 6, 2]).results
+# puts CheckCode.new([5, 4, 6, 2], [1, 2, 3, 4]).results
 # puts CheckCode.new(["1", "2", "3", "4"], ["1", "2", "3", "4"]).results
 # puts CheckCode.new(["1", "2", "3", "4"], ["1", "2", "4", "3"]).results
 # puts CheckCode.new(["1", "2", "3", "4"], ["4", "2", "3", "1"]).results

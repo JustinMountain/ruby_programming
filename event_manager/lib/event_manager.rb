@@ -64,7 +64,7 @@ template_letter = File.read('form_letter.erb')
 erb_template = ERB.new template_letter
 
 registration_times = []
-
+registration_days = []
 
 contents.each do |row|
   id = row[0]
@@ -80,7 +80,7 @@ contents.each do |row|
   # puts phone
 
   registration_times << Time.strptime(row[:regdate], "%m/%d/%Y %k:%M").hour
-
+  registration_days << Time.strptime(row[:regdate], "%m/%d/%Y %k:%M").wday
 end
 
 peak_registration_times(registration_times)

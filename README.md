@@ -1,3 +1,7 @@
+2021-06-24
+- Started the Hangman project 
+- Completed the Event Manager project
+
 2021-06-22
 - Started the Event Manager project
 

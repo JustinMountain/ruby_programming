@@ -49,8 +49,7 @@ def peak_registration_times(reg_times)
 
   reg_times.each { |time| peak_reg_time[time] += 1 }
   peak_reg_time = peak_reg_time.sort_by {|key, value| -value}.to_h
-  p peak_reg_time
-
+  puts "The best times to target ads are #{peak_reg_time.keys[0]}h, #{peak_reg_time.keys[1]}h, and #{peak_reg_time.keys[2]}h."
 end
 
 puts 'EventManager initialized.'

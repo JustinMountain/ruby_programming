@@ -1,3 +1,5 @@
+require 'yaml'
+
 def choose_word(min, max)
   dictionary = []
   hidden_word = ""
@@ -87,9 +89,14 @@ end
 
 def grab_guess
   guess = ""
-  until guess.match(/^[[:alpha:]]+$/) && guess.length == 1
+  until guess.match(/^[[:alpha:]]+$/) && guess.length == 1 || guess.downcase.match("save")
     puts "Which letter would you like to guess?"
     guess = gets.chomp.downcase
+
+    if guess.downcase.match("save")
+      save_game($new_game)
+      return "saved"
+    end
   end
   return guess
 end
@@ -131,27 +138,76 @@ def play_again
   again = ""
   until again == "Y" || again == "N"
     puts "Do you want to play again? Y/n"
-    gets.chomp.upcase == "Y" ? game_loop : return
+    secret_word = choose_word(5, 12)
+    hidden_word = hide_word(secret_word)  
+
+    gets.chomp.upcase == "Y" ? new_game = Hangman.new(secret_word, hidden_word, 0) : return
   end
 end
 
-def game_loop
+def save_game(hangman)
+  yaml = YAML::dump(
+    'secret_word' => secret_word,
+    'hidden_word' => hidden_word,
+    'guesses' => guesses
+  )
+
+  File.open("lib/saved.yaml", 'w') { |file| file.write yaml}
+  puts "Game Saved!"
+end
+
+def load_game
+  game_file = YAML.safe_load(File.open("lib/saved.yaml", 'r'))
+
+  secret_word = game_file['secret_word']
+  hidden_word = game_file['hidden_word']
+  guesses = game_file['guesses']
+
+  game = Hangman.new(secret_word, hidden_word, guesses)
+
+end
+
+class Hangman
+  attr_accessor :secret_word, :hidden_word, :guesses
+
+  def initialize(secret_word, hidden_word, guesses)
+    @secret_word = secret_word
+    @hidden_word = hidden_word
+    @guesses = guesses.to_i
+
+    puts "Your secret word has #{@secret_word.length} characters."
+    puts "You can save your game at any time by typing 'save'."
+
+    until @guesses == 8
+      letter = grab_guess
+      if letter == "saved"
+        return
+      end
+
+      @secret_word.include?(letter) ? @hidden_word = replace_letters(letter, @secret_word, @hidden_word) : @guesses += 1
+      draw_hangman(@guesses)
+      draw_word(@hidden_word) 
+      if @hidden_word.include?("_") == false
+        @guesses = 8
+      end 
+    end
+    @guesses == 8 ? play_again : return
+  end
+end
+
+# Script on hangman.rb load
+which_game = ""
+
+until which_game.match("L") || which_game.match("N")
+  puts "Would you like to load (L) a saved game or play a new (N) game?"
+  which_game = gets.chomp.upcase
+end
+
+if which_game.match("L")
+  load_game
+elsif which_game.match("N")
   secret_word = choose_word(5, 12)
   hidden_word = hide_word(secret_word)
-  guesses = 0
 
-  until guesses == 8
-    letter = grab_guess
-    secret_word.include?(letter) ? hidden_word = replace_letters(letter, secret_word, hidden_word) : guesses += 1
-    draw_hangman(guesses)
-    draw_word(hidden_word) 
-    if hidden_word.include?("_") == false
-      guesses = 8
-    end 
-  end
-  guesses == 8 ? play_again : return
+  $new_game = Hangman.new(secret_word, hidden_word, 0)
 end
-
-game_loop
-
-

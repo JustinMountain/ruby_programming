@@ -1,4 +1,5 @@
 2021-07-03
+- Completed the Custom Enumerables project
 - Started the Custom Enumerables project
 
 2021-06-28

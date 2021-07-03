@@ -101,40 +101,40 @@ end
 
 numbers = [1, 2, 3, 4, 5]
 # my_each test
-# numbers.my_each  { |item| puts item }
-# puts " "
-# numbers.each  { |item| puts item }
+numbers.my_each  { |item| puts item }
+puts " "
+numbers.each  { |item| puts item }
 
 # my_each_with_index test
-# numbers.my_each_with_index  { |item, index| puts "[#{index}]: #{item}" }
-# puts " "
-# numbers.each_with_index  { |item, index| puts "[#{index}]: #{item}" }
+numbers.my_each_with_index  { |item, index| puts "[#{index}]: #{item}" }
+puts " "
+numbers.each_with_index  { |item, index| puts "[#{index}]: #{item}" }
 
 # my_select test
-# puts numbers.my_select  { |num| num.even? }
-# puts " "
-# puts numbers.select  { |num| num.even? }
+puts numbers.my_select  { |num| num.even? }
+puts " "
+puts numbers.select  { |num| num.even? }
 
 # my_all? test
-# puts numbers.my_all?  { |num| num.is_a? Integer }
-# puts " "
-# puts numbers.all?  { |num| num.is_a? Integer }
+puts numbers.my_all?  { |num| num.is_a? Integer }
+puts " "
+puts numbers.all?  { |num| num.is_a? Integer }
 
 # my_any? test
-# puts numbers.my_any?  { |num| num == 6 }
-# puts " "
-# puts numbers.any?  { |num| num == 6 }
+puts numbers.my_any?  { |num| num == 6 }
+puts " "
+puts numbers.any?  { |num| num == 6 }
 
 # my_none? test
-# puts numbers.my_none?  { |num| num == 2 }
-# puts " "
-# puts numbers.none?  { |num| num == 2 }
+puts numbers.my_none?  { |num| num == 2 }
+puts " "
+puts numbers.none?  { |num| num == 2 }
 
 # my_count test
-# puts numbers.my_count  { |num| num.is_a? String }
-# puts numbers.my_count
-# puts " "
-# puts numbers.count  { |num| num.is_a? String }
+puts numbers.my_count  { |num| num.is_a? String }
+puts numbers.my_count
+puts " "
+puts numbers.count  { |num| num.is_a? String }
 
 # my_map test
 my_proc = Proc.new { |num| num * 2 }
@@ -145,11 +145,11 @@ puts " "
 p numbers.map { |num| num * 2 }
 
 # my_inject test
-# p numbers.my_inject { |num, i| num * i}
-# puts " "
-# p numbers.inject { |num, i| num * i}
+p numbers.my_inject { |num, i| num * i}
+puts " "
+p numbers.inject { |num, i| num * i}
 
 # def multiply_els(array)
-#   array.my_inject { |var, injector| var *= injector }
-# end
-# puts multiply_els([2, 4, 5])
+  array.my_inject { |var, injector| var *= injector }
+end
+puts multiply_els([2, 4, 5])

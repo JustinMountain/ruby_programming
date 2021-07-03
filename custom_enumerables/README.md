@@ -1,5 +1,6 @@
 2021-07-03 Post Mortem
-- 
+- This was some great (and much needed) practice with blocks. I spent a lot of time in the reading sections before this project as well as some extra time on additional resources to try to wrap my head around all of the sleight of hand that is happening between blocks, Procs, Lambdas, and the yield keyword. I don't have a complete grasp of these ideas still: I'm especially confused when we go layers deep for blocks on blocks. I can reason my way to the solutions and read them well enough, but these types of solutions aren't yet coming naturally to me. I feel much more comfortable with them, though, and I'm quite pleased with how I was able to find the solutions relatively quickly even if they took time to understand. 
+- Now that I'm moving deeper into the back half of the Ruby section and towards the final project, I really hope that the exercises and projects continue to build on these skills in a useful way. The projects that ask for solutions to problems that are more concrete are so useful in my wrapping my head around these skills. When I can see a logical place to use these skills, finding the solutions seems so much easier. I think this is something that I will continue to become more comfortable and confident with as I grow as a developer, so I'm excited to see how the next lessons play out. 
 
 2021-07-03
 - my_map can now take a block or a Proc as an argument

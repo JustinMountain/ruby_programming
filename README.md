@@ -1,3 +1,9 @@
+2021-07-03
+- Started the Custom Enumerables project
+
+2021-06-28
+- Completed the Hangman project
+
 2021-06-24
 - Started the Hangman project 
 - Completed the Event Manager project

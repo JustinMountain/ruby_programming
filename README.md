@@ -1,3 +1,6 @@
+2021-07-05
+- Started the Recursion project
+
 2021-07-03
 - Completed the Custom Enumerables project
 - Started the Custom Enumerables project

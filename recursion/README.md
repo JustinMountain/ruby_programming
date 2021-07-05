@@ -1,5 +1,7 @@
 2021-07-05 Post Mortem
-- 
+- Recursion is a lot to get your head around. Recursion seems like something that it elegant due to its simplicity, but ends up being a difficult thing to reason towards. The ideas of "base case" and "recursive case" don't seem terribly difficult to grasp, but finding the elegant solution and writing the recursion still seem quite difficult to grasp. It was mentioned in the videos, but I feel like iterative loops make so much more sense. I'm confident that with more practice these ideas will become easier and easier.
+- This project was more great practice. The assigned reading all made recursion sound much easier than it ended up being to implement. I feel like that's a reflection on my lack of exposure to the idea more than it is about the nature of recursion. Once I was able to wrap my head around what was necessary I was able to find myself to the solutions, though I leaned on my peers more than I had in the past. I struggled quite a while trying to reduce the fibonacci resursion down to the 3 or 1 lines of code that was alluded to in the spec, but I couldn't figure it out. I'm still not entirely sure how the fibonacci recurion is working, while I feel like I have a pretty good handle on the merge sort. 
+- Overall I'm quite happy with this section, even though I know that I need more practice. I will look for opportunities to both use and implement recursion as well as seek out some supplemental material in order to ensure that I've really learned the concepts.  
 
 2021-07-05
 - Merge Sorted!

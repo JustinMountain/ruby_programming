@@ -1,3 +1,6 @@
+2021-07-07
+- Started the Linked List project
+
 2021-07-05
 - Started the Recursion project
 

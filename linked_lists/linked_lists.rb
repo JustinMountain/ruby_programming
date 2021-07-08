@@ -41,21 +41,21 @@ class LinkedList
   end
 
   def size
-    puts @length
+    return @length
   end
 
   def head
-    puts @head
+    return @head.value
   end
 
   def tail
-    puts @tail
+    return @tail.value
   end
 
   def at(position)
     current = @head
     position.times { current = current.next_node }
-    puts current.value
+    return current.value
   end
 
   def pop
@@ -66,8 +66,7 @@ class LinkedList
     new_tail.next_node = nil
     @tail = new_tail
     @length -= 1
-
-    puts popped
+    return popped.value
   end
 
   def contains?(value)
@@ -85,7 +84,8 @@ class LinkedList
   def find(value)
     index = 0 
     if self.contains?(value) == false
-      return false
+      puts "#{value} was not in the linked list."
+      return nil
     else
       found = false
       current = @head
@@ -95,7 +95,7 @@ class LinkedList
         index += 1
         break if found == true
       end
-      puts index
+      return index
     end
   end
 
@@ -107,17 +107,14 @@ class LinkedList
       pointer = pointer.next_node
     end
     string << "( " + pointer.value.to_s + " ) -> nil"
-    puts string
+    return string
   end
 
   def insert_at(value, index)
     node = Node.new(value)
-
     pointer = @head
     if index > 0
-      (index - 1).times do
-        pointer = pointer.next_node
-      end
+      (index - 1).times { pointer = pointer.next_node }
       node.next_node = pointer.next_node
       pointer.next_node = node
       @length += 1
@@ -130,12 +127,9 @@ class LinkedList
 
   def remove_at(index)
     if index < @length && index > -1
-      # index - 1 needs to point to index + 1
       pointer = @head
       if index > 0
-        (index - 1).times do
-          pointer = pointer.next_node
-        end
+        (index - 1).times { pointer = pointer.next_node }
         pointer.next_node = pointer.next_node.next_node
         @length -= 1
       elsif index == @length - 1
@@ -173,29 +167,29 @@ list_test.prepend("real first node")
 
 # # Head, Tail, and Size testing
 # list_test.print_list
-# list_test.size
-# list_test.head
-# list_test.tail
-# list_test.at(4) # 4 is the tail, position in RAM should print identically to above
+# puts list_test.size
+# puts list_test.head
+# puts list_test.tail
+# puts list_test.at(4) # 4 is the tail, position in RAM should print identically to above
 
 # # Pop testing and comparisons
-# list_test.pop
+# puts list_test.pop
 # list_test.print_list
-# list_test.size
-# list_test.at(3) # 3 is the new tail, position in RAM should print identically to above
-# list_test.tail # Should match above
+# puts list_test.size
+# puts list_test.at(3) # 3 is the new tail, position in RAM should print identically to above
+# puts list_test.tail # Should match above
 
 # # Contains testing
-# p list_test.contains?("first node")
-# p list_test.contains?("fourth node")
+# puts list_test.contains?("first node")
+# puts list_test.contains?("fourth node")
 
 # # Find testing
-# list_test.at(2)
-# p list_test.contains?("second node")
-# list_test.find("second node")
+# puts list_test.at(2)
+# puts list_test.contains?("second node")
+# puts list_test.find("second node")
 
 # # to_s testing
-# list_test.to_s
+# puts list_test.to_s
 
 # # insert_at and remove_at testing
 # list_test.print_list
@@ -203,5 +197,6 @@ list_test.prepend("real first node")
 # list_test.insert_at("inserted", 2)
 # list_test.print_list
 # puts "---"
+# list_test.remove_at(2)
 # list_test.remove_at(0)
 # list_test.print_list

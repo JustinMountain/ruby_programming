@@ -34,51 +34,40 @@ class Tree
   end
 
   def delete(value, node=@my_root)
-    return nil unless @unsorted.include?(value)
-    # First I need to find the node to delete
-    node = @my_root
-    if node.value == value 
-      has_children = node
+    # Base Case
+    return node if node.nil?
+
+    # Recur down the tree
+    if value < node.value
+      node.left = delete(value, node.left)
+    elsif value > node.value
+      node.right = delete(value, node.right)
+
+    # If value == node.value this is the node to be deleted
     else
-      until node.left.value == value || node.right.value == value
-        if value < node.value
-          node = node.left
-        elsif value > node.value
-          node = node.right
-        end
-      end
-      # Check for status of children
-      node.left.value == value ? has_children = node.left : has_children = node.right
-    end
-    if has_children.left && has_children.right
-      has_children = 2
-    elsif has_children.left || has_children.right
-      has_children = 1
-    else 
-      has_children = 0
-    end
-    puts "#{has_children} child(ren)."
+      # node has 0 or 1 children
+      if node.left == nil
+        return node.right
+      elsif node.right == nil
+        return node.left
 
-    # value is a leaf
-    if has_children == 0
-      node.left.value == value ? node.left = nil : node.right = nil
-
-    # value has one child
-    elsif has_children == 1
-      if node.left.value == value
-        grandchild = node.left
-        grandchild.left == nil ? grandchild = grandchild.right : grandchild = grandchild.left  
-        node.left = grandchild
+      # node has 2 children; find the inorder successor
       else
-        grandchild = node.right
-        grandchild.left == nil ? grandchild = grandchild.right : grandchild = grandchild.left  
-        node.right = grandchild
+      node.value = min_value(node.right)
+      # delete the inorder successor
+      node.right = delete(node.value, node.right)
       end
-    
-    # value has two children
-    else 
-
     end
+    node
+  end
+
+  def min_value(root)
+    minv = root.value
+    while root.left
+      minv = root.left.value
+      root = root.left
+    end
+    minv
   end
 
   # Pretty Print method from the project

@@ -1,5 +1,12 @@
+2021-07-09
+- Started the Binary Search Trees project
+
+2021-07-08
+- Completed the Linked List project
+
 2021-07-07
 - Started the Linked List project
+- Completed the Recursion project
 
 2021-07-05
 - Started the Recursion project

@@ -1,3 +1,10 @@
+2021-07-12
+- Rebalance has been implemented
+  - I made sure to .sort!.uniq on the level order array to ensure that the rebalanced tree would be populated correctly
+- Balanced? has been implemented
+- Height and Depth methods implemented
+- Preorder, Inorder, and Postorder recursive traversal methods have been implemented
+
 2021-07-10
 - Implemented level_order method that returns an array of values in level order
   - Added case for clearing array if the method is envoked more than once

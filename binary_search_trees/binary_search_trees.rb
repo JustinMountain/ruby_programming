@@ -8,12 +8,15 @@ class Node
 end
 
 class Tree
-  attr_accessor :array, :my_root, :unsorted, :sorted, :level_order_array
+  attr_accessor :my_root, :unsorted, :sorted, :level_order_array, :preorder_array, :inorder_array, :postoder_array
   def initialize(array)
     @unsorted = array
     @sorted = array.sort!.uniq
     @my_root = build_tree(@sorted)
     @level_order_array = []
+    @preorder_array = []
+    @inorder_array = []
+    @postorder_array = []
   end
 
   def build_tree(array)
@@ -98,6 +101,81 @@ class Tree
     level_order_recursion(queue, queue.shift)    
   end
 
+  def preorder(node=@my_root)
+    if @preorder_array.length > 0
+      @preorder_array = []
+    end
+    preorder_recursion(node)
+  end
+
+  def preorder_recursion(node)
+    # Base Case
+    return @preorder_array if node.nil?
+
+    #Record the current node's data to the array, followed by its left and right children
+    @preorder_array.push(node.value) 
+    preorder_recursion(node.left)
+    preorder_recursion(node.right)
+  end
+
+  def inorder(node=@my_root)
+    if @inorder_array.length > 0
+      @inorder_array = []
+    end
+    inorder_recursion(node)
+  end
+
+  def inorder_recursion(node)
+    # Base Case
+    return @inorder_array if node.nil?
+
+    inorder_recursion(node.left)
+    @inorder_array.push(node.value) 
+    inorder_recursion(node.right)
+  end
+
+  def postorder(node=@my_root)
+    if @postorder_array.length > 0
+      @postorder_array = []
+    end
+    postorder_recursion(node)
+  end
+
+  def postorder_recursion(node)
+    # Base Case
+    return @inorder_array if node.nil?
+
+    postorder_recursion(node.left)
+    postorder_recursion(node.right)
+    @postorder_array.push(node.value) 
+  end
+
+  def height(node=@my_root)
+    # Height is the distance from the node to the furthest leaf node
+    unless node.nil? || node == @my_root
+      node = (node.instance_of?(Node) ? find(node.value) : find(node))
+    end
+    return -1 if node.nil?
+
+    [height(node.left), height(node.right)].max + 1
+  end
+
+  def depth(node)
+    return height() - height(node)
+  end
+
+  def balanced?(node=@my_root)
+    # The difference in height of every left/right is not more than 1
+    return true if node.nil?
+    height(node.left) - height(node.right) <= 1 ? is_balanced = true : is_balanced = false
+    return true if is_balanced && balanced?(node.left) && balanced?(node.right)
+    false
+  end
+
+  def rebalance
+    @my_root = build_tree(level_order.sort!.uniq)
+  end
+
   # Pretty Print method from the project
   def pretty_print(node = @my_root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -113,15 +191,15 @@ p my_tree.sorted
 p my_tree.my_root.value
 my_tree.pretty_print
 
-# # Insert Testing
-# my_tree.insert(9999)
-# my_tree.insert(999)
-# my_tree.insert(99)
-# my_tree.insert(97)
-# my_tree.insert(98)
-# my_tree.insert(95)
+# Insert Testing
+my_tree.insert(9999)
+my_tree.insert(999)
+my_tree.insert(99)
+my_tree.insert(97)
+my_tree.insert(98)
+my_tree.insert(95)
 
-# my_tree.pretty_print
+my_tree.pretty_print
 
 # # Delete Testing
 #   # 0 children
@@ -139,5 +217,28 @@ my_tree.pretty_print
 # puts my_tree.find(324)
 # puts my_tree.find(67)
 
-# Level Order Array Testing
-p my_tree.level_order
+# # Level Order Array Testing
+# p my_tree.level_order
+
+# # Preoder Array Testing
+# p my_tree.preorder
+
+# # Inorder Array Testing
+# p my_tree.inorder
+
+# # Postorder Array Testing
+# p my_tree.postorder
+
+# # Height Testing
+# p my_tree.height()
+
+# # Depth Testing
+# p my_tree.depth(67)
+
+# Balanced? Testing
+p my_tree.balanced?
+
+# Rebalance Testing
+my_tree.rebalance
+my_tree.pretty_print
+p my_tree.balanced?

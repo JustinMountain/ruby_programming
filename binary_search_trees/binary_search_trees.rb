@@ -184,22 +184,23 @@ class Tree
   end
 end
 
-data_to_tree = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-my_tree = Tree.new(data_to_tree)
-p my_tree.unsorted
-p my_tree.sorted
-p my_tree.my_root.value
-my_tree.pretty_print
+# TESTING
+# data_to_tree = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+# my_tree = Tree.new(data_to_tree)
+# p my_tree.unsorted
+# p my_tree.sorted
+# p my_tree.my_root.value
+# my_tree.pretty_print
 
-# Insert Testing
-my_tree.insert(9999)
-my_tree.insert(999)
-my_tree.insert(99)
-my_tree.insert(97)
-my_tree.insert(98)
-my_tree.insert(95)
+# # Insert Testing
+# my_tree.insert(9999)
+# my_tree.insert(999)
+# my_tree.insert(99)
+# my_tree.insert(97)
+# my_tree.insert(98)
+# my_tree.insert(95)
 
-my_tree.pretty_print
+# my_tree.pretty_print
 
 # # Delete Testing
 #   # 0 children
@@ -235,10 +236,15 @@ my_tree.pretty_print
 # # Depth Testing
 # p my_tree.depth(67)
 
-# Balanced? Testing
-p my_tree.balanced?
+# # Balanced? Testing
+# p my_tree.balanced?
 
-# Rebalance Testing
-my_tree.rebalance
-my_tree.pretty_print
-p my_tree.balanced?
+# # Rebalance Testing
+# my_tree.rebalance
+# my_tree.pretty_print
+# p my_tree.balanced?
+
+# Tie it all together
+random_array = (Array.new(15) {rand(1..100) })
+tree = Tree.new(random_array)
+tree.balanced?

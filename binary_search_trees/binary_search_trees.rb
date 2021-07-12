@@ -247,4 +247,23 @@ end
 # Tie it all together
 random_array = (Array.new(15) {rand(1..100) })
 tree = Tree.new(random_array)
-tree.balanced?
+p tree.balanced?
+p tree.level_order
+p tree.preorder
+p tree.postorder
+p tree.inorder
+
+tree.insert(9999)
+tree.insert(999)
+tree.insert(199)
+tree.insert(297)
+tree.insert(398)
+tree.insert(495)
+p tree.balanced?
+
+tree.rebalance
+p tree.balanced?
+p tree.level_order
+p tree.preorder
+p tree.postorder
+p tree.inorder

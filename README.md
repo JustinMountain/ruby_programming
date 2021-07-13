@@ -1,3 +1,9 @@
+2021-07-13
+- Started the Knights Travails project
+
+2021-07-12
+- Completed the Binary Search Trees project
+
 2021-07-09
 - Started the Binary Search Trees project
 

@@ -1,4 +1,6 @@
 2021-07-14
+- Psuedo code written for knights travails pathfinding algorithm
+- Minor optimizations to ChessNode to control via ChessNode.method
 - Knight class now contains move method which will move the piece around the board
 - Knight class now contains moves? method which returns an array of all valid knight moves
 - Modified ChessBoard to spawn 8 unique ChessNodes rather than 1 in all 8 positions

@@ -6,8 +6,7 @@ class Knight
     value = spawn_loc[1]
 
     this_knight = board.board[key][value]
-    this_knight.piece = "Knight"
-    this_knight.marker = "K"
+    this_knight.knight
     @location = spawn_loc
   end
 
@@ -35,13 +34,11 @@ class Knight
 
     # Change piece and marker at start to nil
     current_loc = board.board[position_num_to_key(start)][start[1]]
-    current_loc.piece = "empty"
-    current_loc.marker = "O"
+    current_loc.reset
 
     # Change piece and marker at finish to Knight
     finish_loc = board.board[position_num_to_key(finish)][finish[1]]
-    finish_loc.piece = "Knight"
-    finish_loc.marker = "K"
+    finish_loc.knight
 
     return "Knight to #{position_key_to_num(finish)}"
   end

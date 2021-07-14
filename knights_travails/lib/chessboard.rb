@@ -44,8 +44,16 @@ class ChessNode
   attr_accessor :piece, :marker
 
   def initialize(piece="empty")
-    @piece = piece
+    reset() if piece == "empty"
+  end
 
-    @marker = "O" if @piece == "empty"
+  def reset
+    @piece = "empty"
+    @marker = "O"
+  end
+
+  def knight
+    @piece = "Knight"
+    @marker = "K"
   end
 end

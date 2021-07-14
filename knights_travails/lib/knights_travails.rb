@@ -1,13 +1,23 @@
 require_relative 'chessboard.rb'
 require_relative 'knight.rb'
 
-test_board = ChessBoard.new()
+# Create a recursive method to find paths from one node to another
+  # Check if piece is at the end location, return something dumb if both start and finish are equal
+  # Otherwise, make an array of all locations on the board
 
-test_knight = Knight.new([4, 4], test_board)
+  # Base Case
+    # Piece is in the end location or has no more valid moves
+  # Check master array crossed with possible moves for new squares to visit, move the piece
+  # Check if piece is at the end location
+    # Yes, return
+    # No, remove current position from master array and recurse
 
-test_board.draw
+# Find the shortest path from above (depth traversal w/ queue) and return that path
 
-p test_knight.moves?
-p test_knight.move([4, 4], [6, 3], test_board)
+master = [1, 2, 3, 4, 5, 6, 7, 8].product([1, 2, 3, 4, 5, 6, 7, 8])
 
-test_board.draw
+def knight_moves(start, finish, board=master)
+  return "Your knight is already in the end location." if start == finish
+end
+
+p master.length

@@ -5,21 +5,21 @@ class ChessBoard
     # 1 Array of 8 length each storing 8 elements
     @board = Hash.new()
     @board[:row_marker] = ["   ", " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 "]
-    @board[:a] = Array.new(8, ChessNode.new)
+    @board[:a] = Array.new(8) {ChessNode.new}
     @board[:a].prepend(" a ")
-    @board[:b] = Array.new(8, ChessNode.new)
+    @board[:b] = Array.new(8) {ChessNode.new}
     @board[:b].prepend(" b ")
-    @board[:c] = Array.new(8, ChessNode.new)
+    @board[:c] = Array.new(8) {ChessNode.new}
     @board[:c].prepend(" c ")
-    @board[:d] = Array.new(8, ChessNode.new)
+    @board[:d] = Array.new(8) {ChessNode.new}
     @board[:d].prepend(" d ")
-    @board[:e] = Array.new(8, ChessNode.new)
+    @board[:e] = Array.new(8) {ChessNode.new}
     @board[:e].prepend(" e ")
-    @board[:f] = Array.new(8, ChessNode.new)
+    @board[:f] = Array.new(8) {ChessNode.new}
     @board[:f].prepend(" f ")
-    @board[:g] = Array.new(8, ChessNode.new)
+    @board[:g] = Array.new(8) {ChessNode.new}
     @board[:g].prepend(" g ")
-    @board[:h] = Array.new(8, ChessNode.new)
+    @board[:h] = Array.new(8) {ChessNode.new}
     @board[:h].prepend(" h ")
   end
 

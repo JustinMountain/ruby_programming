@@ -7,17 +7,16 @@ class Knight
 
     this_knight = board.board[key][value]
     this_knight.knight
-    @location = spawn_loc
   end
 
-  def moves?
+  def moves?(location)
     # Array of valid moves
     valid_moves = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, 2], [2, 1], [2, -1], [1, -2]]
     possible_moves = []
 
     shifted = valid_moves.each do |ele| 
-      ele[0] = ele[0] + @location[0]
-      ele[1] = ele[1] + @location[1]
+      ele[0] = ele[0] + location[0]
+      ele[1] = ele[1] + location[1]
     end
 
     shifted.each do |ele|

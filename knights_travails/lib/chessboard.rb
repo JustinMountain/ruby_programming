@@ -49,11 +49,16 @@ class ChessNode
 
   def reset
     @piece = "empty"
-    @marker = "O"
+    @marker = 0
   end
 
   def knight
     @piece = "Knight"
-    @marker = "K"
+    @marker = 0
+  end
+
+  # Used for Knights_Travails
+  def update(counter)
+    @marker = counter
   end
 end

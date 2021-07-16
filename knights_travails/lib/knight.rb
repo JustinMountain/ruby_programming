@@ -31,15 +31,23 @@ class Knight
     return "Error" unless finish.is_a?(Array) && finish.length == 2
     return "Invalid Move" unless self.moves?.include?(finish)
 
-    # Change piece and marker at start to nil
     current_loc = board.board[position_num_to_key(start)][start[1]]
     current_loc.reset
 
-    # Change piece and marker at finish to Knight
     finish_loc = board.board[position_num_to_key(finish)][finish[1]]
     finish_loc.knight
 
-    return "Knight to #{position_key_to_num(finish)}"
+
+    # # Commented out to be used in Chess later
+    # # Change piece and marker at start to nil
+    # current_loc = board.board[position_num_to_key(start)][start[1]]
+    # current_loc.reset
+
+    # # Change piece and marker at finish to Knight
+    # finish_loc = board.board[position_num_to_key(finish)][finish[1]]
+    # finish_loc.knight
+
+    # return "Knight to #{position_key_to_num(finish)}"
   end
 end
 

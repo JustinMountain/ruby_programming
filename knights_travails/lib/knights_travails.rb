@@ -2,88 +2,60 @@ require_relative 'chessboard.rb'
 require_relative 'knight.rb'
 
 class Knights_Travails < Knight
-  def initialize(start, finish, board=@master)
+  def initialize(start, finish, queue=[])
+    @start = start
+    @finish = finish
+    @board = ChessBoard.new()
+    knight = Knight.new(@start, @board)
+    queue.push(start)
+    start_node = @board.board[position_num_to_key(start)][start[1]]
+    # start_node.marker = "S"
 
-    # Check if piece is at the end location, return something dumb if both start and finish are equal
-    if start == finish
-      puts "Start and finish are equal; the knight doesn't need to move to be in the finish location." 
-      return
-    end
+    p travails_recursion(queue, knight)
 
-    # Otherwise, make an array of all locations on the board
-    @master = [1, 2, 3, 4, 5, 6, 7, 8].product([1, 2, 3, 4, 5, 6, 7, 8]) 
-    @path = []
+    p @board.draw
 
-    tree = build_move_tree(start, finish)
 
-    p tree
-    p @path
+    # build a chess board, placing a knight at starting location
+      # set the ChessNode @ location start to have a marker of 1 and a piece of an array with start at position 0
+    # breadth first search, creating a Queue array of all possible moves for the knight
+      # at any of these possible move locations, if the ChessNode has piece == "empty", add them to the Q 
+        # also make marker + 1 and piece = current piece + location
+    # stop when able to move to finish location
   end
 
-  def build_move_tree(start, finish, remaining=@master)
-
-    remaining.delete(start)
-    moves = self.moves?(start)
-    available_moves = []
-
-    moves.each do |move|
-      available_moves.append(move) if remaining.include?(move)
+  def travails_recursion(queue, knight, path=[], counter=0)
+    if counter == "S"
+      counter == "S"
+    else
+      counter >= 0
+      current_node = @board.board[position_num_to_key(queue[0])][queue[0][1]]
+      counter = current_node.marker + 1
     end
 
-    # p available_moves
+    possible_moves = knight.moves?(queue.shift)
+
+    possible_moves.each do |move| 
+      # ChessNode @ move location
+      move_node = @board.board[position_num_to_key(move)][move[1]]
+
+      queue.push(move) if move_node.marker == 0
+
+      update_node = @board.board[position_num_to_key(move)][move[1]]
+      update_node.update(counter) if move_node.marker == 0
+    end
 
     # Base Case
-      # Piece is in the end location or has no more valid moves
-    if start == finish
-      @path.prepend(start)
-      return
-    elsif available_moves.include?(finish)
-      @path.append(finish)
-      @path.prepend(start)
-    elsif available_moves.length == 0
-      return nil
+    if possible_moves.include?(@finish)
+      return  
     end
-  
-    return nil if available_moves.length == 0
 
-    node = Move_Node.new(start)
-
-    # Check master array crossed with possible moves for new squares to visit, move the piece
-
-    # Check if piece can move to end location
-    i = 0
-    while i <= 8
-      if available_moves[i].is_a?(Array)
-        node.possible_moves[i] = build_move_tree(available_moves[i], finish, remaining)
-      end
-      if available_moves[i + 1] == nil
-        i = 8
-      else
-        i += 1
-      end
-    end
-      # Yes, return
-      # Recurse
-    node
-    # Find the shortest path from above (depth traversal w/ queue) and return that path
+    travails_recursion(queue, knight, path, counter)
   end
 end
-
-class Move_Node
-  attr_accessor :possible_moves
-  def initialize(location)
-    @location = location
-    @possible_moves = Array.new(8)
-  end
-end
-
-
-# def Knight_moves(start, finish, board=master)
-#   return "Your knight is already in the end location." if start == finish
-# end
 
 start = [1, 1]
-finish = [3, 5]
+finish = [8, 8]
 
 knight = Knights_Travails.new(start, finish)
 

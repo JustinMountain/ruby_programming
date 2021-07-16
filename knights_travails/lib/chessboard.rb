@@ -41,7 +41,7 @@ class ChessBoard
 end
 
 class ChessNode
-  attr_accessor :piece, :marker, :location
+  attr_accessor :piece, :marker, :path
 
   def initialize(piece="empty")
     reset() if piece == "empty"
@@ -58,11 +58,8 @@ class ChessNode
   end
 
   # Used for Knights_Travails
-  def update(counter)
+  def update(counter, path)
     @marker = counter
-  end
-
-  def update_location(coords)
-    @location = coords
+    @path = path.dup
   end
 end

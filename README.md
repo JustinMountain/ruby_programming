@@ -1,3 +1,6 @@
+2021-07-16
+- Complete the Knights Travails project
+
 2021-07-13
 - Started the Knights Travails project
 

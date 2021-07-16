@@ -14,29 +14,16 @@ class Knights_Travails < Knight
     p travails_recursion(queue, knight)
 
     p @board.draw
-
-
-    # build a chess board, placing a knight at starting location
-      # set the ChessNode @ location start to have a marker of 1 and a piece of an array with start at position 0
-    # breadth first search, creating a Queue array of all possible moves for the knight
-      # at any of these possible move locations, if the ChessNode has piece == "empty", add them to the Q 
-        # also make marker + 1 and piece = current piece + location
-    # stop when able to move to finish location
   end
 
   def travails_recursion(queue, knight, path=[], counter=0)
-    if counter == "S"
-      counter == "S"
-    else
-      counter >= 0
-      current_node = @board.board[position_num_to_key(queue[0])][queue[0][1]]
-      counter = current_node.marker + 1
-    end
+    # Increment counter by resetting to current value + 1
+    current_node = @board.board[position_num_to_key(queue[0])][queue[0][1]]
+    counter = current_node.marker + 1
 
+    # Add to Queue and Update move counter
     possible_moves = knight.moves?(queue.shift)
-
     possible_moves.each do |move| 
-      # ChessNode @ move location
       move_node = @board.board[position_num_to_key(move)][move[1]]
 
       queue.push(move) if move_node.marker == 0

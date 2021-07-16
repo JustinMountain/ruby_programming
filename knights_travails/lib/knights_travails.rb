@@ -3,19 +3,23 @@ require_relative 'knight.rb'
 
 class Knights_Travails < Knight
   def initialize(start, finish, queue=[])
+    # Initialize variables for use
     @start = start
     @finish = finish
     @board = ChessBoard.new()
-    knight = Knight.new(@start, @board)
+
     queue.push(start)
+    knight = Knight.new(@start, @board)
+    @path = []
+
+    # Setup path for starting position
     start_node = @board.board[position_num_to_key(start)][start[1]]
-    start_node.path = start
-    @path = [Array.new(7) { Array.new }]
-    @path[0] = start_node.path
+    start_node.path = Array.new(1) { Array.new }
+    start_node.path.push(start)
 
-    p travails_recursion(queue, knight)
-
-    p @counter
+    # Run the recursion
+    travails_recursion(queue, knight)
+    print_results(@path, @counter)
   end
 
   def travails_recursion(queue, knight, path=[], counter=0)
@@ -24,7 +28,7 @@ class Knights_Travails < Knight
     @counter = current_node.marker + 1
     @path = current_node.path.dup
 
-    # Add to Queue and update move counter
+    # Add to Queue and update move counter and path-so-far
     possible_moves = knight.moves?(queue.shift)
     possible_moves.each do |move| 
       move_node = @board.board[position_num_to_key(move)][move[1]]
@@ -45,10 +49,16 @@ class Knights_Travails < Knight
 
     travails_recursion(queue, knight, @path, @counter)
   end
+
+  def print_results(path, distance)
+    puts "The knight can make it in #{distance} moves:"
+    path.each do |position|
+      p position unless position.empty?
+    end
+  end
 end
 
-start = [1, 1]
-finish = [8, 8]
+start = [4, 4]
+finish = [2, 4]
 
-knight = Knights_Travails.new(start, finish)
-
+knight_moves = Knights_Travails.new(start, finish)

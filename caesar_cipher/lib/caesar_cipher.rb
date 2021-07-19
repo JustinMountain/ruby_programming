@@ -1,4 +1,6 @@
 def caesar_cipher(input_string, num) 
+  num > 0 ? num = num % 26 : num = (num*-1 % 26)*-1
+
   # check if string is a string, number is a number
   if input_string.is_a?(String) == true && num.is_a?(Integer) == true
     # loop over the string
@@ -32,6 +34,7 @@ def caesar_cipher(input_string, num)
     end
   elsif string.is_a?(String) == false
     p "that's no string!"
+    return nil
   elsif num.is_a?(Integer) == false
     p "that's no int!"
   end
@@ -40,9 +43,9 @@ def caesar_cipher(input_string, num)
   cipher_string
 end
 
-# puts "Please enter a string to cipher:"
+# puts "Please enter a string to cipher"
 # user_input = gets
-# puts "How many digits would you like to adjust by:"
+# puts "How many digits would you like to adjust by"
 # user_value = gets.chomp.to_i
 # until user_value > 0
 #   puts "That wasn't a number, please try again: "

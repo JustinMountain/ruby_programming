@@ -1,3 +1,6 @@
+2021-07-25
+- Started backtesting with RSpec
+
 2021-06-12 Post Mortem
 - This was a fun project to put together. I was quite happy to start working on some programs of my own, and working through the logic of tic tac toe was a great way to tackle Ruby on my own. 
 - I feel like I'm finally getting a better handle on Ruby's syntax. While working through this project, the most difficult thing I encountered was working with variables. I found that I still need a little practice deciding where to initialize variables as well as practice deciding which type of variables I need. I didn't enp up using any modules, either. The whole program was more or less constructed with 3 classes: GameSquare, GameBoard, and GamePlayLoop. I'm not sure if this was the most effectively way to solve the tic tac toe problem, but it's how I did it and it seems to work.

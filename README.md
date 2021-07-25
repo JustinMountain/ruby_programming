@@ -1,5 +1,13 @@
+2021-07-25
+- Started backtesting for Tic Tac Toe
+- Completed RSpec Playground 
+
+2021-07-19
+- Started RSpec Playgound 
+- Completed backtesting for the Caesar Cipher project 
+
 2021-07-16
-- Complete the Knights Travails project
+- Completed the Knights Travails project
 
 2021-07-13
 - Started the Knights Travails project

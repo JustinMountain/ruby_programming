@@ -12,14 +12,11 @@ class GameSquare
   def play(player)
     if is_playable == true 
       @is_playable = false
-      if ($player == "Player1") 
-        @content = "x"
-      else 
-        @content = "o"
-      end
-      player_changer()
+      @content =
+        $player == 'Player1' ? 'x' : 'o'
+      player_changer
     else
-      puts "That square is already taken, please choose another."
+      puts 'That square is already taken, please choose another.'
     end
   end
 
@@ -171,7 +168,3 @@ class GamePlayLoop
     end
   end
 end
-
-GamePlayLoop.new()
-
-class 

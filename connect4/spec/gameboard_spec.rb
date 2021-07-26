@@ -15,7 +15,7 @@ RSpec.describe GameBoard do
     end
 
     it 'should have a space in each index' do
-      expect(test_board.board[0][0]).to eql(' ')
+      expect(test_board.board[0][0]).to eq(' ')
     end
   end
 
@@ -28,7 +28,7 @@ RSpec.describe GameBoard do
         string_output = test_board.draw_row(test_row)
         expected = ' |   |   |   |   |   |   |   | '
 
-        expect(string_output).to eql(expected)
+        expect(string_output).to eq(expected)
       end
     end
   end

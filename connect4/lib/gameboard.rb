@@ -21,6 +21,3 @@ class GameBoard
     @board
   end
 end
-
-test = GameBoard.new
-test.draw_game

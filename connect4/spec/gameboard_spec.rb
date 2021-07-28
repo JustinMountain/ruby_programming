@@ -32,4 +32,51 @@ RSpec.describe GameBoard do
       end
     end
   end
+
+  context 'player1 plays their turn'
+
+  describe '#play' do
+    let(:test_board) { described_class.new }
+
+    context 'play in column' do
+      column = 3
+      marker1 = 'X'
+      marker2 = 'O'
+
+      context 'the bottom row is empty' do
+        it 'should place a marker in the bottom row' do
+          test_board.play(marker1, column)
+          expect(test_board.board[5][column]).to eq(marker1)
+        end
+      end
+
+      context 'the bottom row is occupied' do
+        before do
+          test_board.play(marker1, column)
+        end
+
+        it 'should place the piece in the next available spot' do
+          test_board.play(marker2, column)
+          expect(test_board.board[4][column]).to eq(marker2)
+        end
+      end
+
+      context 'the column is full' do
+        before do
+          test_board.play(marker1, column)
+          test_board.play(marker2, column)
+          test_board.play(marker1, column)
+          test_board.play(marker2, column)
+          test_board.play(marker1, column)
+          test_board.play(marker2, column)
+        end
+
+        it 'should not allow a marker to be placed in the column is full' do
+          receive_error = test_board.play(marker1, column)
+          error_message = 'Invalid choice: This column is already full.'
+          expect(receive_error).to eq(error_message)
+        end
+      end
+    end
+  end
 end

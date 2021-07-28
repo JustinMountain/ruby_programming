@@ -2,13 +2,14 @@
 
 # GameBoard where the game is played
 class Players
-  attr_reader :marker1, :marker2, :player1, :player2
+  attr_reader :marker1, :marker2, :player1, :player2, :active_player
 
   def initialize
     @marker1 = 'O'
     @marker2 = 'X'
     @player1 = 'Player 1'
     @player2 = 'Player 2'
+    @active_player = nil
   end
 
   def update_marker(player, marker)
@@ -37,5 +38,14 @@ class Players
       end
     else 'Invalid input for updating marker'
     end
+  end
+
+  def update_active_player
+    @active_player =
+      case @active_player
+      when @player1 then @player2
+      when @player2 then @player1
+      else @player1
+      end
   end
 end

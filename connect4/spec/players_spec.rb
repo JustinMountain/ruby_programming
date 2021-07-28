@@ -54,4 +54,44 @@ RSpec.describe Players do
       expect(players.player2).to eq('Tamy')
     end
   end
+
+  describe '#update_active_player' do
+    let(:players) { described_class.new }
+
+    context 'before the game starts' do
+      it 'should start as nil' do
+        expect(players.active_player).to be_nil
+      end  
+    end
+
+    context 'updating at the start of the game' do
+      it 'should update from nil to Player 1' do 
+        active_player = players.update_active_player
+        expect(active_player).to eq('Player 1')
+      end
+    end
+
+    context 'the active player is Player 1' do
+      before do
+        players.update_active_player
+      end
+
+      it 'should update from Player 1 to Player 2' do
+        active_player = players.update_active_player
+        expect(active_player).to eq('Player 2')
+      end
+    end
+
+    context 'the active player is Player 2' do
+      before do
+        players.update_active_player
+        players.update_active_player
+      end
+
+      it 'should update from Player 1 to Player 2' do
+        active_player = players.update_active_player
+        expect(active_player).to eq('Player 1')
+      end
+    end
+  end
 end

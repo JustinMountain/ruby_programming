@@ -43,13 +43,13 @@ RSpec.describe Players do
     let(:players) { described_class.new }
 
     it 'should update the name of player1 to Justin' do
-      players.update_name('player1', 'Justin')
+      players.update_name('Player1', 'Justin')
 
       expect(players.player1).to eq('Justin')
     end
 
     it 'should update the name of player2 to Tamy' do
-      players.update_name('player2', 'Tamy')
+      players.update_name('Player2', 'Tamy')
 
       expect(players.player2).to eq('Tamy')
     end

@@ -6,6 +6,7 @@ TODO:
   - diagonal1 win condition
   - diagonal2 win condition  
 - Create method to check for stalemate
+- Create condition to require the two markers to be different
 
 2021-07-28
 - Added a method to track the active player to the Player class

@@ -2,7 +2,7 @@
 
 # GameBoard where the game is played
 class Players
-  attr_reader :marker1, :marker2, :player1, :player2, :active_player
+  attr_accessor :marker1, :marker2, :player1, :player2, :active_player
 
   def initialize
     @marker1 = 'O'
@@ -27,13 +27,13 @@ class Players
   end
 
   def update_name(player, new_name)
-    valid_players = %w[player1 player2]
+    valid_players = %w[Player1 Player2]
 
     if valid_players.include?(player)
       case player
-      when 'player1'
+      when 'Player1'
         @player1 = new_name
-      when 'player2'
+      when 'Player2'
         @player2 = new_name
       end
     else 'Invalid input for updating marker'

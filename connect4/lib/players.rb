@@ -48,4 +48,8 @@ class Players
       else @player1
       end
   end
+
+  def active_marker
+    @active_player == @player1 ? @marker1 : @marker2
+  end
 end

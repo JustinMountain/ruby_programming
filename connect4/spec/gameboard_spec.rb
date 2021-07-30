@@ -124,7 +124,7 @@ RSpec.describe GameBoard do
     context 'the board is full' do
       it 'returns false when no row has 4 of the same marker consecutively' do
         test_board.board[0] = %w[O X O X O X X]
-        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[1] = %w[X X X O O O X]
         test_board.board[2] = %w[O O X O X O X]
         test_board.board[3] = %w[X O O X O O O]
         test_board.board[4] = %w[O X O O O X X]
@@ -178,7 +178,7 @@ RSpec.describe GameBoard do
     context 'the board is full' do
       it 'returns false when no column has 4 of the same marker consecutively' do
         test_board.board[0] = %w[O X O X O X X]
-        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[1] = %w[X X X O O O X]
         test_board.board[2] = %w[O O X O X O X]
         test_board.board[3] = %w[X O O X O O O]
         test_board.board[4] = %w[O X O O O X X]
@@ -242,6 +242,94 @@ RSpec.describe GameBoard do
     end
   end
 
+  describe '#diagonal_win?' do
+    let(:test_board) { described_class.new }
+
+    it 'returns false when the game has just been initialized' do
+      expect(test_board.diagonal_win?).to be(false)
+    end
+
+    context 'the board is full' do
+      it 'returns false when no diagonal has 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X X X O O O X]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        expect(test_board.diagonal_win?).to be(false)
+      end
+
+      it 'returns true when one diagonal has 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        expect(test_board.diagonal_win?).to be(true)
+      end
+    end
+
+    context 'top-left to bottom-right' do
+      it 'returns true if the diagonal is on the bottom row' do
+        test_board.board[2] = %w[O]
+        test_board.board[3] = %w[X O X O X O X]
+        test_board.board[4] = %w[X X O X O X O]
+        test_board.board[5] = %w[X X X O X O X]
+        expect(test_board.diagonal_win?).to be(true)
+      end
+
+      it 'returns true if the diagonal is one up from the bottom row' do
+        test_board.board[1] = %w[O]
+        test_board.board[2] = %w[X O X O X O X]
+        test_board.board[3] = %w[X X O X O X O]
+        test_board.board[4] = %w[X X X O X O X]
+        test_board.board[5] = %w[A B C D E F G]
+        expect(test_board.diagonal_win?).to be(true)
+      end
+
+      it 'returns true if the diagonal starts on the top row' do
+        test_board.board[0] = %w[O]
+        test_board.board[1] = %w[X O X O X O X]
+        test_board.board[2] = %w[X X O X O X O]
+        test_board.board[3] = %w[X X X O X O X]
+        test_board.board[4] = %w[A B C D E F G]
+        test_board.board[5] = %w[H I J K L M N]
+        expect(test_board.diagonal_win?).to be(true)
+      end
+    end
+
+    context 'top-right to bottom-left' do
+      it 'returns true if the diagonal is on the bottom row' do
+        test_board.board[2] = %w[X O X O X O O]
+        test_board.board[3] = %w[X O X O X O X]
+        test_board.board[4] = %w[O X O X O X O]
+        test_board.board[5] = %w[X O X O X O X]
+        expect(test_board.diagonal_win?).to be(true)
+      end
+
+      it 'returns true if the diagonal is one up from the bottom row' do
+        test_board.board[1] = %w[X O X O X O O]
+        test_board.board[2] = %w[X O X O X O X]
+        test_board.board[3] = %w[X X O X O X O]
+        test_board.board[4] = %w[X X X O X O X]
+        test_board.board[5] = %w[A B C D E F G]
+        expect(test_board.diagonal_win?).to be(true)
+      end
+
+      it 'returns true if the diagonal starts on the top row' do
+        test_board.board[0] = %w[X O X O X O O]
+        test_board.board[1] = %w[X O X O X O X]
+        test_board.board[2] = %w[X X O X O X O]
+        test_board.board[3] = %w[X X X O X O X]
+        test_board.board[4] = %w[A B C D E F G]
+        test_board.board[5] = %w[H I J K L M N]
+        expect(test_board.diagonal_win?).to be(true)
+      end
+    end
+  end
+
   describe '#game_over?' do
     let(:test_board) { described_class.new }
 
@@ -287,5 +375,66 @@ RSpec.describe GameBoard do
       end
     end
 
+    context 'the game has finished because of a diagonal win' do
+      it 'returns true' do
+        test_board.board[0] = %w[X O X O X O O]
+        test_board.board[1] = %w[X O X O X O X]
+        test_board.board[2] = %w[X X O X O X O]
+        test_board.board[3] = %w[X X X O X O X]
+        test_board.board[4] = %w[A B C D E F G]
+        test_board.board[5] = %w[H I J K L M N]
+        expect(test_board.game_over?).to be(true)
+      end
+    end
+  end
+
+  describe '#game_over_condition' do
+    let(:test_board) { described_class.new }
+
+    context 'the game has just been instantiated' do
+      it "returns a string containing 'keep playing'" do
+        string = 'keep playing'
+        expect(test_board.game_over_condition).to eq(string)
+      end
+    end
+
+    context 'there is a horizontal win condition' do
+      it "returns a string containing 'horizontal'" do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X X X X O O O] # Winning row
+        string = 'horizontal'
+        expect(test_board.game_over_condition).to eq(string)
+      end
+    end
+
+    context 'there is a vertical win condition' do
+      it "returns a string containing 'horizontal'" do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[O O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[O O X X X O O]
+        string = 'vertical'
+        expect(test_board.game_over_condition).to eq(string)
+      end
+    end
+
+    context 'there is a diagonal win condition' do
+      it "returns a string containing 'horizontal'" do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        string = 'diagonal'
+        expect(test_board.game_over_condition).to eq(string)
+      end
+    end
   end
 end

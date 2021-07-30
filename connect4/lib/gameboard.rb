@@ -6,7 +6,6 @@ class GameBoard
 
   def initialize
     @board = Array.new(6) { Array.new(7, ' ') }
-    @game_won = false
   end
 
   def draw_row(row)
@@ -56,7 +55,30 @@ class GameBoard
     false
   end
 
+  def diagonal_win?
+    0.upto(2) do |y|
+      0.upto(6) do |x|
+        return true if @board[y][x] != ' ' && @board[y][x] == @board[y + 1][x + 1] && @board[y][x] == @board[y + 2][x + 2] && @board[y][x] == @board[y + 3][x + 3]
+        return true if @board[y][x] != ' ' && @board[y][x] == @board[y + 1][x - 1] && @board[y][x] == @board[y + 2][x - 2] && @board[y][x] == @board[y + 3][x - 3]
+      end
+    end
+    false
+  end
+
   def game_over?
-    stalemate? || horizontal_win? || vertical_win?
+    stalemate? || horizontal_win? || vertical_win? || diagonal_win?
+  end
+
+  def game_over_condition
+    if horizontal_win? 
+      'horizontal'
+    elsif vertical_win? 
+      'vertical'
+    elsif diagonal_win? 
+      'diagonal'
+    elsif stalemate?
+      'stalemate'
+    else 'keep playing'
+    end
   end
 end

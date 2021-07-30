@@ -1,10 +1,9 @@
-TODO:
-- Create a game loop
-- Create methods to check for win condition
-  - diagonal1 win condition
-  - diagonal2 win condition  
+2021-07-30 Post Mortem
+- 
 
 2021-07-30
+- Created the game loop class and completed the project
+- Implemented both diagonal win conditions and the tests for them
 - Implemented method and tests for vertical victory conditions
 - Implemented method and tests for horiztontal victory condition
 - Implemented game over boolean method

@@ -94,4 +94,29 @@ RSpec.describe Players do
       end
     end
   end
+
+  describe '#active_marker' do
+    let(:players) { described_class.new }
+
+    before do
+      # Sets the original active player
+      players.update_active_player
+    end
+
+    context 'the active player is Player 1' do
+      it 'should return O for the marker' do
+        expect(players.active_marker).to eq('O')
+      end
+    end
+
+    context 'the active player is Player 2' do
+      before do
+        players.update_active_player
+      end
+
+      it 'should return O for the marker' do
+        expect(players.active_marker).to eq('X')
+      end
+    end
+  end
 end

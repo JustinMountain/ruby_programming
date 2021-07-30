@@ -199,40 +199,44 @@ RSpec.describe GameBoard do
 
     context 'looking at the rightmost column' do
       it 'returns true if there are 4 of the same marker consecutively' do
-        test_board.board[2] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
-        test_board.board[3] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
-        test_board.board[4] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
-        test_board.board[5] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O X]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O X]
         expect(test_board.vertical_win?).to be(true)
       end
 
       it 'returns false if there are not 4 of the same marker consecutively' do
-        test_board.board[2] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
-        test_board.board[3] = %w[' ' ' ' ' ' ' ' ' ' ' ' O]
-        test_board.board[4] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
-        test_board.board[5] = %w[' ' ' ' ' ' ' ' ' ' ' ' O]
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
         expect(test_board.vertical_win?).to be(false)
       end
     end
 
     context 'looking at the leftmost column' do
       it 'returns true if there are 4 of the same marker consecutively' do
-        test_board.board[0] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[1] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[2] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[3] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[4] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[5] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[O O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[O O X X X O O]
         expect(test_board.vertical_win?).to be(true)
       end
 
       it 'returns false if there are not 4 of the same marker consecutively' do
-        test_board.board[0] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[1] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[2] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[3] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[4] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
-        test_board.board[5] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
         expect(test_board.vertical_win?).to be(false)
       end
     end
@@ -241,11 +245,47 @@ RSpec.describe GameBoard do
   describe '#game_over?' do
     let(:test_board) { described_class.new }
 
+    context 'the game has just been instantiated' do
+      it 'returns false' do
+        expect(test_board.game_over?).to be(false)
+      end
+    end
+
     context 'the game has reached a stalemate' do
       it 'returns true' do
-        test_board.board[0] = %w[X X X O X X X]
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
         expect(test_board.game_over?).to be(true)
       end
     end
+
+    context 'the game has finished because of a horizontal win' do
+      it 'returns true' do
+        test_board.board[0] = %w[X X X X O X ' ']
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        expect(test_board.game_over?).to be(true)
+      end
+    end
+
+    context 'the game has finished because of a vertical win' do
+      it 'returns true' do
+        test_board.board[0] = %w[X X O X O ' ' ' ']
+        test_board.board[1] = %w[X O X X O O ' ']
+        test_board.board[2] = %w[X O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        expect(test_board.game_over?).to be(true)
+      end
+    end
+
   end
 end

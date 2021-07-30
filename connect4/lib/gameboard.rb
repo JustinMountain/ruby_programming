@@ -47,7 +47,16 @@ class GameBoard
     false
   end
 
+  def vertical_win?
+    0.upto(2) do |y|
+      0.upto(6) do |x|
+        return true if @board[y][x] != ' ' && @board[y][x] == @board[y + 1][x] && @board[y][x] == @board[y + 2][x] && @board[y][x] == @board[y + 3][x]
+      end
+    end
+    false
+  end
+
   def game_over?
-    stalemate?
+    stalemate? || horizontal_win? || vertical_win?
   end
 end

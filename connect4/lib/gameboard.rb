@@ -6,6 +6,7 @@ class GameBoard
 
   def initialize
     @board = Array.new(6) { Array.new(7, ' ') }
+    @game_won = false
   end
 
   def draw_row(row)
@@ -30,5 +31,23 @@ class GameBoard
 
     @board[position][column] = marker
     [position, column]
+  end
+
+  def stalemate?
+    @board[0].include?(' ') ? false : true
+  end
+
+  def horizontal_win?
+    @board.each do |row|
+      return true if row[0] != ' ' && row[0] == row[1] && row[0] == row[2] && row[0] == row[3]
+      return true if row[1] != ' ' && row[1] == row[2] && row[1] == row[3] && row[1] == row[4]
+      return true if row[2] != ' ' && row[2] == row[3] && row[2] == row[4] && row[2] == row[5]
+      return true if row[3] != ' ' && row[3] == row[4] && row[3] == row[5] && row[3] == row[6]
+    end
+    false
+  end
+
+  def game_over?
+    stalemate?
   end
 end

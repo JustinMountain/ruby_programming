@@ -19,10 +19,10 @@ RSpec.describe GameBoard do
     end
   end
 
-  context 'a new game state' do
-    let(:test_board) { described_class.new }
+  describe '#draw_row' do
+    context 'a new game state' do
+      let(:test_board) { described_class.new }
 
-    describe '#draw_row' do
       it 'should return the expected string to print' do
         test_row = test_board.board[0]
         string_output = test_board.draw_row(test_row)
@@ -32,8 +32,6 @@ RSpec.describe GameBoard do
       end
     end
   end
-
-  context 'player1 plays their turn'
 
   describe '#play' do
     let(:test_board) { described_class.new }
@@ -76,6 +74,177 @@ RSpec.describe GameBoard do
           error_message = 'Invalid choice: This column is already full.'
           expect(receive_error).to eq(error_message)
         end
+      end
+    end
+  end
+
+  describe '#stalemate?' do
+    let(:test_board) { described_class.new }
+
+    context 'the game was just initialized' do
+      it 'should return false' do
+        expect(test_board.stalemate?).to be(false)
+      end
+    end
+
+    context 'only one column has been filled' do
+      before do
+        column = 3
+        marker1 = 'X'
+        marker2 = 'O'
+
+        test_board.play(marker1, column)
+        test_board.play(marker2, column)
+        test_board.play(marker1, column)
+        test_board.play(marker2, column)
+        test_board.play(marker1, column)
+        test_board.play(marker2, column)
+      end
+
+      it 'should return false' do
+        expect(test_board.stalemate?).to be(false)
+      end
+    end
+
+    context 'the top row has been filled; the game is at stalemate' do
+      it 'should return true' do
+        test_board.board[0] = %w[X X X O X X X]
+        expect(test_board.stalemate?).to be(true)
+      end
+    end
+  end
+
+  describe '#horizontal_win?' do
+    let(:test_board) { described_class.new }
+
+    it 'returns false when the game has just been initialized' do
+      expect(test_board.horizontal_win?).to be(false)
+    end
+
+    context 'the board is full' do
+      it 'returns false when no row has 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        expect(test_board.horizontal_win?).to be(false)
+      end
+
+      it 'returns true when one row has 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X X X X X O O] # Winning row
+        expect(test_board.horizontal_win?).to be(true)
+      end
+    end
+
+    context 'looking at the bottom row' do
+      it 'returns true if there are 4 of the same marker consecutively' do
+        test_board.board[5] = %w[O O O O X X X]
+        expect(test_board.horizontal_win?).to be(true)
+      end
+
+      it 'is false if there are not 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O O O X O X X]
+        expect(test_board.horizontal_win?).to be(false)
+      end
+    end
+
+    context 'looking at the top row' do
+      it 'is true if there are 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O O O O X X X]
+        expect(test_board.horizontal_win?).to be(true)
+      end
+
+      it 'is false if there are not 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O O O X O X X]
+        expect(test_board.horizontal_win?).to be(false)
+      end
+    end
+  end
+
+  describe '#vertical_win?' do
+    let(:test_board) { described_class.new }
+
+    it 'returns false when the game has just been initialized' do
+      expect(test_board.vertical_win?).to be(false)
+    end
+
+    context 'the board is full' do
+      it 'returns false when no column has 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O X O X O X X]
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X O X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        expect(test_board.vertical_win?).to be(false)
+      end
+
+      it 'returns true when one column has 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O X O X O X X] # 4 X's down the center column
+        test_board.board[1] = %w[X O X X O O O]
+        test_board.board[2] = %w[O O X X X O X]
+        test_board.board[3] = %w[X O O X O O O]
+        test_board.board[4] = %w[O X O O O X X]
+        test_board.board[5] = %w[X O X X X O O]
+        expect(test_board.vertical_win?).to be(true)
+      end
+    end
+
+    context 'looking at the rightmost column' do
+      it 'returns true if there are 4 of the same marker consecutively' do
+        test_board.board[2] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
+        test_board.board[3] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
+        test_board.board[4] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
+        test_board.board[5] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
+        expect(test_board.vertical_win?).to be(true)
+      end
+
+      it 'returns false if there are not 4 of the same marker consecutively' do
+        test_board.board[2] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
+        test_board.board[3] = %w[' ' ' ' ' ' ' ' ' ' ' ' O]
+        test_board.board[4] = %w[' ' ' ' ' ' ' ' ' ' ' ' X]
+        test_board.board[5] = %w[' ' ' ' ' ' ' ' ' ' ' ' O]
+        expect(test_board.vertical_win?).to be(false)
+      end
+    end
+
+    context 'looking at the leftmost column' do
+      it 'returns true if there are 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[1] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[2] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[3] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[4] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[5] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
+        expect(test_board.vertical_win?).to be(true)
+      end
+
+      it 'returns false if there are not 4 of the same marker consecutively' do
+        test_board.board[0] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[1] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[2] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[3] = %w[O ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[4] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
+        test_board.board[5] = %w[X ' ' ' ' ' ' ' ' ' ' ' ']
+        expect(test_board.vertical_win?).to be(false)
+      end
+    end
+  end
+
+  describe '#game_over?' do
+    let(:test_board) { described_class.new }
+
+    context 'the game has reached a stalemate' do
+      it 'returns true' do
+        test_board.board[0] = %w[X X X O X X X]
+        expect(test_board.game_over?).to be(true)
       end
     end
   end

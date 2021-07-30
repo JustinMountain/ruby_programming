@@ -5,8 +5,12 @@ TODO:
   - vertical win condition
   - diagonal1 win condition
   - diagonal2 win condition  
-- Create method to check for stalemate
-- Create condition to require the two markers to be different
+
+2021-07-30
+- Implemented method and tests for horiztontal win condition
+- Implemented game over boolean method
+- Implemented a method that determines if the game is at a stalemate
+- Created condition to require the two markers to be different
 
 2021-07-28
 - Added a method to track the active player to the Player class

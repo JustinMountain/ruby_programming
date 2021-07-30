@@ -27,7 +27,7 @@ RSpec.describe Players do
     let(:players) { described_class.new }
 
     it 'should update the marker for player 1 to Y' do
-      players.update_marker('player1', 'Y')
+      players.update_marker('Player1', 'Y')
 
       expect(players.marker1).to eq('Y')
     end

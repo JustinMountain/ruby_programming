@@ -13,13 +13,13 @@ class Players
   end
 
   def update_marker(player, marker)
-    valid_players = %w[player1 player2]
+    valid_players = %w[Player1 Player2]
 
     if marker.length == 1 && valid_players.include?(player)
       case player
-      when 'player1'
+      when 'Player1'
         @marker1 = marker
-      when 'player2'
+      when 'Player2'
         @marker2 = marker
       end
     else 'Invalid input for updating marker'

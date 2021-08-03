@@ -1,3 +1,9 @@
+2021-08-03
+- Started the Chess project
+
+2021-07-30
+- Completed the Connect 4 project
+
 2021-07-26
 - Started the Connect 4 project
 

@@ -1,59 +1,56 @@
+# frozen_string_literal: true
+
+# GameBoard where the game is played
 class ChessBoard
   attr_accessor :board
 
   def initialize
-    # 1 Array of 8 length each storing 8 elements
-    @board = Hash.new()
-    @board[:row_marker] = ["   ", " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 "]
-    @board[:a] = Array.new(8) {ChessNode.new}
-    @board[:a].prepend(" a ")
-    @board[:b] = Array.new(8) {ChessNode.new}
-    @board[:b].prepend(" b ")
-    @board[:c] = Array.new(8) {ChessNode.new}
-    @board[:c].prepend(" c ")
-    @board[:d] = Array.new(8) {ChessNode.new}
-    @board[:d].prepend(" d ")
-    @board[:e] = Array.new(8) {ChessNode.new}
-    @board[:e].prepend(" e ")
-    @board[:f] = Array.new(8) {ChessNode.new}
-    @board[:f].prepend(" f ")
-    @board[:g] = Array.new(8) {ChessNode.new}
-    @board[:g].prepend(" g ")
-    @board[:h] = Array.new(8) {ChessNode.new}
-    @board[:h].prepend(" h ")
+    @board = Array.new(8) { Array.new(8) }
+    init_nodes
   end
 
-  def draw
-    # Top row needs to be [8] of each array, iterated down until entire board is drawn
-    row_count = 8
-    until row_count < 0
-      @board.each do |key, value|
-        if value[row_count].instance_of?(ChessNode)
-          print " #{value[row_count].marker} "
-        else
-          print value[row_count]
-        end
+  def init_nodes
+    @board.each do |row|
+      0.upto(7) do |i|
+        row[i] = ChessNode.new
       end
-      row_count -= 1
-      print "\n"
     end
+  end
+
+  def draw_row(row, index)
+    printable = +' '
+    printable << (8 - index).to_s
+    row.each do |node|
+      printable << "  #{node.marker}"
+    end
+    printable
+  end
+
+  def draw_game
+    @board.reverse.each_with_index { |row, index| puts draw_row(row, index) }
+    puts "    a  b  c  d  e  f  g  h\n\n"
+    @board
   end
 end
 
+# Chess Node
 class ChessNode
   attr_accessor :piece, :marker
 
-  def initialize(piece="empty")
-    reset() if piece == "empty"
+  def initialize(piece = 'empty')
+    reset_node if piece == 'empty'
   end
 
-  def reset
-    @piece = "empty"
-    @marker = 0
+  def reset_node
+    @piece = 'empty'
+    @marker = "\u2654"
   end
 
   def knight
-    @piece = "Knight"
+    @piece = 'Knight'
     @marker = 0
   end
 end
+
+board = ChessBoard.new
+board.draw_game

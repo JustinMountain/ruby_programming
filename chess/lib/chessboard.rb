@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'chessnode'
+
 # GameBoard where the game is played
 class ChessBoard
   attr_accessor :board
@@ -29,25 +31,6 @@ class ChessBoard
     @board.reverse.each_with_index { |row, index| puts draw_row(row, index) }
     puts "    a  b  c  d  e  f  g  h\n\n"
     @board
-  end
-end
-
-# Chess Node
-class ChessNode
-  attr_accessor :piece, :marker
-
-  def initialize(piece = 'empty')
-    reset_node if piece == 'empty'
-  end
-
-  def reset_node
-    @piece = 'empty'
-    @marker = "\u2654"
-  end
-
-  def knight
-    @piece = 'Knight'
-    @marker = 0
   end
 end
 

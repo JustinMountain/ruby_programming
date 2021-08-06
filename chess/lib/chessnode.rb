@@ -6,7 +6,6 @@ class ChessNode
 
   def initialize(piece = 'empty')
     reset_node if piece == 'empty'
-    @player = player
   end
 
   def reset_node
@@ -21,9 +20,9 @@ class ChessNode
     if valid_players.include?(player)
       case player
       when 'Player1'
-        @marker1 = "\u2658"
+        @marker = "\u2658"
       when 'Player2'
-        @marker2 = "\u265E"
+        @marker = "\u265E"
       end
     else 'Invalid input for updating marker'
     end

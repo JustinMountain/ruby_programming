@@ -32,8 +32,20 @@ class ChessBoard
     puts "    a  b  c  d  e  f  g  h\n\n"
     @board
   end
+
+  def init_pieces
+    init_knights
+  end
+
+  def init_knights
+    @board[7][1].knight('Player1')
+    @board[7][6].knight('Player1')
+    @board[0][1].knight('Player2')
+    @board[0][6].knight('Player2')
+  end
 end
 
 # board = ChessBoard.new
 # board.init_nodes
+# board.init_knights
 # board.draw_game

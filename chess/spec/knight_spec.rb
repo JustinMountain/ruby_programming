@@ -123,4 +123,96 @@ RSpec.describe Knight do
       end
     end
   end
+
+  describe '#move' do
+    let(:test_knight) { described_class.new }
+
+    context 'an invalid start location' do
+      it 'returns the error message if not given an array' do
+        start = 0
+        finish = [5, 5]
+        board = instance_double('board', { board: [[0, 0], [1, 1]] })
+        error_message = 'Invalid start location'
+
+        invalid = test_knight.move(start, finish, board)
+
+        expect(invalid).to eq(error_message)
+      end
+
+      it 'returns the error message if given an array longer than 2' do
+        start = [0, 5, 2]
+        finish = [5, 5]
+        board = instance_double('board', { board: [[0, 0], [1, 1]] })
+        error_message = 'Invalid start location'
+
+        invalid = test_knight.move(start, finish, board)
+
+        expect(invalid).to eq(error_message)
+      end
+
+      it 'returns the error message if given an array shorter than 2' do
+        start = [0]
+        finish = [5, 5]
+        board = instance_double('board', { board: [[0, 0], [1, 1]] })
+        error_message = 'Invalid start location'
+
+        invalid = test_knight.move(start, finish, board)
+
+        expect(invalid).to eq(error_message)
+      end
+    end
+
+    context 'an invalid finish location' do
+      it 'returns the error message if not given an array' do
+        start = [5, 5]
+        finish = 0
+        board = instance_double('board', { board: [[0, 0], [1, 1]] })
+        error_message = 'Invalid finish location'
+
+        invalid = test_knight.move(start, finish, board)
+
+        expect(invalid).to eq(error_message)
+      end
+
+      it 'returns the error message if given an array longer than 2' do
+        start = [5, 5]
+        finish = [1, 1, 1]
+        board = instance_double('board', { board: [[0, 0], [1, 1]] })
+        error_message = 'Invalid finish location'
+
+        invalid = test_knight.move(start, finish, board)
+
+        expect(invalid).to eq(error_message)
+      end
+
+      it 'returns the error message if given an array shorter than 2' do
+        start = [5, 5]
+        finish = [1]
+        board = instance_double('board', { board: [[0, 0], [1, 1]] })
+        error_message = 'Invalid finish location'
+
+        invalid = test_knight.move(start, finish, board)
+
+        expect(invalid).to eq(error_message)
+      end
+    end
+  end
+
+  describe '#check_validity' do
+    let(:test_knight) { described_class.new }
+
+    context 'an invalid move location' do
+      it 'returns the appropriate error message' do
+        start = [1, 1]
+        finish = [3, 3]
+        board = instance_double('board')
+        instance_double('valid_moves', { valid_moves: [[2, 3], [3, 2]] })
+        error_message = 'Invalid move'
+
+        invalid = test_knight.move(start, finish, board)
+
+        expect(invalid).to eq(error_message)
+      end
+    end
+  end
 end

@@ -1,5 +1,4 @@
 TODO
-- Create tests and refactor knight.rb
 - Create Pawn
 - Create Rook
 - Create Bishop
@@ -9,6 +8,8 @@ TODO
 note: will need to convert movement to consider array drawing (invert and consider 0)
 
 2021-08-06
+- Refactored Knight class to move a knight piece on the chess board
+  - Tests established for these methods
 - Refactored Knight class methods to find valid move locations
   - Tests established for these methods
 - Created tests for ChessNode object

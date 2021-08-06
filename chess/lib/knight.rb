@@ -36,50 +36,41 @@ class Knight
     possible_moves
   end
 
+  # Handles updating the gameboard when moving the knight
   def move(start, finish, board)
-    'Error' unless start.is_a?(Array) && start.length == 2
-    'Error' unless finish.is_a?(Array) && finish.length == 2
-    'Invalid Move' unless self.moves?.include?(finish)
-
-    current_loc = board.board[position_num_to_key(start)][start[1]]
-    current_loc.reset
-
-    finish_loc = board.board[position_num_to_key(finish)][finish[1]]
-    finish_loc.knight
-
-    # Commented out to be used in Chess later
-    # Change piece and marker at start to nil
-    current_loc = board.board[position_num_to_key(start)][start[1]]
-    current_loc.reset
-
-    # Change piece and marker at finish to Knight
-    finish_loc = board.board[position_num_to_key(finish)][finish[1]]
-    finish_loc.knight
-
-    "Knight to #{position_key_to_num(finish)}"
+    if start.is_a?(Integer) || start.length != 2
+      'Invalid start location'
+    elsif !finish.is_a?(Array) || finish.length != 2
+      'Invalid finish location'
+    else
+      check_validity(start, finish, board)
+    end
   end
-end
 
-def position_num_to_key(spawn_loc)
-  key = :a if spawn_loc[0] == 1
-  key = :b if spawn_loc[0] == 2
-  key = :c if spawn_loc[0] == 3
-  key = :d if spawn_loc[0] == 4
-  key = :e if spawn_loc[0] == 5
-  key = :f if spawn_loc[0] == 6
-  key = :g if spawn_loc[0] == 7
-  key = :h if spawn_loc[0] == 8
-  key
-end
+  # Used in #move
+  def update_start(start, board)
+    start_row = start[0]
+    start_column = start[1]
+    start_node = board.board[start_row][start_column]
+    start_node.reset_node
+  end
 
-def position_key_to_num(spawn_loc)
-  spawn_loc[0] = :a if spawn_loc[0] == 1
-  spawn_loc[0] = :b if spawn_loc[0] == 2
-  spawn_loc[0] = :c if spawn_loc[0] == 3
-  spawn_loc[0] = :d if spawn_loc[0] == 4
-  spawn_loc[0] = :e if spawn_loc[0] == 5
-  spawn_loc[0] = :f if spawn_loc[0] == 6
-  spawn_loc[0] = :g if spawn_loc[0] == 7
-  spawn_loc[0] = :h if spawn_loc[0] == 8
-  spawn_loc
+  # Used in #move
+  def update_finish(finish, board)
+    finish_row = finish[0]
+    finish_column = finish[1]
+    finish_node = board.board[finish_row][finish_column]
+    finish_node.knight
+  end
+
+  # Used in #move
+  def check_validity(start, finish, board)
+    valid = valid_moves(start)
+    if valid.include?(finish)
+      update_start(start, board)
+      update_finish(finish, board)
+    else
+      'Invalid move'
+    end
+  end
 end

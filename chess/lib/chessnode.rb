@@ -46,3 +46,6 @@ class ChessNode
     end
   end
 end
+
+# Player1 is outlined colour
+# Player 2 is solid colour

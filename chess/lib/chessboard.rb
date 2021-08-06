@@ -39,15 +39,15 @@ class ChessBoard
   end
 
   def init_pawns
-    @board[6].each { |node| node.pawn('Player1') }
-    @board[1].each { |node| node.pawn('Player2') }
+    @board[6].each { |node| node.pawn('Player2') }
+    @board[1].each { |node| node.pawn('Player1') }
   end
 
   def init_knights
-    @board[7][1].knight('Player1')
-    @board[7][6].knight('Player1')
-    @board[0][1].knight('Player2')
-    @board[0][6].knight('Player2')
+    @board[7][1].knight('Player2')
+    @board[7][6].knight('Player2')
+    @board[0][1].knight('Player1')
+    @board[0][6].knight('Player1')
   end
 end
 

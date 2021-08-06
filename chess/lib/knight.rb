@@ -1,35 +1,45 @@
+# frozen_string_literal: true
+
+# Object to control knights movement
 class Knight
-  def initialize(spawn_loc, board)
-    return "Error" unless spawn_loc.is_a?(Array) && spawn_loc.length == 2
-
-    key = position_num_to_key(spawn_loc)
-    value = spawn_loc[1]
-
-    this_knight = board.board[key][value]
-    this_knight.knight
+  # Determines the valid moves for a knight at position start_location
+  def valid_moves(start_location)
+    if start_location.is_a?(Array) && start_location.length == 2
+      all_moves = all_moves(start_location)
+      possible_moves(all_moves)
+    else
+      'Error'
+    end
   end
 
-  def moves?(location)
+  # Used in valid_moves
+  def all_moves(start_location)
     # Array of valid moves
     valid_moves = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, 2], [2, 1], [2, -1], [1, -2]]
+    all_moves = []
+
+    valid_moves.each do |ele|
+      ele[0] = ele[0] + start_location[0]
+      ele[1] = ele[1] + start_location[1]
+      all_moves << ele
+    end
+    all_moves
+  end
+
+  # Used in valid_moves
+  def possible_moves(all_moves)
     possible_moves = []
 
-    shifted = valid_moves.each do |ele| 
-      ele[0] = ele[0] + location[0]
-      ele[1] = ele[1] + location[1]
+    all_moves.each do |ele|
+      possible_moves << ele unless ele[0] > 8 || ele[1] > 8 || ele[0] < 1 || ele[1] < 1
     end
-
-    shifted.each do |ele|
-      possible_moves << ele unless (ele[0] > 8 || ele[1] > 8 || ele[0] < 1 || ele[1] < 1)
-    end
-
-    return possible_moves 
+    possible_moves
   end
 
   def move(start, finish, board)
-    return "Error" unless start.is_a?(Array) && start.length == 2
-    return "Error" unless finish.is_a?(Array) && finish.length == 2
-    return "Invalid Move" unless self.moves?.include?(finish)
+    'Error' unless start.is_a?(Array) && start.length == 2
+    'Error' unless finish.is_a?(Array) && finish.length == 2
+    'Invalid Move' unless self.moves?.include?(finish)
 
     current_loc = board.board[position_num_to_key(start)][start[1]]
     current_loc.reset
@@ -37,17 +47,16 @@ class Knight
     finish_loc = board.board[position_num_to_key(finish)][finish[1]]
     finish_loc.knight
 
+    # Commented out to be used in Chess later
+    # Change piece and marker at start to nil
+    current_loc = board.board[position_num_to_key(start)][start[1]]
+    current_loc.reset
 
-    # # Commented out to be used in Chess later
-    # # Change piece and marker at start to nil
-    # current_loc = board.board[position_num_to_key(start)][start[1]]
-    # current_loc.reset
+    # Change piece and marker at finish to Knight
+    finish_loc = board.board[position_num_to_key(finish)][finish[1]]
+    finish_loc.knight
 
-    # # Change piece and marker at finish to Knight
-    # finish_loc = board.board[position_num_to_key(finish)][finish[1]]
-    # finish_loc.knight
-
-    # return "Knight to #{position_key_to_num(finish)}"
+    "Knight to #{position_key_to_num(finish)}"
   end
 end
 
@@ -60,7 +69,7 @@ def position_num_to_key(spawn_loc)
   key = :f if spawn_loc[0] == 6
   key = :g if spawn_loc[0] == 7
   key = :h if spawn_loc[0] == 8
-  return key
+  key
 end
 
 def position_key_to_num(spawn_loc)
@@ -72,5 +81,5 @@ def position_key_to_num(spawn_loc)
   spawn_loc[0] = :f if spawn_loc[0] == 6
   spawn_loc[0] = :g if spawn_loc[0] == 7
   spawn_loc[0] = :h if spawn_loc[0] == 8
-  return spawn_loc
+  spawn_loc
 end

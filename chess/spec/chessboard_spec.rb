@@ -66,32 +66,66 @@ RSpec.describe ChessBoard do
     end
   end
 
+  describe '#init_pawns' do
+    let(:test_board) { described_class.new }
+
+    before do
+      test_board.init_nodes
+      test_board.init_pieces
+    end
+
+    it 'should return a solid pawn at 2b' do
+      two_b = test_board.board[6][1].marker
+
+      expect(two_b).to eq("\u2659")
+    end
+
+    it 'should return a solid pawn at 2h' do
+      two_h = test_board.board[6][1].marker
+
+      expect(two_h).to eq("\u2659")
+    end
+
+    it 'should return a outline pawn at 7b' do
+      two_b = test_board.board[1][1].marker
+
+      expect(two_b).to eq("\u265F")
+    end
+
+    it 'should return a outline pawn at 7h' do
+      two_b = test_board.board[1][7].marker
+
+      expect(two_b).to eq("\u265F")
+    end
+  end
+
   describe '#init_knights' do
     let(:test_board) { described_class.new }
+
     before do
       test_board.init_nodes
       test_board.init_knights
     end
 
-    it 'should return a white knight at 1b' do
+    it 'should return a solid knight at 1b' do
       one_b = test_board.board[7][1].marker
 
       expect(one_b).to eq("\u2658")
     end
 
-    it 'should return a white knight at 1g' do
+    it 'should return a solid knight at 1g' do
       one_g = test_board.board[7][1].marker
 
       expect(one_g).to eq("\u2658")
     end
 
-    it 'should return a black knight at 8b' do
+    it 'should return a outline knight at 8b' do
       seven_b = test_board.board[0][1].marker
 
       expect(seven_b).to eq("\u265E")
     end
 
-    it 'should return a black knight at 8g' do
+    it 'should return a outline knight at 8g' do
       seven_g = test_board.board[0][1].marker
 
       expect(seven_g).to eq("\u265E")

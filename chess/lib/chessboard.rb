@@ -34,7 +34,13 @@ class ChessBoard
   end
 
   def init_pieces
+    init_pawns
     init_knights
+  end
+
+  def init_pawns
+    @board[6].each { |node| node.pawn('Player1') }
+    @board[1].each { |node| node.pawn('Player2') }
   end
 
   def init_knights
@@ -45,7 +51,7 @@ class ChessBoard
   end
 end
 
-# board = ChessBoard.new
-# board.init_nodes
-# board.init_knights
-# board.draw_game
+board = ChessBoard.new
+board.init_nodes
+board.init_pieces
+board.draw_game

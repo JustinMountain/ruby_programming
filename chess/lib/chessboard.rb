@@ -6,7 +6,6 @@ class ChessBoard
 
   def initialize
     @board = Array.new(8) { Array.new(8) }
-    init_nodes
   end
 
   def init_nodes
@@ -52,5 +51,6 @@ class ChessNode
   end
 end
 
-board = ChessBoard.new
-board.draw_game
+# board = ChessBoard.new
+# board.init_nodes
+# board.draw_game

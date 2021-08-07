@@ -2,30 +2,46 @@
 
 # Object to control pawn movement
 class Pawn
-  def valid_moves(start_location)
-    if start_location.is_a?(Array) && start_location.length == 2
-      all_moves = all_moves(start_location)
-      possible_moves(all_moves)
+  # Determines the valid moves for a knight at position start_location
+  def valid_moves(start, board)
+    if start.is_a?(Array) && start.length == 2
+      all_moves = all_moves(start)
+      directed = player_direction(all_moves, start, board)
+      player_adjusted = player_correction(directed, start, board)
+      possible = possible_moves(player_adjusted)
+      player_correction(start, possible, board)
     else
       'Error'
     end
   end
 
-  # Used in valid_moves
-  def all_moves(start_location)
+  # Used in valid_moves to determine all potential moves
+  def all_moves(start)
     # Array of valid moves
     valid_moves = [[1, 0], [1, 1], [1, -1]]
     all_moves = []
 
     valid_moves.each do |ele|
-      ele[0] = ele[0] + start_location[0]
-      ele[1] = ele[1] + start_location[1]
+      ele[0] = ele[0] + start[0]
+      ele[1] = ele[1] + start[1]
       all_moves << ele
     end
     all_moves
   end
 
-  # Used in valid_moves
+  # Determines the direction pawns are allowed to move
+  def player_direction(all_moves, start, board)
+    row = start[0]
+    column = start[1]
+    player = board.board[row][column].owner
+
+    all_moves unless player == 'Player2'
+
+    all_moves.each { |pos| pos[0] *= -1 }
+    all_moves
+  end
+
+  # Used in valid_moves to limit potential moves to be on the board
   def possible_moves(all_moves)
     possible_moves = []
 
@@ -33,6 +49,30 @@ class Pawn
       possible_moves << ele unless ele[0] > 8 || ele[1] > 8 || ele[0] < 1 || ele[1] < 1
     end
     possible_moves
+  end
+
+  # Used in valid_moves to limit potential moves to not take own piece
+  def player_correction(start, possible, board)
+    start_owner = node_owner(start, board)
+    corrected = []
+
+    possible.each do |finish|
+      finish_owner = node_owner(finish, board)
+
+      if finish[1] == start[1]
+        corrected << finish if finish_owner == ''
+      elsif finish_owner != start_owner && finish_owner != ''
+        corrected << finish
+      end
+    end
+    corrected
+  end
+
+  # Used in player_correction
+  def node_owner(location, board)
+    row = location[0]
+    column = location[1]
+    board.board[row][column].owner
   end
 
   # Handles updating the gameboard when moving the pawn
@@ -66,20 +106,12 @@ class Pawn
   def check_validity(start, finish, board)
     valid = valid_moves(start)
     if valid.include?(finish)
-      start_row = start[0]
-      start_column = start[1]
-      this_player = board.board[start_row][start_column].owner
+      start_owner = node_owner(start, board)
+      finish_owner = node_owner(finish, board)
 
-      finish_row = finish[0]
-      finish_column = finish[1]
-      finish_owner = board.board[finish_row][finish_column].owner
-
-      if finish - start == [1] && finish_owner == ''
+      if finish_owner != start_owner
         update_start(start, board)
-        update_finish(finish, board, this_player)
-      elsif finish_owner != this_player
-        update_start(start, board)
-        update_finish(finish, board, this_player)
+        update_finish(finish, board, start_owner)
       end
     else
       'Invalid move'

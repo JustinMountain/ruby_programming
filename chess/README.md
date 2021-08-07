@@ -7,6 +7,9 @@ TODO
 
 note: will need to convert movement to consider array drawing (invert and consider 0)
 
+2021-08-07
+- Added player correction method to remove nodes which have player's own pieces at the target location
+
 2021-08-06
 - Work done on Pawn object, working on check_validity
   - Need to add control for player/direction to valid_moves(?)

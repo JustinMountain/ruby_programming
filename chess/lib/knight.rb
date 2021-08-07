@@ -3,24 +3,25 @@
 # Object to control knights movement
 class Knight
   # Determines the valid moves for a knight at position start_location
-  def valid_moves(start_location)
-    if start_location.is_a?(Array) && start_location.length == 2
-      all_moves = all_moves(start_location)
-      possible_moves(all_moves)
+  def valid_moves(start, board)
+    if start.is_a?(Array) && start.length == 2
+      all_moves = all_moves(start)
+      possible = possible_moves(all_moves)
+      player_correction(start, possible, board)
     else
       'Error'
     end
   end
 
   # Used in valid_moves
-  def all_moves(start_location)
+  def all_moves(start)
     # Array of valid moves
     valid_moves = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, 2], [2, 1], [2, -1], [1, -2]]
     all_moves = []
 
     valid_moves.each do |ele|
-      ele[0] = ele[0] + start_location[0]
-      ele[1] = ele[1] + start_location[1]
+      ele[0] = ele[0] + start[0]
+      ele[1] = ele[1] + start[1]
       all_moves << ele
     end
     all_moves
@@ -34,6 +35,25 @@ class Knight
       possible_moves << ele unless ele[0] > 8 || ele[1] > 8 || ele[0] < 1 || ele[1] < 1
     end
     possible_moves
+  end
+
+  # Used in valid_moves to limit potential moves to not take own piece
+  def player_correction(start, possible, board)
+    start_owner = node_owner(start, board)
+    corrected = []
+
+    possible.each do |finish|
+      finish_owner = node_owner(finish, board)
+      corrected << finish if finish_owner != start_owner
+    end
+    corrected
+  end
+
+  # Used in player_correction
+  def node_owner(location, board)
+    row = location[0]
+    column = location[1]
+    board.board[row][column].owner
   end
 
   # Handles updating the gameboard when moving the knight
@@ -65,7 +85,7 @@ class Knight
 
   # Used in #move
   def check_validity(start, finish, board)
-    valid = valid_moves(start)
+    valid = valid_moves(start, board)
     if valid.include?(finish)
       update_start(start, board)
       update_finish(finish, board)

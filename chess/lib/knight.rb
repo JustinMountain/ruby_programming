@@ -63,7 +63,18 @@ class Knight
     elsif !finish.is_a?(Array) || finish.length != 2
       'Invalid finish location'
     else
-      check_validity(start, finish, board)
+      valid_moves = valid_moves(start, board)
+      check_move_validity(start, finish, board, valid_moves)
+    end
+  end
+
+  # Used in #move
+  def check_move_validity(start, finish, board, valid_moves)
+    if valid_moves.include?(finish)
+      update_start(start, board)
+      update_finish(finish, board)
+    else
+      'Invalid move'
     end
   end
 
@@ -81,16 +92,5 @@ class Knight
     finish_column = finish[1]
     finish_node = board.board[finish_row][finish_column]
     finish_node.knight
-  end
-
-  # Used in #move
-  def check_validity(start, finish, board)
-    valid = valid_moves(start, board)
-    if valid.include?(finish)
-      update_start(start, board)
-      update_finish(finish, board)
-    else
-      'Invalid move'
-    end
   end
 end

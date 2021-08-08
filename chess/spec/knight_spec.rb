@@ -200,21 +200,27 @@ RSpec.describe Knight do
     end
   end
 
-  # describe '#check_validity' do
-  #   let(:test_knight) { described_class.new }
+  describe '#check_move_validity' do
+    let(:test_knight) { described_class.new }
 
-  #   context 'an invalid move location' do
-  #     it 'returns the appropriate error message' do
-  #       start = [1, 1]
-  #       finish = [3, 3]
-  #       board = instance_double('board', { board: board.board[row][column].owner = '' })
-  #       instance_double('valid_moves', { valid_moves: [[2, 3], [3, 2]] })
-  #       error_message = 'Invalid move'
+    context 'an invalid move location' do
+      it 'returns the appropriate error message' do
+        start = [1, 1]
+        finish = [3, 3]
+        board = [
+          [[1, 1], [1, 2], [1, 3]],
+          [[2, 1], [2, 2], [2, 3]],
+          [[3, 1], [3, 2], [3, 3]]
+        ]
+        valid = [
+          [2, 3], [3, 2]
+        ]
 
-  #       invalid = test_knight.move(start, finish, board)
+        invalid = test_knight.check_move_validity(start, finish, board, valid)
+        error_message = 'Invalid move'
 
-  #       expect(invalid).to eq(error_message)
-  #     end
-  #   end
-  # end
+        expect(invalid).to eq(error_message)
+      end
+    end
+  end
 end

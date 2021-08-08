@@ -126,6 +126,13 @@ RSpec.describe Knight do
     end
   end
 
+  describe '#player_correction' do
+    let(:test_knight) { described_class.new }
+
+    context 'there is a player piece at the intended location'
+    context 'there is no player piece at any intended location'
+  end
+
   describe '#move' do
     let(:test_knight) { described_class.new }
 

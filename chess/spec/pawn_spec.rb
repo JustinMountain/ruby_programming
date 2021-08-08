@@ -86,20 +86,44 @@ RSpec.describe Pawn do
   describe '#determine movement' do
     let(:test_pawn) { described_class.new }
 
-    it 'should a return positive array for Player1' do
+    it 'should a return positive array for Player1 in start position' do
       player = 'Player1'
-      expected_array = [[1, -1], [1, 0], [1, 1]]
+      start = [1, 1]
+      expected_array = [[1, -1], [1, 0], [1, 1], [2, 0]]
 
-      determined = test_pawn.determine_movement(player)
+      determined = test_pawn.determine_movement(player, start)
 
       expect(determined).to eq(expected_array)
     end
 
-    it 'should a return positive array for Player2' do
+    it 'should a return positive array for Player1 in any other position' do
+      player = 'Player1'
+      start = [3, 1]
+      expected_array = [[1, -1], [1, 0], [1, 1]]
+
+      determined = test_pawn.determine_movement(player, start)
+
+      expect(determined).to eq(expected_array)
+    end
+
+    it 'should a return negative array for Player2 in start position' do
       player = 'Player2'
+      start = [6, 1]
+
+      expected_array = [[-1, -1], [-1, 0], [-1, 1], [-2, 0]]
+
+      determined = test_pawn.determine_movement(player, start)
+
+      expect(determined).to eq(expected_array)
+    end
+
+    it 'should a return negative array for Player2 in any other position' do
+      player = 'Player2'
+      start = [3, 1]
+
       expected_array = [[-1, -1], [-1, 0], [-1, 1]]
 
-      determined = test_pawn.determine_movement(player)
+      determined = test_pawn.determine_movement(player, start)
 
       expect(determined).to eq(expected_array)
     end
@@ -108,7 +132,16 @@ RSpec.describe Pawn do
   describe '#player_correction' do
     let(:test_pawn) { described_class.new }
 
-    context 'there is a player piece at the intended location'
-    context 'there is no player piece at any intended location'
+    context 'there is no player piece at any intended location' do
+      it 'should return the same array of possible moves'
+    end
+
+    context 'there is an opponent piece at the intended location' do
+      it 'should return the same array of possible moves'
+    end
+
+    context 'there is a player-owned piece at the intended location' do
+      it 'should remove the square from the array of possible moves'
+    end
   end
 end

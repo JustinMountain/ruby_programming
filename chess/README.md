@@ -1,11 +1,21 @@
 TODO
-- Create Pawn
 - Create Rook
 - Create Bishop
 - Create Queen
 - Create King
+- Create input for moving pieces
+  - will need to convert movement to consider array drawing (invert and consider 0)
+- Create Game Loop
 
-note: will need to convert movement to consider array drawing (invert and consider 0)
+2021-08-08
+- Tests for the Pawn class
+  - I still can't figure out how to create a test that considers my nested object (board.board.owner continually annoys me).
+- Added Pawn class
+  - Placed required restrictions on pawn movement
+    - Player1 can only move up, Player2 down
+    - The first move for the pawn can move two squares not one
+- Adjusted tests according to below
+- Extracted Piece object from Knight for inheritance
 
 2021-08-07
 - Added player correction method to remove nodes which have player's own pieces at the target location

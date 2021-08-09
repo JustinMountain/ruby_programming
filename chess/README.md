@@ -7,6 +7,10 @@ TODO
   - will need to convert movement to consider array drawing (invert and consider 0)
 - Create Game Loop
 
+2021-08-09
+- Added Rook class and some tests
+- 
+
 2021-08-08
 - Tests for the Pawn class
   - I still can't figure out how to create a test that considers my nested object (board.board.owner continually annoys me).

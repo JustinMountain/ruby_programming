@@ -43,6 +43,7 @@ class Rook < Piece
       row = pos[0]
       column = pos[1]
       owner = board.board[row][column]
+
       limited << pos if owner == ''
       break if owner != ''
     end

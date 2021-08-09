@@ -49,7 +49,7 @@ RSpec.describe Rook do
         expect(third_move).to eq(expected)
       end
 
-      it 'should return [1, -6] for the third move location [2]' do
+      it 'should return [1, -6] for the final move location [27]' do
         start_location = [1, 1]
         all_moves = test_rook.all_moves(start_location)
         third_move = all_moves[27]

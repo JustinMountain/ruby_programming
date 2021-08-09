@@ -1,15 +1,13 @@
 TODO
-- Create Rook
-- Create Bishop
-- Create Queen
 - Create King
 - Create input for moving pieces
   - will need to convert movement to consider array drawing (invert and consider 0)
 - Create Game Loop
 
 2021-08-09
+- Added Queen class and some tests
+- Added Bishop class and some tests
 - Added Rook class and some tests
-- 
 
 2021-08-08
 - Tests for the Pawn class

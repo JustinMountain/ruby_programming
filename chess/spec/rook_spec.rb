@@ -23,11 +23,11 @@ RSpec.describe Rook do
     let(:test_rook) { described_class.new }
 
     context 'there is a rook at 1, 1 for player 1 on an empty board' do
-      it 'should return an array of 28 move locations' do
+      it 'should return an array of 14 move locations' do
         start_location = [1, 1]
         all_moves = test_rook.all_moves(start_location)
 
-        expect(all_moves.length).to be(28)
+        expect(all_moves.length).to be(14)
         # These 28 positions are limited to valid board locations in possible_moves
       end
 

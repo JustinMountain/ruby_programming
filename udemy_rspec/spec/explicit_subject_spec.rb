@@ -1,5 +1,6 @@
 RSpec.describe Hash do
   subject(:custom_name) do
+    { a: 1, b: 2 }
   end
 
   it 'has two key-value pairs' do

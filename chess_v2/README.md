@@ -1,4 +1,5 @@
 2021-08-14
+- GameBoard has a method to update the location of a piece in the player hash
 - GameBoard has a method to update the display contents depending on piece
 - GameBoard has a method to reset the display contents for drawing
 - GameBoard has a method to remove a piece from a player's hash
@@ -8,13 +9,6 @@
 - Established directory for chess_v2
 
 TODO:
-- Create game board
-  - Array of 8 Arrays with 8 positions each
-  - Hash to store the remaining pieces for each player (key: piece name, value: location)
-  - Method to draw the board
-  - Method to remove piece from the hash
-  - Method to update the game board
-  - Method to update the hash for a piece's new location
 - Create Piece object
   - Initialize with player, location
   - Boolean method to check validity of a move(start, end)
@@ -37,6 +31,8 @@ TODO:
     - King
     - Pawn
 - Create a method that takes in a string from the player and interprets it into a move
+* GameBoard Object:
+  - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
 
 Chess Game Loop:
 1) Choose a piece to move
@@ -52,3 +48,12 @@ Chess Game Loop:
    - Update the board so the starting position is now empty
 5) Change player
 6) Repeat 1-5 until winner is declared
+
+COMPLETE
+x Create game board
+  x Array of 8 Arrays with 8 positions each
+  x Hash to store the remaining pieces for each player (key: piece name, value: location)
+  x Method to draw the board
+  x Method to remove piece from the hash
+  x Method to update the game board
+  x Method to update the hash for a piece's new location

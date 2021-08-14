@@ -146,6 +146,7 @@ RSpec.describe GameBoard do
 
   describe '#update_board' do
     let(:gameboard) { described_class.new }
+
     before do
       @mock_piece = double('Piece', marker: "\u265C") # Solid Rook
     end
@@ -208,5 +209,18 @@ RSpec.describe GameBoard do
   end
 
   describe '#update_piece_location' do
+    let(:gameboard) { described_class.new }
+
+    it 'should update the value for the given piece-key to its new location' do
+      p1_pieces_mock = { 'pawn1': [2, 1], 'pawn2': [2, 2] }
+
+      piece = 'pawn1'
+      new_location = [3, 1]
+      expected_pieces_hash = { 'pawn1': [3, 1], 'pawn2': [2, 2] }
+
+      returned_hash = gameboard.update_piece_location(p1_pieces_mock, piece, new_location)
+
+      expect(returned_hash).to eq(expected_pieces_hash)
+    end
   end
 end

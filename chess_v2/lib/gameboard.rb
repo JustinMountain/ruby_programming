@@ -56,4 +56,15 @@ class GameBoard
 
     @board_array[row][column] = piece_object.marker
   end
+
+  def update_piece_location(pieces_hash, piece, new_location)
+    piece_sym = piece.to_sym
+
+    if pieces_hash.key?(piece_sym)
+      pieces_hash[piece_sym] = new_location
+    else
+      "Piece doesn't exist."
+    end
+    pieces_hash
+  end
 end

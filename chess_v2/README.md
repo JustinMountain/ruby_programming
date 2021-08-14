@@ -11,7 +11,7 @@
 
 TODO:
 - Create Piece object
-  - Initialize with player, location
+  x Initialize with player, location
   - Boolean method to check validity of a move(start, end)
     - Start with an array of all possible moves
     - Add the start location to this array
@@ -20,8 +20,9 @@ TODO:
     - Remove any piece-specific restricted positions
       - Bishop/Rook/Queen should remove squares if boxed in by either player
       - King cannot put itself in danger
-  - Method to move(start, end)
-    - If Boolean above returns true:
+      - Pawn can move twice from start position, can only capture diagonally
+  x Method to move(start, end)
+    *-* If Boolean above returns true: (in game logic, not in object)
       - Call Update board methods for start and finish locations
 - Create each different game piece which inherit from Piece
   - Each piece type should hold an array of its possible moves and this_piece_restrictions

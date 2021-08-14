@@ -67,6 +67,81 @@ RSpec.describe GameBoard do
   end
 
   describe '#remove_piece' do
+    let(:gameboard) { described_class.new }
+
+    context 'removing a piece from player 1' do
+      it 'should remove a piece from the appropriate players hash' do
+        p1_pieces_mock = { 'pawn1': [2, 1], 'pawn2': [2, 2] }
+        piece = 'pawn1'
+
+        gameboard.remove_piece(p1_pieces_mock, piece)
+        expect(p1_pieces_mock).not_to have_key(piece)
+      end
+
+      it 'should return a string error if the piece is not in the hash' do
+        p1_pieces_mock = { 'pawn1': [2, 1], 'pawn2': [2, 2] }
+        piece = 'pawn3'
+        string_error = "Piece doesn't exist."
+
+        return_string = gameboard.remove_piece(p1_pieces_mock, piece)
+        expect(return_string).to eq(string_error)
+      end
+    end
+  end
+
+  describe '#reset_location_marker' do
+    let(:gameboard) { described_class.new }
+
+    it 'returns a string error if not given an array' do
+      string_error = 'Location must be an array of length 2'
+      location = 1
+
+      location_contents = gameboard.reset_location_marker(location)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'returns a string error if not given an array of length 2' do
+      string_error = 'Location must be an array of length 2'
+      location = [1]
+
+      location_contents = gameboard.reset_location_marker(location)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'returns a string error if coordinates are not on the gameboard' do
+      string_error = 'Invalid coordinates'
+      location = [8, 8]
+
+      location_contents = gameboard.reset_location_marker(location)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'returns a string error if coordinates are negative' do
+      string_error = 'Invalid coordinates'
+      location = [-1, -1]
+
+      location_contents = gameboard.reset_location_marker(location)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'updates the board from initialized state' do
+      location = [2, 2]
+      location_contents = gameboard.reset_location_marker(location)
+
+      expect(location_contents).to eq("\u00B7")
+    end
+
+    it 'can reset the position when already displaying a piece' do
+      row = rand(0..7)
+      column = rand(0..7)
+      gameboard.board_array[row][column] = "\u265C"
+      expect(gameboard.board_array[row][column]).to eq("\u265C")
+
+      location = [row, column]
+      location_contents = gameboard.reset_location_marker(location)
+
+      expect(location_contents).to eq("\u00B7")
+    end
   end
 
   describe '#update_board' do

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# GameBoard where the chess game will be played
 class GameBoard
   attr_reader :board_array, :p1_pieces, :p2_pieces
 
@@ -22,5 +23,26 @@ class GameBoard
       printable << "  #{location}"
     end
     printable
+  end
+
+  def remove_piece(pieces_hash, piece)
+    piece_sym = piece.to_sym
+
+    if pieces_hash.key?(piece_sym)
+      pieces_hash.delete(piece_sym)
+    else
+      "Piece doesn't exist."
+    end
+  end
+
+  def reset_location_marker(location)
+    return 'Location must be an array of length 2' unless location.is_a?(Array) && location.length == 2
+
+    row = location[0]
+    column = location[1]
+
+    return 'Invalid coordinates' unless row >= 0 && row <= 7 && column >= 0 && column <= 7
+
+    @board_array[row][column] = "\u00B7"
   end
 end

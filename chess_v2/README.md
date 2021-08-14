@@ -1,4 +1,8 @@
 2021-08-14
+- GameBoard has a method to reset the display contents for drawing
+- GameBoard has a method to remove a piece from a player's hash
+- GameBoard has methods to draw each row and to draw the game
+- GameBoard will initialize with board array and 2 hashes
 - Thought through game loop and necessary functionality
 - Established directory for chess_v2
 

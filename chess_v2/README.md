@@ -1,4 +1,5 @@
 2021-08-14
+- Piece and piece_spec established
 - GameBoard has a method to update the location of a piece in the player hash
 - GameBoard has a method to update the display contents depending on piece
 - GameBoard has a method to reset the display contents for drawing

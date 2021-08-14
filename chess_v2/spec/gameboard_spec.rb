@@ -145,6 +145,66 @@ RSpec.describe GameBoard do
   end
 
   describe '#update_board' do
+    let(:gameboard) { described_class.new }
+    before do
+      @mock_piece = double('Piece', marker: "\u265C") # Solid Rook
+    end
+
+    it 'returns a string error if not given an array' do
+      string_error = 'Location must be an array of length 2'
+      location = 1
+
+      location_contents = gameboard.update_board(location, @mock_piece)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'returns a string error if not given an array of length 2' do
+      string_error = 'Location must be an array of length 2'
+      location = [1]
+
+      location_contents = gameboard.update_board(location, @mock_piece)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'returns a string error if coordinates are not on the gameboard' do
+      string_error = 'Invalid coordinates'
+      location = [8, 8]
+
+      location_contents = gameboard.update_board(location, @mock_piece)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'returns a string error if coordinates are negative' do
+      string_error = 'Invalid coordinates'
+      location = [-1, -1]
+
+      location_contents = gameboard.update_board(location, @mock_piece)
+      expect(location_contents).to eq(string_error)
+    end
+
+    it 'updates the board from default state' do
+      row = rand(0..7)
+      column = rand(0..7)
+      gameboard.board_array[row][column] = "\00B7"
+      expect(gameboard.board_array[row][column]).to eq("\00B7")
+
+      location = [row, column]
+      location_contents = gameboard.update_board(location, @mock_piece)
+
+      expect(location_contents).to eq("\u265C") # Solid Rook
+    end
+
+    it 'can reset the position when already displaying a piece' do
+      row = rand(0..7)
+      column = rand(0..7)
+      gameboard.board_array[row][column] = "\u2658" # Oulined Knight
+      expect(gameboard.board_array[row][column]).to eq("\u2658") # Oulined Knight
+
+      location = [row, column]
+      location_contents = gameboard.update_board(location, @mock_piece)
+
+      expect(location_contents).to eq("\u265C") # Solid Rook
+    end
   end
 
   describe '#update_piece_location' do

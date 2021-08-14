@@ -45,4 +45,15 @@ class GameBoard
 
     @board_array[row][column] = "\u00B7"
   end
+
+  def update_board(location, piece_object)
+    return 'Location must be an array of length 2' unless location.is_a?(Array) && location.length == 2
+
+    row = location[0]
+    column = location[1]
+
+    return 'Invalid coordinates' unless row >= 0 && row <= 7 && column >= 0 && column <= 7
+
+    @board_array[row][column] = piece_object.marker
+  end
 end

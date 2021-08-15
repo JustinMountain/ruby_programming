@@ -14,6 +14,14 @@ class GameBoard
     @board_array
   end
 
+  def return_p1_pieces
+    @p1_pieces
+  end
+
+  def return_p2_pieces
+    @p2_pieces
+  end
+
   def draw_game
     @board_array.reverse.each_with_index { |row, index| puts draw_row(row, index) }
     puts "    a  b  c  d  e  f  g  h\n\n"

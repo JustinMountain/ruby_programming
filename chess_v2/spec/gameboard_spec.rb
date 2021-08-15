@@ -51,6 +51,26 @@ RSpec.describe GameBoard do
     end
   end
 
+  describe '#return_p1_pieces' do
+    let(:gameboard) { described_class.new }
+
+    it 'should return the hash of Player 1 pieces' do
+      p1_pieces_hash = gameboard.return_p1_pieces
+
+      expect(p1_pieces_hash).to be_a(Hash)
+    end
+  end
+
+  describe '#return_p2_pieces' do
+    let(:gameboard) { described_class.new }
+
+    it 'should return the hash of Player 2 pieces' do
+      p2_pieces_hash = gameboard.return_p2_pieces
+
+      expect(p2_pieces_hash).to be_a(Hash)
+    end
+  end
+
   describe '#draw_game' do
     let(:gameboard) { described_class.new }
 

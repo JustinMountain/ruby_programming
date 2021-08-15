@@ -14,12 +14,9 @@ class GameBoard
     @board_array
   end
 
-  def return_p1_pieces
-    @p1_pieces
-  end
-
-  def return_p2_pieces
-    @p2_pieces
+  def return_player_pieces(player)
+    return @p1_pieces if player == 'Player1'
+    return @p2_pieces if player == 'Player2'
   end
 
   def draw_game

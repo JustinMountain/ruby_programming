@@ -31,25 +31,34 @@ class Piece
     board_adjusted = []
 
     start_adjusted_moves.each do |ele|
-      board_adjusted << ele unless ele[0] > 7 || ele[1] > 7 || ele[0] < 0 || ele[1] < 0
+      board_adjusted << ele unless ele[0] > 7 || ele[1] > 7 || ele[0].negative? || ele[1].negative?
     end
     board_adjusted
   end
 
   # Remove any square with player's own pieces in it
-  def remove_own_piece_locations(board, board_adjusted_moves)
+  def remove_own_piece_locations(board, player, board_adjusted_moves)
+    player_pieces = board.return_player_pieces(player)
+    adjusted = []
+
+    board_adjusted_moves.each do |location|
+      adjusted << location unless player_pieces.value?(location)
+    end
+    adjusted
   end
 
   # Remove any piece-specific restricted positions
-  def piece_specific_restrictions(own_piece_adjusted_moves)
+  def piece_specific_restrictions(_board, own_piece_adjusted_moves)
+    own_piece_adjusted_moves
   end
 
-  # def valid_move?(start, finish)
-  #   start_adjusted_moves = moves_from_start(start)
-  #   board_adjusted_moves = remove_invalid_coordinates(start_adjusted_moves)
-  #   own_piece_adjusted_moves = remove_own_piece_locations(board_adjusted_moves)
-  #   piece_rectricted = piece_specific_restrictions(own_piece_adjusted_moves)
-  #   true if piece_rectricted.include(finish)
-  #   false
-  # end
+  def valid_move?(board, player, start, finish)
+    start_adjusted_moves = moves_from_start(start)
+    board_adjusted_moves = remove_invalid_coordinates(start_adjusted_moves)
+    own_piece_adjusted_moves = remove_own_piece_locations(board, player, board_adjusted_moves)
+    piece_restricted = piece_specific_restrictions(board, own_piece_adjusted_moves)
+    return true if piece_restricted.include?(finish)
+
+    false
+  end
 end

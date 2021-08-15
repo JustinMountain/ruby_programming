@@ -1,5 +1,10 @@
 2021-08-15 
-- Added method to return board state to GameBoard
+- Piece: Added boolean move to test for move validity
+- Piece: Added method to adjust for piece specific restrictions (none for default piece object)
+- Piece: Added method to remove any square containing ally pieces
+- Piece: Added method to remove invalid board positions from possible move array
+- Piece: Added method to add start location to the piece's possible moves
+- Piece: Added method to return board state to GameBoard
 
 2021-08-14
 - Piece and piece_spec established
@@ -13,21 +18,11 @@
 - Established directory for chess_v2
 
 TODO:
-- Create Piece object
-  x Initialize with player, location
-  - Boolean method to check validity of a move(start, end)
-    - Start with an array of all possible moves
-    - Add the start location to this array
-    - Remove any square with player's own pieces in it
-    - Remove any coordinates that aren't on the board (position greater than 8 or less than 1)
+- Create each different game piece which inherit from Piece
     - Remove any piece-specific restricted positions
       - Bishop/Rook/Queen should remove squares if boxed in by either player
       - King cannot put itself in danger
       - Pawn can move twice from start position, can only capture diagonally
-  x Method to move(start, end)
-    *-* If Boolean above returns true: (in game logic, not in object)
-      - Call Update board methods for start and finish locations
-- Create each different game piece which inherit from Piece
   - Each piece type should hold an array of its possible moves and this_piece_restrictions
     - Knight
     - Rook
@@ -38,6 +33,9 @@ TODO:
 - Create a method that takes in a string from the player and interprets it into a move
 * GameBoard Object:
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
+* If Boolean for move validity returns true: (in game logic, not in object)
+  - Call Update board methods for start and finish locations
+
 
 Chess Game Loop:
 1) Choose a piece to move
@@ -62,3 +60,11 @@ x Create game board
   x Method to remove piece from the hash
   x Method to update the game board
   x Method to update the hash for a piece's new location
+x Create Piece object
+  x Initialize with player, location
+  x Boolean method to check validity of a move(start, end)
+  x Method to add the start location to array of all possible moves
+  x Method to remove any square with player's own pieces in it
+  x Method to remove any coordinates that aren't on the board (position greater than 8 or less than 1)
+  x Method to be replaced with piece-specific restrictions
+  x Method to move(start, end)

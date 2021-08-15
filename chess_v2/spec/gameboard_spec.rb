@@ -33,6 +33,24 @@ RSpec.describe GameBoard do
     end
   end
 
+  describe '#return_board' do
+    let(:gameboard) { described_class.new }
+
+    it 'should return the current (just initialized) board state' do
+      expect(gameboard.board_array.length).to eq(8)
+
+      gameboard.board_array.each do |row|
+        expect(row.length).to eq(8)
+      end
+
+      gameboard.board_array.each do |row|
+        row.each do |col|
+          expect(col).to be_nil
+        end
+      end
+    end
+  end
+
   describe '#draw_game' do
     let(:gameboard) { described_class.new }
 

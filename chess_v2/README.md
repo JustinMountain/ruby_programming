@@ -1,3 +1,6 @@
+2021-08-15 
+- Added method to return board state to GameBoard
+
 2021-08-14
 - Piece and piece_spec established
 - GameBoard has a method to update the location of a piece in the player hash

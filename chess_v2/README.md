@@ -1,4 +1,6 @@
 2021-08-16
+- TDD Done for Rook
+- All named pieces initialize with proper marker
 - Piece: Finished tests for valid_move? boolean method
 
 2021-08-15 
@@ -21,19 +23,23 @@
 - Established directory for chess_v2
 
 TODO:
-- Create each different game piece which inherit from Piece
-    - Remove any piece-specific restricted positions
-      - Bishop/Rook/Queen should remove squares if boxed in by either player
-      - King cannot put itself in danger
-      - Pawn can move twice from start position, can only capture diagonally
-  - Each piece type should hold an array of its possible moves and this_piece_restrictions
-    - Knight
-    - Rook
+x Create each different game piece which inherit from Piece
+  - Each piece should hold an array of its possible moves
+    x Rook
     - Bishop
     - Queen
     - King
+    x Knight
     - Pawn
+  - Each piece should remove from the array its piece-specific restricted positions
+    - Rook should remove squares if boxed in by either player
+    - Bishop should remove squares if boxed in by either player
+    - Queen should remove squares if boxed in by either player
+    - King cannot put itself in danger
+    x Knight has no meaningful restrictions
+    - Pawn can move twice from start position, can only capture diagonally
 - Create a method that takes in a string from the player and interprets it into a move
+
 * GameBoard Object:
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
 * If Boolean for move validity returns true: (in game logic, not in object)

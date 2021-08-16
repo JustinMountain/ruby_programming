@@ -124,20 +124,74 @@ RSpec.describe Piece do
       player = piece.player
       start = piece.location
       finish = [2, 3]
+      start_adjusted_moves = [[0, 3], [-1, 2], [-1, 0], [0, -1], [2, 3], [3, 2], [3, 0], [2, -1]]
+      board_adjusted_moves = [[0, 3], [2, 3], [3, 2], [3, 0]]
+      own_piece_adjusted_moves = [[0, 3], [2, 3], [3, 2], [3, 0]]
+      piece_restricted = [[0, 3], [2, 3], [3, 2], [3, 0]]
+
+      allow(piece).to receive(:moves_from_start).and_return(start_adjusted_moves)
+      allow(piece).to receive(:remove_invalid_coordinates).and_return(board_adjusted_moves)
+      allow(piece).to receive(:remove_own_piece_locations).and_return(own_piece_adjusted_moves)
+      allow(piece).to receive(:piece_specific_restrictions).and_return(piece_restricted)
 
       valid = piece.valid_move?(board_double, player, start, finish)
-
       expect(valid).to be(true)
     end
 
-    it 'should return false if the move is valid' do
+    it 'should return false if the finish location is not on the board' do
+      board_double = double('board_double', return_player_pieces: { pawn1: [2, 3], pawn2: [3, 3] })
+      player = piece.player
+      start = piece.location
+      finish = [8, 8]
+      start_adjusted_moves = [[0, 3], [-1, 2], [-1, 0], [0, -1], [2, 3], [3, 2], [3, 0], [2, -1]]
+      board_adjusted_moves = [[0, 3], [2, 3], [3, 2], [3, 0]]
+      own_piece_adjusted_moves = [[0, 3], [2, 3], [3, 2], [3, 0]]
+      piece_restricted = [[0, 3], [2, 3], [3, 2], [3, 0]]
+
+      allow(piece).to receive(:moves_from_start).and_return(start_adjusted_moves)
+      allow(piece).to receive(:remove_invalid_coordinates).and_return(board_adjusted_moves)
+      allow(piece).to receive(:remove_own_piece_locations).and_return(own_piece_adjusted_moves)
+      allow(piece).to receive(:piece_specific_restrictions).and_return(piece_restricted)
+
+      valid = piece.valid_move?(board_double, player, start, finish)
+      expect(valid).to be(false)
+    end
+
+    it 'should return false if the player already owns the piece at the finish location' do
       board_double = double('board_double', return_player_pieces: { pawn1: [2, 3], pawn2: [3, 3] })
       player = piece.player
       start = piece.location
       finish = [2, 3]
+      start_adjusted_moves = [[0, 3], [-1, 2], [-1, 0], [0, -1], [2, 3], [3, 2], [3, 0], [2, -1]]
+      board_adjusted_moves = [[0, 3], [2, 3], [3, 2], [3, 0]]
+      own_piece_adjusted_moves = [[0, 3], [3, 2], [3, 0]]
+      piece_restricted = [[0, 3], [3, 2], [3, 0]]
+
+      allow(piece).to receive(:moves_from_start).and_return(start_adjusted_moves)
+      allow(piece).to receive(:remove_invalid_coordinates).and_return(board_adjusted_moves)
+      allow(piece).to receive(:remove_own_piece_locations).and_return(own_piece_adjusted_moves)
+      allow(piece).to receive(:piece_specific_restrictions).and_return(piece_restricted)
 
       valid = piece.valid_move?(board_double, player, start, finish)
+      expect(valid).to be(false)
+    end
 
+    it 'should return false if the piece prevents movement to the finish location' do 
+      board_double = double('board_double', return_player_pieces: { pawn1: [2, 3], pawn2: [3, 3] })
+      player = piece.player
+      start = piece.location
+      finish = [2, 3]
+      start_adjusted_moves = [[0, 3], [-1, 2], [-1, 0], [0, -1], [2, 3], [3, 2], [3, 0], [2, -1]]
+      board_adjusted_moves = [[0, 3], [2, 3], [3, 2], [3, 0]]
+      own_piece_adjusted_moves = [[0, 3], [3, 2], [3, 0]]
+      piece_restricted = []
+
+      allow(piece).to receive(:moves_from_start).and_return(start_adjusted_moves)
+      allow(piece).to receive(:remove_invalid_coordinates).and_return(board_adjusted_moves)
+      allow(piece).to receive(:remove_own_piece_locations).and_return(own_piece_adjusted_moves)
+      allow(piece).to receive(:piece_specific_restrictions).and_return(piece_restricted)
+
+      valid = piece.valid_move?(board_double, player, start, finish)
       expect(valid).to be(false)
     end
   end

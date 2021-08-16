@@ -1,3 +1,6 @@
+2021-08-16
+- Piece: Finished tests for valid_move? boolean method
+
 2021-08-15 
 - Piece: Added boolean move to test for move validity
 - Piece: Added method to adjust for piece specific restrictions (none for default piece object)

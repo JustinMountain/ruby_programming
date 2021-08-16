@@ -13,6 +13,7 @@ class Piece
   def move(board, start, finish)
     board.reset_location_marker(start)
     board.update_board(finish)
+    @location = finish
   end
 
   # Add the start location to this array

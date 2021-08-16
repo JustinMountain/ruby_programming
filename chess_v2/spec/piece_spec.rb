@@ -16,6 +16,23 @@ RSpec.describe Piece do
 
       piece.move(board_double, start, finish)
     end
+
+    context 'a piece has been moved' do
+      before do
+        board_double = double('board_double', update_board: 'some_marker', reset_location_marker: 'some_marker')
+        start = [1, 1]
+        finish = [2, 1]
+        start_location = piece.location
+        expect(start_location).to eq([1, 1])
+
+        piece.move(board_double, start, finish)
+      end
+
+      it 'updates location to finish coordinates' do
+        new_location = piece.location
+        expect(new_location).to eq([2, 1])
+      end
+    end
   end
 
   describe '#moves_from_start' do

@@ -1,4 +1,5 @@
 2021-08-17
+- King-specific movement added with tests
 - Queen-specific movement added with tests
 - Bishop-specific movement added with tests
 - Updated tests for new rook methods

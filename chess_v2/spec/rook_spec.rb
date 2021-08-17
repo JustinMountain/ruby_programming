@@ -18,6 +18,16 @@ RSpec.describe Rook do
 
         expect(returned_array).to eq(expected_array)
       end
+    end
+  end
+
+  describe '#update_marker' do
+    context 'Player 1' do
+      let(:rook) { described_class.new('Player1', [1, 1]) }
+
+      before do
+        rook.update_marker
+      end
 
       it 'should store the marker appropriate for Player 1' do
         expected_marker = "\u265C"
@@ -29,6 +39,10 @@ RSpec.describe Rook do
 
     context 'Player 2' do
       let(:rook) { described_class.new('Player2', [1, 1]) }
+
+      before do
+        rook.update_marker
+      end
 
       it 'should store the marker appropriate for Player 2' do
         expected_marker = "\u2656"

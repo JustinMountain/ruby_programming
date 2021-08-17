@@ -1,3 +1,10 @@
+2021-08-17
+- Queen-specific movement added with tests
+- Bishop-specific movement added with tests
+- Updated tests for new rook methods
+  - After talking with the discord server, I got a better understanding of when tests are needed
+- Refactored Rook-specific restrictions
+
 2021-08-16
 - TDD Done for Rook
 - All named pieces initialize with proper marker
@@ -26,15 +33,15 @@ TODO:
 x Create each different game piece which inherit from Piece
   - Each piece should hold an array of its possible moves
     x Rook
-    - Bishop
-    - Queen
+    x Bishop
+    x Queen
     - King
     x Knight
     - Pawn
   - Each piece should remove from the array its piece-specific restricted positions
-    - Rook should remove squares if boxed in by either player
-    - Bishop should remove squares if boxed in by either player
-    - Queen should remove squares if boxed in by either player
+    x Rook should remove squares if boxed in by either player
+    x Bishop should remove squares if boxed in by either player
+    x Queen should remove squares if boxed in by either player
     - King cannot put itself in danger
     x Knight has no meaningful restrictions
     - Pawn can move twice from start position, can only capture diagonally

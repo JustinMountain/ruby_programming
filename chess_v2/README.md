@@ -1,3 +1,23 @@
+TODO:
+- Create GameController
+  - Requires a way to track which player has the active turn
+  - Requires a method that takes in a string from the player and interprets it into a move
+  - Needs to initiate a board and pieces on the board
+  - Needs to initiate moves and update locations accordingly
+    - Should check for move validity before moving
+    - board.p1/p2_pieces && piece.location
+  - Needs to check for win conditions
+    - Needs to prevent King from moving itself in danger
+
+* GameBoard Object:
+  - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
+
+2021-08-18
+- Updated TODO for GameController object and moved to the top
+- Minor optimization done to King movement
+  - Does not need break condition since it can only move one in any direction
+- Pawn-specific movement added with tests
+
 2021-08-17
 - King-specific movement added with tests
 - Queen-specific movement added with tests
@@ -30,30 +50,6 @@
 - Thought through game loop and necessary functionality
 - Established directory for chess_v2
 
-TODO:
-x Create each different game piece which inherit from Piece
-  - Each piece should hold an array of its possible moves
-    x Rook
-    x Bishop
-    x Queen
-    - King
-    x Knight
-    - Pawn
-  - Each piece should remove from the array its piece-specific restricted positions
-    x Rook should remove squares if boxed in by either player
-    x Bishop should remove squares if boxed in by either player
-    x Queen should remove squares if boxed in by either player
-    - King cannot put itself in danger
-    x Knight has no meaningful restrictions
-    - Pawn can move twice from start position, can only capture diagonally
-- Create a method that takes in a string from the player and interprets it into a move
-
-* GameBoard Object:
-  - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
-* If Boolean for move validity returns true: (in game logic, not in object)
-  - Call Update board methods for start and finish locations
-
-
 Chess Game Loop:
 1) Choose a piece to move
    - Is there a piece at this location?
@@ -85,3 +81,17 @@ x Create Piece object
   x Method to remove any coordinates that aren't on the board (position greater than 8 or less than 1)
   x Method to be replaced with piece-specific restrictions
   x Method to move(start, end)
+x Create each different game piece which inherit from Piece
+  x Each piece should hold an array of its possible moves
+    x Rook
+    x Bishop
+    x Queen
+    x King
+    x Knight
+    x Pawn
+  x Each piece should remove from the array its piece-specific restricted positions
+    x Rook should remove squares if boxed in by either player
+    x Bishop should remove squares if boxed in by either player
+    x Queen should remove squares if boxed in by either player
+    x Knight has no meaningful restrictions
+    x Pawn can move twice from start position, can only capture diagonally

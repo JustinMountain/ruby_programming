@@ -59,8 +59,6 @@ class King < Piece
       opponent_piece = opponent_occupies?(location_marker)
 
       restricted_array << [adjusted[0], adjusted[1]] if opponent_piece || location_marker == "\u00B7"
-
-      break if opponent_piece
     end
     restricted_array
   end

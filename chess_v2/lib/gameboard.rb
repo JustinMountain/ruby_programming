@@ -1,13 +1,39 @@
 # frozen_string_literal: true
 
+require_relative 'gameboard', 'pawn'
+
 # GameBoard where the chess game will be played
 class GameBoard
   attr_reader :board_array, :p1_pieces, :p2_pieces
 
   def initialize
     @board_array = Array.new(8) { Array.new(8) }
-    @p1_pieces = {}
-    @p2_pieces = {}
+    @p1_pieces = init_p1_pieces_hash
+    @p2_pieces = init_p2_pieces_hash
+  end
+
+  def init_p1_pieces_hash
+    {
+      'pawn1' => [1, 0], 'pawn2' => [1, 1], 'pawn3' => [1, 2], 'pawn4' => [1, 3],
+      'pawn5' => [1, 4], 'pawn6' => [1, 5], 'pawn7' => [1, 6], 'pawn8' => [1, 7],
+      'rook1' => [0, 0], 'rook2' => [0, 7],
+      'knight1' => [0, 1], 'knight2' => [0, 6],
+      'bishop1' => [0, 2], 'bishop2' => [0, 5],
+      'queen' => [0, 4],
+      'king' => [0, 3]
+    }
+  end
+
+  def init_p2_pieces_hash
+    {
+      'pawn1' => [6, 0], 'pawn2' => [6, 1], 'pawn3' => [6, 2], 'pawn4' => [6, 3],
+      'pawn5' => [6, 4], 'pawn6' => [6, 5], 'pawn7' => [6, 6], 'pawn8' => [6, 7],
+      'rook1' => [7, 0], 'rook2' => [7, 7],
+      'knight1' => [7, 1], 'knight2' => [7, 6],
+      'bishop1' => [7, 2], 'bishop2' => [7, 5],
+      'queen' => [7, 4],
+      'king' => [7, 3]
+    }
   end
 
   def return_board

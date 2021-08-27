@@ -12,6 +12,10 @@ TODO:
 * GameBoard Object:
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
 
+2021-08-27
+- Initiated controller and controller_spec
+* Break was due to moving to Canada
+
 2021-08-18
 - Updated TODO for GameController object and moved to the top
 - Minor optimization done to King movement

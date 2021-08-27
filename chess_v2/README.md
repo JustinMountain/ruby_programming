@@ -13,6 +13,9 @@ TODO:
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
 
 2021-08-27
+- Controller will initialize all 16 game pieces
+- Added player piece hash for p1 and p2 to GameBoard
+- Added active_player tracker to controller 
 - Initiated controller and controller_spec
 * Break was due to moving to Canada
 

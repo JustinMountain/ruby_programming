@@ -8,6 +8,7 @@ class GameBoard
 
   def initialize
     @board_array = Array.new(8) { Array.new(8) }
+
     @p1_pieces = init_p1_pieces_hash
     @p2_pieces = init_p2_pieces_hash
   end
@@ -101,5 +102,14 @@ class GameBoard
       "Piece doesn't exist."
     end
     pieces_hash
+  end
+
+  def init_board
+    (0..7).each do |row|
+      (0..7).each do |column|
+        location = [row, column]
+        reset_location_marker(location)
+      end
+    end
   end
 end

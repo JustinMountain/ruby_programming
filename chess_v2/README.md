@@ -8,6 +8,7 @@ TODO:
     - board.p1/p2_pieces && piece.location
   - Needs to check for win conditions
     - Needs to prevent King from moving itself in danger
+- Pawn promotes to queen if reaches the end
 
 * GameBoard Object:
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly

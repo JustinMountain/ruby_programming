@@ -15,25 +15,25 @@ class GameBoard
 
   def init_p1_pieces_hash
     {
-      'pawn1' => [1, 0], 'pawn2' => [1, 1], 'pawn3' => [1, 2], 'pawn4' => [1, 3],
-      'pawn5' => [1, 4], 'pawn6' => [1, 5], 'pawn7' => [1, 6], 'pawn8' => [1, 7],
-      'rook1' => [0, 0], 'rook2' => [0, 7],
-      'knight1' => [0, 1], 'knight2' => [0, 6],
-      'bishop1' => [0, 2], 'bishop2' => [0, 5],
-      'queen' => [0, 4],
-      'king' => [0, 3]
+      'p1pawn1' => [1, 0], 'p1pawn2' => [1, 1], 'p1pawn3' => [1, 2], 'p1pawn4' => [1, 3],
+      'p1pawn5' => [1, 4], 'p1pawn6' => [1, 5], 'p1pawn7' => [1, 6], 'p1pawn8' => [1, 7],
+      'p1rook1' => [0, 0], 'p1rook2' => [0, 7],
+      'p1knight1' => [0, 1], 'p1knight2' => [0, 6],
+      'p1bishop1' => [0, 2], 'p1bishop2' => [0, 5],
+      'p1queen' => [0, 4],
+      'p1king' => [0, 3]
     }
   end
 
   def init_p2_pieces_hash
     {
-      'pawn1' => [6, 0], 'pawn2' => [6, 1], 'pawn3' => [6, 2], 'pawn4' => [6, 3],
-      'pawn5' => [6, 4], 'pawn6' => [6, 5], 'pawn7' => [6, 6], 'pawn8' => [6, 7],
-      'rook1' => [7, 0], 'rook2' => [7, 7],
-      'knight1' => [7, 1], 'knight2' => [7, 6],
-      'bishop1' => [7, 2], 'bishop2' => [7, 5],
-      'queen' => [7, 4],
-      'king' => [7, 3]
+      'p2pawn1' => [6, 0], 'p2pawn2' => [6, 1], 'p2pawn3' => [6, 2], 'p2pawn4' => [6, 3],
+      'p2pawn5' => [6, 4], 'p2pawn6' => [6, 5], 'p2pawn7' => [6, 6], 'p2pawn8' => [6, 7],
+      'p2rook1' => [7, 0], 'p2rook2' => [7, 7],
+      'p2knight1' => [7, 1], 'p2knight2' => [7, 6],
+      'p2bishop1' => [7, 2], 'p2bishop2' => [7, 5],
+      'p2queen' => [7, 4],
+      'p2king' => [7, 3]
     }
   end
 

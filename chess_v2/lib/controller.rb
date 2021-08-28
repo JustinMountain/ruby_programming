@@ -40,8 +40,8 @@ class Controller
 
     'Reached'
 
-    # # Checks for move validity
-    # finish_location = return_location_coords(move_string[4], move_string[5])
+    # Checks for move validity
+    finish_location = return_location_coords(move_string[4], move_string[5])
 
     # Updates piece locations
       # piece.location

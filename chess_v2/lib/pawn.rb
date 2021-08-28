@@ -10,6 +10,7 @@ class Pawn < Piece
     super
     @player = player
     @location = location
+    @marker = update_marker
 
     case @player
     when 'Player1'

@@ -10,6 +10,8 @@ class Bishop < Piece
     super
     @player = player
     @location = location
+    @marker = update_marker
+
     @moves_array = [
       # top-left to bottom-right
       [1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7],

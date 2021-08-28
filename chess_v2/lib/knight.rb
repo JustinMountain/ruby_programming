@@ -11,6 +11,8 @@ class Knight < Piece
     super
     @player = player
     @location = location
+    @marker = update_marker
+
     @moves_array = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, 2], [2, 1], [2, -1], [1, -2]]
 
     case player

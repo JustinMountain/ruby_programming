@@ -10,6 +10,8 @@ class King < Piece
     super
     @player = player
     @location = location
+    @marker = update_marker
+
     @moves_array = [
       [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]
     ]

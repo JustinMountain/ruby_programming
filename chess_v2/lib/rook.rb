@@ -10,6 +10,8 @@ class Rook < Piece
     super
     @player = player
     @location = location
+    @marker = update_marker
+
     @moves_array = [
       [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0],
       [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0],

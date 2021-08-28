@@ -15,6 +15,8 @@ class Controller
   def initialize
     @active_player = 'Player1'
     @board = GameBoard.new
+    @board.init_board
+
     init_p1_pieces
     init_p2_pieces
   end
@@ -32,11 +34,15 @@ class Controller
     # Takes in player move input
     return 'Invalid movement input' unless check_move_input_format(move_string) == "It's Good!"
 
-    start_location = return_location_coords(move_string[1], move_string[2])
-    finish_location = return_location_coords(move_string[4], move_string[5])
-
     # Checks for a piece at the start location
-    # Checks for move validity
+    start_location = return_location_coords(move_string[1], move_string[2])
+    return 'No player piece at location' unless player_piece_at_location(start_location)
+
+    'Reached'
+
+    # # Checks for move validity
+    # finish_location = return_location_coords(move_string[4], move_string[5])
+
     # Updates piece locations
       # piece.location
       # board.reset_location_marker
@@ -49,9 +55,19 @@ class Controller
 
   private
 
+  def player_piece_at_location(start_location)
+    case @active_player
+    when 'Player1'
+      return false unless @board.p1_pieces.key(start_location)
+    when 'Player2'
+      return false unless @board.p2_pieces.key(start_location)
+    end
+    true
+  end
+
   def return_location_coords(letter, number)
     location = []
-    location[0] = number.to_i
+    location[0] = number.to_i - 1
     location[1] = letter_position_to_row(letter)
     location
   end
@@ -102,6 +118,18 @@ class Controller
     @p1bishop2 = Bishop.new('Player1', [0, 5])
     @p1queen = Queen.new('Player1', [0, 4])
     @p1king = King.new('Player1', [0, 3])
+    push_p1_pieces_to_board
+  end
+
+  def push_p1_pieces_to_board
+    @board.update_board([0, 0], @p1rook1)
+    @board.update_board([0, 7], @p1rook2)
+    @board.update_board([0, 1], @p1knight1)
+    @board.update_board([0, 6], @p1knight2)
+    @board.update_board([0, 2], @p1bishop1)
+    @board.update_board([0, 5], @p1bishop2)
+    @board.update_board([0, 4], @p1queen)
+    @board.update_board([0, 3], @p1king)
   end
 
   def init_p1_pawns
@@ -113,6 +141,18 @@ class Controller
     @p1pawn6 = Pawn.new('Player1', [1, 5])
     @p1pawn7 = Pawn.new('Player1', [1, 6])
     @p1pawn8 = Pawn.new('Player1', [1, 7])
+    push_p1_pawns_to_board
+  end
+
+  def push_p1_pawns_to_board
+    @board.update_board([1, 0], @p1pawn1)
+    @board.update_board([1, 1], @p1pawn2)
+    @board.update_board([1, 2], @p1pawn3)
+    @board.update_board([1, 3], @p1pawn4)
+    @board.update_board([1, 4], @p1pawn5)
+    @board.update_board([1, 5], @p1pawn6)
+    @board.update_board([1, 6], @p1pawn7)
+    @board.update_board([1, 7], @p1pawn8)
   end
 
   def init_p2_pieces
@@ -125,6 +165,18 @@ class Controller
     @p2bishop2 = Bishop.new('Player2', [7, 5])
     @p2queen = Queen.new('Player2', [7, 4])
     @p2king = King.new('Player2', [7, 3])
+    push_p2_pieces_to_board
+  end
+
+  def push_p2_pieces_to_board
+    @board.update_board([7, 0], @p2rook1)
+    @board.update_board([7, 7], @p2rook2)
+    @board.update_board([7, 1], @p2knight1)
+    @board.update_board([7, 6], @p2knight2)
+    @board.update_board([7, 2], @p2bishop1)
+    @board.update_board([7, 5], @p2bishop2)
+    @board.update_board([7, 4], @p2queen)
+    @board.update_board([7, 3], @p2king)
   end
 
   def init_p2_pawns
@@ -136,8 +188,21 @@ class Controller
     @p2pawn6 = Pawn.new('Player2', [6, 5])
     @p2pawn7 = Pawn.new('Player2', [6, 6])
     @p2pawn8 = Pawn.new('Player2', [6, 7])
+    push_p2_pawns_to_board
+  end
+
+  def push_p2_pawns_to_board
+    @board.update_board([6, 0], @p2pawn1)
+    @board.update_board([6, 1], @p2pawn2)
+    @board.update_board([6, 2], @p2pawn3)
+    @board.update_board([6, 3], @p2pawn4)
+    @board.update_board([6, 4], @p2pawn5)
+    @board.update_board([6, 5], @p2pawn6)
+    @board.update_board([6, 6], @p2pawn7)
+    @board.update_board([6, 7], @p2pawn8)
   end
 end
 
 controller = Controller.new
-p controller.input_move('Ng1-f3')
+controller.board.draw_game
+p controller.input_move('Nb2-b4')

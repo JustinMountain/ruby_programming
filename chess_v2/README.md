@@ -14,8 +14,10 @@ TODO:
 
 2021-08-28
 - Controller.input_move
-  - will now take in only valid long form notation
-  - will now convert letter-number from string to location coordinates
+  - will take in only valid long form notation
+  - will convert letter-number from string to location coordinates
+  - will initialize all pieces on to the game board
+  - will check for a piece at the specified starting location
 
 2021-08-27
 - Controller will initialize all 16 game pieces

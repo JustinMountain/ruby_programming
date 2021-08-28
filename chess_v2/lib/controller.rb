@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'gameboard', 'pawn', 'rook', 'knight', 'bishop', 'queen', 'king'
+require_relative 'gameboard'
+require_relative 'pawn'
+require_relative 'rook'
+require_relative 'knight'
+require_relative 'bishop'
+require_relative 'queen'
+require_relative 'king'
 
 # Controller for playing chess
 class Controller
@@ -22,18 +28,68 @@ class Controller
                      end
   end
 
-  # Takes in player move input
+  def input_move(move_string)
+    # Takes in player move input
+    return 'Invalid movement input' unless check_move_input_format(move_string) == "It's Good!"
+
+    start_location = return_location_coords(move_string[1], move_string[2])
+    finish_location = return_location_coords(move_string[4], move_string[5])
+
+    # Checks for a piece at the start location
     # Checks for move validity
     # Updates piece locations
       # piece.location
       # board.reset_location_marker
       # board.update_board
       # board.update_piece_location
+  end
 
   # Checks for win conditions
   # *Prevents king from putting itself in danger
 
   private
+
+  def return_location_coords(letter, number)
+    location = []
+    location[0] = number.to_i
+    location[1] = letter_position_to_row(letter)
+    location
+  end
+
+  def letter_position_to_row(letter)
+    position_to_row = { 'a' => 0, 'b' => 1, 'c' => 2, 'd' => 3, 'e' => 4, 'f' => 5, 'g' => 6, 'h' => 7 }
+    position_to_row[letter]
+  end
+
+  def check_move_input_format(move_string)
+    return 'Invalid move string format.' unless move_string.is_a?(String) && move_string.length == 6
+    return 'Invalid piece notation.' unless check_piece(move_string[0])
+    return 'Invalid start location.' unless check_grid_coord(move_string[1], move_string[2])
+    return 'Invalid movement marker.' unless check_movement_marker(move_string[3])
+    return 'Invalid finish location.' unless check_grid_coord(move_string[4], move_string[5])
+
+    "It's Good!"
+  end
+
+  def check_piece(piece)
+    valid_pieces = %w[B N R K Q P]
+    return false unless valid_pieces.include?(piece)
+
+    true
+  end
+
+  def check_grid_coord(letter, number)
+    return false unless letter.match(/[a-h]/) && number.match(/[0-7]/)
+
+    true
+  end
+
+  def check_movement_marker(move)
+    valid_markers = %w[- x]
+    return false unless valid_markers.include?(move)
+
+    true
+  end
 
   # Initiates a new pieces
   def init_p1_pieces
@@ -82,3 +138,6 @@ class Controller
     @p2pawn8 = Pawn.new('Player2', [6, 7])
   end
 end
+
+controller = Controller.new
+p controller.input_move('Ng1-f3')

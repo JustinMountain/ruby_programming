@@ -1,8 +1,8 @@
 TODO:
 - Create GameController
-  - Requires a way to track which player has the active turn
+  x Requires a way to track which player has the active turn
   - Requires a method that takes in a string from the player and interprets it into a move
-  - Needs to initiate a board and pieces on the board
+  x Needs to initiate a board and pieces on the board
   - Needs to initiate moves and update locations accordingly
     - Should check for move validity before moving
     - board.p1/p2_pieces && piece.location
@@ -11,6 +11,11 @@ TODO:
 
 * GameBoard Object:
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
+
+2021-08-28
+- Controller.input_move
+  - will now take in only valid long form notation
+  - will now convert letter-number from string to location coordinates
 
 2021-08-27
 - Controller will initialize all 16 game pieces

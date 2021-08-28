@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'gameboard', 'pawn'
+require_relative 'gameboard'
 
 # GameBoard where the chess game will be played
 class GameBoard

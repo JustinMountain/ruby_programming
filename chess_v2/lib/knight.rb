@@ -14,8 +14,10 @@ class Knight < Piece
     @marker = update_marker
 
     @moves_array = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, 2], [2, 1], [2, -1], [1, -2]]
+  end
 
-    case player
+  def update_marker
+    case @player
     when 'Player1'
       @marker = "\u265E"
     when 'Player2'

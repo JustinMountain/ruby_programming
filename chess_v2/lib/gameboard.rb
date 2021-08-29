@@ -4,7 +4,8 @@ require_relative 'gameboard'
 
 # GameBoard where the chess game will be played
 class GameBoard
-  attr_reader :board_array, :p1_pieces, :p2_pieces
+  attr_reader :board_array
+  attr_accessor :p1_pieces, :p2_pieces
 
   def initialize
     @board_array = Array.new(8) { Array.new(8) }
@@ -94,10 +95,8 @@ class GameBoard
   end
 
   def update_piece_location(pieces_hash, piece, new_location)
-    piece_sym = piece.to_sym
-
-    if pieces_hash.key?(piece_sym)
-      pieces_hash[piece_sym] = new_location
+    if pieces_hash.key?(piece)
+      pieces_hash[piece] = new_location
     else
       "Piece doesn't exist."
     end

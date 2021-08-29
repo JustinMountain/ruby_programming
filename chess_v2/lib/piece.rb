@@ -55,10 +55,10 @@ class Piece
   end
 
   def valid_move?(board, player, start, finish)
-    start_adjusted_moves = moves_from_start(start)
-    board_adjusted_moves = remove_invalid_coordinates(start_adjusted_moves)
-    own_piece_adjusted_moves = remove_own_piece_locations(board, player, board_adjusted_moves)
-    piece_restricted = piece_specific_restrictions(board, own_piece_adjusted_moves)
+    p start_adjusted_moves = moves_from_start(start)
+    p board_adjusted_moves = remove_invalid_coordinates(start_adjusted_moves)
+    p own_piece_adjusted_moves = remove_own_piece_locations(board, player, board_adjusted_moves)
+    p piece_restricted = piece_specific_restrictions(board, own_piece_adjusted_moves)
     return true if piece_restricted.include?(finish)
 
     false

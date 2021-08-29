@@ -17,6 +17,7 @@ x Create GameController
 2021-08-29
 - BUG: piece movement arrays are returning incorrectly
   - new end location not being updated correctly?
+  - Seems like @moves_array is mutating somewhere...
 - Updated location variable on piece to attr_accessor so it can be changed by Controller
 - Controller.input_move
   - Will check for move validity

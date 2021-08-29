@@ -40,23 +40,32 @@ class Controller
     return 'No player piece at location' unless piece_name
 
     # Checks for move validity
-
     piece = return_piece(piece_name)
     finish_location = return_location_coords(move_string[4], move_string[5])
 
-    piece.valid_move?(@board, @active_player, start_location, finish_location)
+    is_valid = piece.valid_move?(@board, @active_player, start_location, finish_location)
 
     # Updates piece locations
-      # piece.location
-      # board.reset_location_marker
-      # board.update_board
-      # board.update_piece_location
+    is_valid ? update_locations(piece, piece_name, start_location, finish_location) : false
   end
 
   # Checks for win conditions
   # *Prevents king from putting itself in danger
 
   private
+
+  def update_locations(piece, piece_name, start_location, finish_location)
+    piece.location = finish_location
+
+    if @active_player == 'Player1'
+      @board.update_piece_location(@board.p1_pieces, piece_name, finish_location)
+    else
+      @board.update_piece_location(@board.p2_pieces, piece_name, finish_location)
+    end
+
+    @board.reset_location_marker(start_location)
+    @board.update_board(finish_location, piece)
+  end
 
   def return_piece(piece_name)
     if piece_name.include?('p1')
@@ -291,3 +300,4 @@ end
 controller = Controller.new
 controller.board.draw_game
 p controller.input_move('Nb2-b4')
+controller.board.draw_game

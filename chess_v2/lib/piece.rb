@@ -2,7 +2,8 @@
 
 # Piece to be used for all Game Pieces
 class Piece
-  attr_reader :player, :location, :moves_array
+  attr_reader :player, :moves_array
+  attr_accessor :location
 
   def initialize(player, location)
     @player = player

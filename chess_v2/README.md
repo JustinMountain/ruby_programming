@@ -4,6 +4,7 @@ x Create GameController
   x Requires a method that takes in a string from the player and interprets it into a move
   x Needs to initiate a board and pieces on the board
   x Needs to initiate moves and update locations accordingly
+    - Needs to restrict string based on piece type
     x Should check for move validity before moving
     x board.p1/p2_pieces && piece.location
   x Needs to check for win conditions
@@ -14,6 +15,8 @@ x Create GameController
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
 
 2021-08-29
+- BUG: piece movement arrays are returning incorrectly
+  - new end location not being updated correctly?
 - Updated location variable on piece to attr_accessor so it can be changed by Controller
 - Controller.input_move
   - Will check for move validity

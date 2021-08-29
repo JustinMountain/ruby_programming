@@ -4,7 +4,8 @@ require_relative 'piece'
 
 # Bishop piece inherits from the Piece object
 class Bishop < Piece
-  attr_reader :player, :location, :moves_array, :marker
+  attr_reader :player, :moves_array, :marker
+  attr_accessor :location
 
   def initialize(player, location)
     super

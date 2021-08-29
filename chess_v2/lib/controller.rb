@@ -79,7 +79,7 @@ class Controller
 
     if @active_player == 'Player1'
       @board.update_piece_location(@board.p1_pieces, piece_name, finish_location)
-    else
+    elsif @active_player == 'Player2'
       @board.update_piece_location(@board.p2_pieces, piece_name, finish_location)
     end
 
@@ -319,16 +319,13 @@ end
 
 controller = Controller.new
 controller.board.draw_game
-p controller.input_move('Nb2-b4')
+controller.input_move('Pb2-b4')
 controller.change_active_player
 controller.board.draw_game
-p controller.input_move('Nc7-c5')
+controller.input_move('Pc7-c5')
 controller.change_active_player
 controller.board.draw_game
 
-p controller.board.p1_pieces
-p controller.board.p2_pieces
-
-p controller.input_move('Nb4-c5')
+p controller.input_move('Pb4-c5')
 controller.change_active_player
 controller.board.draw_game

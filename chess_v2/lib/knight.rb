@@ -4,7 +4,8 @@ require_relative 'piece'
 
 # Knight piece inherits from the Piece object
 class Knight < Piece
-  attr_reader :player, :location, :moves_array, :marker
+  attr_reader :player, :moves_array, :marker
+  attr_accessor :location
 
   # Piece uses the knight's movement as its foundation, so no methods are necessary
   def initialize(player, location)

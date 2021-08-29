@@ -1,23 +1,24 @@
 TODO:
-- Create GameController
+x Create GameController
   x Requires a way to track which player has the active turn
   x Requires a method that takes in a string from the player and interprets it into a move
   x Needs to initiate a board and pieces on the board
   x Needs to initiate moves and update locations accordingly
     x Should check for move validity before moving
     x board.p1/p2_pieces && piece.location
-  - Needs to check for win conditions
-    - Needs to prevent King from moving itself in danger
+  x Needs to check for win conditions
+- Needs to prevent King from moving itself in danger
 - Pawn promotes to queen if reaches the end
 
 * GameBoard Object:
   - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
 
 2021-08-29
-- Updated locatiopn variable on piece to attr_accessor so it can be changed by Controller
+- Updated location variable on piece to attr_accessor so it can be changed by Controller
 - Controller.input_move
   - Will check for move validity
   - Will update piece.location, board.reset_location_marker, board.update_board, board.update_piece_location if move is valid
+- Checks for game over condition (the king is dead)
 
 2021-08-28
 - Controller.input_move

@@ -45,14 +45,34 @@ class Controller
 
     is_valid = piece.valid_move?(@board, @active_player, start_location, finish_location)
 
+    # Removes piece from opponent hash if present at finish location
+    remove_from_piece_hash(finish_location, piece_name)
+
     # Updates piece locations
     is_valid ? update_locations(piece, piece_name, start_location, finish_location) : false
   end
 
-  # Checks for win conditions
-  # *Prevents king from putting itself in danger
+  def game_over?
+    case @active_player
+    when 'Player1'
+      return false if @board.p2_pieces.key?('p2king')
+    when 'Player2'
+      return false if @board.p1_pieces.key?('p1king')
+    end
+    true
+  end
 
   private
+
+  def remove_from_piece_hash(finish_location, piece_name)
+    if @active_player == 'Player1' && @board.p2_pieces.key(finish_location)
+      @board.remove_piece(@board.p2_pieces, piece_name)
+    elsif @active_player == 'Player2' && @board.p1_pieces.key(finish_location)
+      @board.remove_piece(@board.p1_pieces, piece_name)
+    else
+      'No piece to remove'
+    end
+  end
 
   def update_locations(piece, piece_name, start_location, finish_location)
     piece.location = finish_location
@@ -300,4 +320,15 @@ end
 controller = Controller.new
 controller.board.draw_game
 p controller.input_move('Nb2-b4')
+controller.change_active_player
+controller.board.draw_game
+p controller.input_move('Nc7-c5')
+controller.change_active_player
+controller.board.draw_game
+
+p controller.board.p1_pieces
+p controller.board.p2_pieces
+
+p controller.input_move('Nb4-c5')
+controller.change_active_player
 controller.board.draw_game

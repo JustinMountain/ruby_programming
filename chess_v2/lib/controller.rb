@@ -36,12 +36,15 @@ class Controller
 
     # Checks for a piece at the start location
     start_location = return_location_coords(move_string[1], move_string[2])
-    return 'No player piece at location' unless player_piece_at_location(start_location)
-
-    'Reached'
+    piece_name = player_piece_at_location(start_location)
+    return 'No player piece at location' unless piece_name
 
     # Checks for move validity
+
+    piece = return_piece(piece_name)
     finish_location = return_location_coords(move_string[4], move_string[5])
+
+    piece.valid_move?(@board, @active_player, start_location, finish_location)
 
     # Updates piece locations
       # piece.location
@@ -55,14 +58,96 @@ class Controller
 
   private
 
+  def return_piece(piece_name)
+    if piece_name.include?('p1')
+      return_p1_piece_object(piece_name)
+    elsif piece_name.include?('p2')
+      return_p2_piece_object(piece_name)
+    end
+  end
+
+  def return_p1_piece_object(piece_name)
+    case piece_name
+    when 'p1pawn1'
+      @p1pawn1
+    when 'p1pawn2'
+      @p1pawn2
+    when 'p1pawn3'
+      @p1pawn3
+    when 'p1pawn4'
+      @p1pawn4
+    when 'p1pawn5'
+      @p1pawn5
+    when 'p1pawn6'
+      @p1pawn6
+    when 'p1pawn7'
+      @p1pawn7
+    when 'p1pawn8'
+      @p1pawn8
+    when 'p1rook1'
+      @p1rook1
+    when 'p1rook2'
+      @p1rook2
+    when 'p1knight1'
+      @p1knight1
+    when 'p1knight2'
+      @p1knight2
+    when 'p1bishop1'
+      @p1bishop1
+    when 'p1bishop2'
+      @p1bishop2
+    when 'p1queen'
+      @p1queen
+    when 'p1king'
+      @p1king
+    end
+  end
+
+  def return_p2_piece_object(piece_name)
+    case piece_name
+    when 'p2pawn1'
+      @p2pawn1
+    when 'p2pawn2'
+      @p2pawn2
+    when 'p2pawn3'
+      @p2pawn3
+    when 'p2pawn4'
+      @p2pawn4
+    when 'p2pawn5'
+      @p2pawn5
+    when 'p2pawn6'
+      @p2pawn6
+    when 'p2pawn7'
+      @p2pawn7
+    when 'p2pawn8'
+      @p2pawn8
+    when 'p2rook1'
+      @p2rook1
+    when 'p2rook2'
+      @p2rook2
+    when 'p2knight1'
+      @p2knight1
+    when 'p2knight2'
+      @p2knight2
+    when 'p2bishop1'
+      @p2bishop1
+    when 'p2bishop2'
+      @p2bishop2
+    when 'p2queen'
+      @p2queen
+    when 'p2king'
+      @p2king
+    end
+  end
+
   def player_piece_at_location(start_location)
     case @active_player
     when 'Player1'
-      return false unless @board.p1_pieces.key(start_location)
+      piece = @board.p1_pieces.key(start_location)
     when 'Player2'
-      return false unless @board.p2_pieces.key(start_location)
+      piece = @board.p2_pieces.key(start_location)
     end
-    true
+    piece
   end
 
   def return_location_coords(letter, number)

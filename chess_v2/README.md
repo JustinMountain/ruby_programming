@@ -1,9 +1,12 @@
 TODO:
 - Create game loop in main.rb
+- Create game description and how to play instructions
+- Create save/load function
 - Needs to prevent King from moving itself in danger
 - Pawn promotes to queen if reaches the end
 
 2021-08-30
+- Initiated main.rb
 - input_move now only accepts moves if the desired piece is at the start location
 - Used Marshall to make a deep copy of @moves_array to prevent it from mutating
 

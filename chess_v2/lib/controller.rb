@@ -65,7 +65,25 @@ class Controller
     true
   end
 
+  def display_instructions
+    how_to_play
+    # Explanation on how to write a move command
+    # Explanation on how to save/load
+    # Explanation on limitations (no castle, pawns don't promote, and king can move into danger)
+  end
+
   private
+
+  def how_to_play
+    puts 'This game of chess uses Long algebraic notation to input move commands.'
+    puts "To play, input a 6 character string of characters that looks like 'Rd3×d7'"
+    puts "The first character represents the name of the piece you want to move: \n  P = pawn\n  R = rook\n  N = knight\n  B = bishop\n  Q = queen\n  K = king"
+    puts 'The second and third characters represent the starting square that piece is on.'
+    puts 'The fourth square represents move (-) or capture (x).'
+    puts 'The fifth and sixth characters represent the square the piece will move to.'
+    puts "So our move command of 'Rd3×d7' says that we want to move the Rook at d3 to capture a piece at d7."
+    puts "An opening move might look like 'Pe2-e4'"
+  end
 
   def correct_piece_at_location(letter, piece_name)
     case letter
@@ -106,6 +124,7 @@ class Controller
 
     @board.reset_location_marker(start_location)
     @board.update_board(finish_location, piece)
+    true
   end
 
   def return_piece(piece_name)

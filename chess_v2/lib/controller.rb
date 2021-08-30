@@ -116,80 +116,6 @@ class Controller
     end
   end
 
-  def return_p1_piece_object(piece_name)
-    case piece_name
-    when 'p1pawn1'
-      @p1pawn1
-    when 'p1pawn2'
-      @p1pawn2
-    when 'p1pawn3'
-      @p1pawn3
-    when 'p1pawn4'
-      @p1pawn4
-    when 'p1pawn5'
-      @p1pawn5
-    when 'p1pawn6'
-      @p1pawn6
-    when 'p1pawn7'
-      @p1pawn7
-    when 'p1pawn8'
-      @p1pawn8
-    when 'p1rook1'
-      @p1rook1
-    when 'p1rook2'
-      @p1rook2
-    when 'p1knight1'
-      @p1knight1
-    when 'p1knight2'
-      @p1knight2
-    when 'p1bishop1'
-      @p1bishop1
-    when 'p1bishop2'
-      @p1bishop2
-    when 'p1queen'
-      @p1queen
-    when 'p1king'
-      @p1king
-    end
-  end
-
-  def return_p2_piece_object(piece_name)
-    case piece_name
-    when 'p2pawn1'
-      @p2pawn1
-    when 'p2pawn2'
-      @p2pawn2
-    when 'p2pawn3'
-      @p2pawn3
-    when 'p2pawn4'
-      @p2pawn4
-    when 'p2pawn5'
-      @p2pawn5
-    when 'p2pawn6'
-      @p2pawn6
-    when 'p2pawn7'
-      @p2pawn7
-    when 'p2pawn8'
-      @p2pawn8
-    when 'p2rook1'
-      @p2rook1
-    when 'p2rook2'
-      @p2rook2
-    when 'p2knight1'
-      @p2knight1
-    when 'p2knight2'
-      @p2knight2
-    when 'p2bishop1'
-      @p2bishop1
-    when 'p2bishop2'
-      @p2bishop2
-    when 'p2queen'
-      @p2queen
-    when 'p2king'
-      @p2king
-    end
-  end
-
   def player_piece_at_location(start_location)
     case @active_player
     when 'Player1'
@@ -336,17 +262,78 @@ class Controller
     @board.update_board([6, 6], @p2pawn7)
     @board.update_board([6, 7], @p2pawn8)
   end
+
+  def return_p1_piece_object(piece_name)
+    case piece_name
+    when 'p1pawn1'
+      @p1pawn1
+    when 'p1pawn2'
+      @p1pawn2
+    when 'p1pawn3'
+      @p1pawn3
+    when 'p1pawn4'
+      @p1pawn4
+    when 'p1pawn5'
+      @p1pawn5
+    when 'p1pawn6'
+      @p1pawn6
+    when 'p1pawn7'
+      @p1pawn7
+    when 'p1pawn8'
+      @p1pawn8
+    when 'p1rook1'
+      @p1rook1
+    when 'p1rook2'
+      @p1rook2
+    when 'p1knight1'
+      @p1knight1
+    when 'p1knight2'
+      @p1knight2
+    when 'p1bishop1'
+      @p1bishop1
+    when 'p1bishop2'
+      @p1bishop2
+    when 'p1queen'
+      @p1queen
+    when 'p1king'
+      @p1king
+    end
+  end
+
+  def return_p2_piece_object(piece_name)
+    case piece_name
+    when 'p2pawn1'
+      @p2pawn1
+    when 'p2pawn2'
+      @p2pawn2
+    when 'p2pawn3'
+      @p2pawn3
+    when 'p2pawn4'
+      @p2pawn4
+    when 'p2pawn5'
+      @p2pawn5
+    when 'p2pawn6'
+      @p2pawn6
+    when 'p2pawn7'
+      @p2pawn7
+    when 'p2pawn8'
+      @p2pawn8
+    when 'p2rook1'
+      @p2rook1
+    when 'p2rook2'
+      @p2rook2
+    when 'p2knight1'
+      @p2knight1
+    when 'p2knight2'
+      @p2knight2
+    when 'p2bishop1'
+      @p2bishop1
+    when 'p2bishop2'
+      @p2bishop2
+    when 'p2queen'
+      @p2queen
+    when 'p2king'
+      @p2king
+    end
+  end
 end
-
-controller = Controller.new
-controller.board.draw_game
-controller.input_move('Nb2-b4')
-controller.change_active_player
-controller.board.draw_game
-controller.input_move('Nc7-c5')
-controller.change_active_player
-controller.board.draw_game
-
-controller.input_move('Nb4-c5')
-controller.change_active_player
-controller.board.draw_game

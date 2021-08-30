@@ -1,13 +1,5 @@
 TODO:
-x Create GameController
-  x Requires a way to track which player has the active turn
-  x Requires a method that takes in a string from the player and interprets it into a move
-  x Needs to initiate a board and pieces on the board
-  x Needs to initiate moves and update locations accordingly
-    - Needs to restrict string based on piece type
-    x Should check for move validity before moving
-    x board.p1/p2_pieces && piece.location
-  x Needs to check for win conditions
+- Create game loop in main.rb
 - Needs to prevent King from moving itself in danger
 - Pawn promotes to queen if reaches the end
 
@@ -122,3 +114,12 @@ x Create each different game piece which inherit from Piece
     x Queen should remove squares if boxed in by either player
     x Knight has no meaningful restrictions
     x Pawn can move twice from start position, can only capture diagonally
+x Create GameController
+  x Requires a way to track which player has the active turn
+  x Requires a method that takes in a string from the player and interprets it into a move
+  x Needs to initiate a board and pieces on the board
+  x Needs to initiate moves and update locations accordingly
+    - Needs to restrict string based on piece type
+    x Should check for move validity before moving
+    x board.p1/p2_pieces && piece.location
+  x Needs to check for win conditions

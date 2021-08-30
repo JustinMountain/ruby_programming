@@ -11,8 +11,9 @@ x Create GameController
 - Needs to prevent King from moving itself in danger
 - Pawn promotes to queen if reaches the end
 
-* GameBoard Object:
-  - p1_pieces and p2_pieces may need to be updated to attr_accessor for remove_piece and update_piece_location to function properly
+2021-08-30
+- input_move now only accepts moves if the desired piece is at the start location
+- Used Marshall to make a deep copy of @moves_array to prevent it from mutating
 
 2021-08-29
 - BUG: piece movement arrays are returning incorrectly

@@ -37,7 +37,10 @@ class Controller
     # Checks for a piece at the start location
     start_location = return_location_coords(move_string[1], move_string[2])
     piece_name = player_piece_at_location(start_location)
+
+    # Check piece chosen to move is at start location
     return 'No player piece at location' unless piece_name
+    return 'Desired piece is not at start location' unless correct_piece_at_location(move_string[0], piece_name) == true
 
     # Checks for move validity
     piece = return_piece(piece_name)
@@ -63,6 +66,24 @@ class Controller
   end
 
   private
+
+  def correct_piece_at_location(letter, piece_name)
+    case letter
+    when 'B'
+      return true if piece_name.include?('bishop')
+    when 'N'
+      return true if piece_name.include?('knight')
+    when 'R'
+      return true if piece_name.include?('rook')
+    when 'K'
+      return true if piece_name.include?('king')
+    when 'Q'
+      return true if piece_name.include?('queen')
+    when 'P'
+      return true if piece_name.include?('pawn')
+    end
+    false
+  end
 
   def remove_from_piece_hash(finish_location, piece_name)
     if @active_player == 'Player1' && @board.p2_pieces.key(finish_location)
@@ -319,13 +340,13 @@ end
 
 controller = Controller.new
 controller.board.draw_game
-controller.input_move('Pb2-b4')
+controller.input_move('Nb2-b4')
 controller.change_active_player
 controller.board.draw_game
-controller.input_move('Pc7-c5')
+controller.input_move('Nc7-c5')
 controller.change_active_player
 controller.board.draw_game
 
-p controller.input_move('Pb4-c5')
+controller.input_move('Nb4-c5')
 controller.change_active_player
 controller.board.draw_game

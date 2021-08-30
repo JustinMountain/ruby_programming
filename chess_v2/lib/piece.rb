@@ -19,7 +19,8 @@ class Piece
 
   # Add the start location to this array
   def moves_from_start(start)
-    start_adjusted = @moves_array
+    # start_adjusted = @moves_array
+    start_adjusted = Marshal.load(Marshal.dump(@moves_array))
 
     start_adjusted.each do |ele|
       ele[0] = ele[0] + start[0]

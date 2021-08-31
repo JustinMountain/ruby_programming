@@ -32,6 +32,8 @@ class Controller
 
   def input_move(move_string)
     # Takes in player move input
+    how_to_play if move_string == 'instructions'
+
     return 'Invalid movement input' unless check_move_input_format(move_string) == "It's Good!"
 
     # Checks for a piece at the start location
@@ -49,6 +51,8 @@ class Controller
     is_valid = piece.valid_move?(@board, @active_player, start_location, finish_location)
 
     # Removes piece from opponent hash if present at finish location
+
+    # piece_name needs to be replaced with the piece that is at the final location
     remove_from_piece_hash(finish_location, piece_name)
 
     # Updates piece locations
@@ -67,12 +71,9 @@ class Controller
 
   def display_instructions
     how_to_play
-    # Explanation on how to write a move command
     # Explanation on how to save/load
-    # Explanation on limitations (no castle, pawns don't promote, and king can move into danger)
+    limitations
   end
-
-  private
 
   def how_to_play
     puts 'This game of chess uses Long algebraic notation to input move commands.'
@@ -82,7 +83,17 @@ class Controller
     puts 'The fourth square represents move (-) or capture (x).'
     puts 'The fifth and sixth characters represent the square the piece will move to.'
     puts "So our move command of 'Rd3×d7' says that we want to move the Rook at d3 to capture a piece at d7."
-    puts "An opening move might look like 'Pe2-e4'"
+    puts "An opening move might look like 'Pe2-e4'."
+    puts "\nYou can type 'instructions' to re-read these instructions at any time."
+  end
+
+  private
+
+  def limitations
+    puts "\nUnfortunately, at this time you there are the following limitations to the game:"
+    puts '  The rook and king cannot castle'
+    puts '  Pawns will not promote to queen if they reach the opponents side'
+    puts '  It is possible to move your king into danger'
   end
 
   def correct_piece_at_location(letter, piece_name)
@@ -175,7 +186,7 @@ class Controller
   end
 
   def check_grid_coord(letter, number)
-    return false unless letter.match(/[a-h]/) && number.match(/[0-7]/)
+    return false unless letter.match(/[a-h]/) && number.match(/[1-8]/)
 
     true
   end

@@ -1,11 +1,15 @@
 TODO:
-- Create game loop in main.rb
-- Create game description and how to play instructions
 - Create save/load function
 - Needs to prevent King from moving itself in danger
 - Pawn promotes to queen if reaches the end
 
+2021-08-31
+- Main game loop completed
+- Fixed bug where Player 2 couldn't move pieces in the back row
+- Added explanation to the introduction about the current limitations of the game.
+
 2021-08-30
+- Started writing game loop
 - Initiated main.rb
 - input_move now only accepts moves if the desired piece is at the start location
 - Used Marshall to make a deep copy of @moves_array to prevent it from mutating
@@ -126,3 +130,5 @@ x Create GameController
     x Should check for move validity before moving
     x board.p1/p2_pieces && piece.location
   x Needs to check for win conditions
+x Create game loop in main.rb
+x Create game description and how to play instructions

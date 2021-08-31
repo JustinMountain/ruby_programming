@@ -63,10 +63,8 @@ class GameBoard
   end
 
   def remove_piece(pieces_hash, piece)
-    piece_sym = piece.to_sym
-
-    if pieces_hash.key?(piece_sym)
-      pieces_hash.delete(piece_sym)
+    if pieces_hash.key?(piece)
+      pieces_hash.delete(piece)
     else
       "Piece doesn't exist."
     end

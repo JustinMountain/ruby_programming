@@ -51,9 +51,8 @@ class Controller
     is_valid = piece.valid_move?(@board, @active_player, start_location, finish_location)
 
     # Removes piece from opponent hash if present at finish location
-
-    # piece_name needs to be replaced with the piece that is at the final location
-    remove_from_piece_hash(finish_location, piece_name)
+    finish_piece = opponent_piece_at_location(finish_location)
+    remove_from_piece_hash(finish_location, finish_piece) if finish_piece
 
     # Updates piece locations
     is_valid ? update_locations(piece, piece_name, start_location, finish_location) : false
@@ -152,6 +151,16 @@ class Controller
       piece = @board.p1_pieces.key(start_location)
     when 'Player2'
       piece = @board.p2_pieces.key(start_location)
+    end
+    piece
+  end
+
+  def opponent_piece_at_location(finish_location)
+    case @active_player
+    when 'Player1'
+      piece = @board.p2_pieces.key(finish_location)
+    when 'Player2'
+      piece = @board.p1_pieces.key(finish_location)
     end
     piece
   end

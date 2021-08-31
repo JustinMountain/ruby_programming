@@ -60,7 +60,6 @@ until finished_playing == true
   if again == 'Y'
     chess_loop = Controller.new
     puts "     Welcome to chess!\n\n"
-    chess_loop.board.draw_game
   else
     finished_playing = true
   end

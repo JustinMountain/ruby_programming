@@ -4,6 +4,7 @@ TODO:
 - Pawn promotes to queen if reaches the end
 
 2021-08-31
+- Fixed bug where pieces weren't being removed from player hash when removed from game
 - Main game loop completed
 - Fixed bug where Player 2 couldn't move pieces in the back row
 - Added explanation to the introduction about the current limitations of the game.

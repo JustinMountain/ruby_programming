@@ -1,7 +1,7 @@
-TODO:
-- Create save/load function
-- Needs to prevent King from moving itself in danger
-- Pawn promotes to queen if reaches the end
+2021-09-01 Post Mortem
+- Chess turned out to be much more difficult that I had originally anticipated for a couple of reasons. The first major reason why this was the case is that I tried to reuse code from the Knights Travails project, despite having learned a lot between the end of that project and the start of Chess. I tried to shoehorn a lot from that project into chess in an effort to DRY, but I ended up throwing the original project away to start fresh. I learned a lot from the process of throwing away and starting again, especially when I came across points that I knew should work a different way - a different way that I ultimately ended up implementing.
+- When I started v2, I spent some extra time outlining what needs to be done for a chess game to work. The main points being a chess board to play on, a piece object that would determing movement, individual pieces that implement specific piece movement rules which inherit from Piece, and a controller to maintain game state as well as control player input for movement. I set out to implement all of this and it went relatively smoothly until I needed to take a 10 day break to move from Brazil to Canada. After this break, coming back to my code was confusing. I had lost all of my familiarity with the codebase and though I could sit and read everything to understand it (and debug it) I had lost a lot of the enthusiasm through momentum that I had accumulated by creating the game from scratch. I would find more places that I wish I had done differently, where changing the implementation was breaking the TDD I had done up until that point (things like adding an argument to the method aren't so easily worked around). 
+- I learned a lot about planning and implementation and finally got a great grasp on TDD through the first half of my work on this project, but the loss of momentum has been quite disheartening. I have completed the project: there is a game loop which functions as you would expect it to except for a lack of castle, pawn promotion, and check. The game plays and while I know that I could implement these last few things as well as clean up the game loop and controller portions of the code, I need to step away from chess and (like many projects before it) come back to it at a later date with more knowledge and understanding. I know that this was a incredible learning experience, but after reaching 80-90% complete I'm sure that moving forward and coming back later will be much more fruitful than continuing to implement the finer aspects of this implementation of chess.
 
 2021-08-31
 - Fixed bug where pieces weren't being removed from player hash when removed from game
@@ -133,3 +133,8 @@ x Create GameController
   x Needs to check for win conditions
 x Create game loop in main.rb
 x Create game description and how to play instructions
+
+TODO:
+- Create save/load function
+- Needs to prevent King from moving itself in danger
+- Pawn promotes to queen if reaches the end
